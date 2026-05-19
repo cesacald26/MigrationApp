@@ -565,62 +565,25 @@ footer{background:var(--dark);border-top:1px solid rgba(236,119,35,.15);padding:
 <section class="roadmap-section" id="roadmap">
   <div class="s-tag reveal">Plan de migración</div>
   <h2 class="s-title reveal">Roadmap<br><span class="orange">2026 — 2027</span></h2>
+  
+  <!-- Botón de recarga manual -->
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+    <button class="prop-vote-btn" onclick="forceReloadRoadmap()" style="background: rgba(236,119,35,0.2);">
+      🔄 Recargar Roadmap
+    </button>
+  </div>
+  
   <div class="roadmap-track">
     <div class="roadmap-line"><div class="roadmap-line-fill" id="lineProgress"></div></div>
-    <div class="roadmap-phases">
-
-      <div class="phase-item reveal" data-progress="10">
-        <div class="phase-dot active"><div class="phase-dot-inner"></div></div>
-        <div class="phase-num active">01</div>
-        <div class="phase-name">Diagnóstico</div>
-        <div class="phase-period">Q2 2026</div>
-        <div class="phase-prog-label">Avance de fase</div>
-        <div class="phase-prog-wrap"><div class="phase-prog-bar" data-target="10"></div></div>
-        <div class="phase-tasks">Análisis de complejidad<br>Inventario de forms<br>Definición de prioridades por área<br>Depuración de funcionalidades</div>
-        <span class="phase-badge badge-wip">En Curso</span>
-      </div>
-
-      <div class="phase-item reveal" data-progress="0">
-        <div class="phase-dot active"><div class="phase-dot-inner"></div></div>
-        <div class="phase-num active">02</div>
-        <div class="phase-name">Diseño & Arquitectura</div>
-        <div class="phase-period">Q2 2026</div>
-        <div class="phase-prog-label">Avance de fase</div>
-        <div class="phase-prog-wrap"><div class="phase-prog-bar" data-target="00"></div></div>
-        <div class="phase-tasks">Diseño UX/UI web<br>Arquitectura APEX<br>Estándares de desarrollo</div>
-        <span class="phase-badge badge-next">Próximo</span>
-      </div>
-
-      <div class="phase-item reveal" data-progress="0">
-        <div class="phase-dot"><div class="phase-dot-inner"></div></div>
-        <div class="phase-num">03</div>
-        <div class="phase-name">Desarrollo Módulo 1</div>
-        <div class="phase-period">Q3 2026</div>
-        <div class="phase-prog-label">Avance de fase</div>
-        <div class="phase-prog-wrap"><div class="phase-prog-bar" data-target="0"></div></div>
-        <div class="phase-tasks">Desarrollo Login / Main Page<br>Migración de funcionalidades actuales<br>Pruebas unitarias<br>Documentación e instructivos</div>
-        <span class="phase-badge badge-next">Próximo</span>
-      </div>
-
-      <div class="phase-item reveal" data-progress="0">
-        <div class="phase-dot"><div class="phase-dot-inner"></div></div>
-        <div class="phase-num">04</div>
-        <div class="phase-name">Roll-out & Go Live</div>
-        <div class="phase-period">Q1 2027</div>
-        <div class="phase-prog-label">Avance de fase</div>
-        <div class="phase-prog-wrap"><div class="phase-prog-bar" data-target="0"></div></div>
-        <div class="phase-tasks">Piloto usuarios clave<br>Lanzamiento general · Entregables Fase 1<br>Capacitación a usuarios de las funcionalidades entregadas</div>
-        <span class="phase-badge badge-next">Futuro</span>
-      </div>
-
+    <div class="roadmap-phases" id="roadmapPhases">
+      <!-- Las fases se cargarán dinámicamente desde JSON -->
+      <div style="text-align: center; padding: 40px;">Cargando roadmap...</div>
     </div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════
-     NOMBRE & LOGO DEL ERP (VERSIÓN MEJORADA)
-     - Eliminada carga de logos (no funcional en mailto)
-     - Sistema de votos automático con localStorage
+     NOMBRE & LOGO DEL ERP
 ══════════════════════════════════════════════ -->
 <section id="nombre-erp">
   <div class="s-tag reveal">Participación corporativa</div>
@@ -991,8 +954,15 @@ tick(); setInterval(tick,1000);
 const rObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el=>rObs.observe(el));
 
-new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.getElementById('lineProgress').style.width='20%';}),{threshold:0.3})
-  .observe(document.getElementById('roadmap'));
+loadRoadmap();
+
+new IntersectionObserver(es => {
+    es.forEach(e => {
+        if (e.isIntersecting) {
+            updateRoadmapProgress();
+        }
+    });
+}, { threshold: 0.3 }).observe(document.getElementById('roadmap'));
 
 const pObs=new IntersectionObserver(es=>{
   es.forEach(e=>{if(e.isIntersecting){
@@ -1011,6 +981,189 @@ document.getElementById('demo2Btn').href = DEMO_LINK_2;
 // Pequeña comprobación para asegurar que los enlaces no están vacíos
 if(DEMO_LINK_1 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_1 con la URL real de GitHub Pages');
 if(DEMO_LINK_2 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_2 con la URL real de GitHub Pages');
+
+
+const ROADMAP_JSON_URL = 'https://cesacald26.github.io/MigrationApp/roadmap.json';
+let roadmapData = null;
+
+// Cargar roadmap desde JSON
+async function loadRoadmap() {
+    try {
+        const url = `${ROADMAP_JSON_URL}?_=${Date.now()}`;
+        const response = await fetch(url, {
+            cache: 'no-store',
+            headers: { 'Cache-Control': 'no-cache' }
+        });
+        
+        if (response.ok) {
+            roadmapData = await response.json();
+            renderRoadmap();
+            updateRoadmapProgress();
+            return roadmapData;
+        } else {
+            console.warn('Error al cargar roadmap, usando datos por defecto');
+            return getDefaultRoadmap();
+        }
+    } catch (error) {
+        console.error('Error de red:', error);
+        return getDefaultRoadmap();
+    }
+}
+
+// Datos por defecto (fallback)
+function getDefaultRoadmap() {
+    return {
+        lastUpdated: new Date().toISOString(),
+        phases: [
+            {id:1, name:"Diagnóstico", period:"Q2 2026", status:"active", 
+             tasks:[
+                 {name:"Análisis de complejidad", completed:false},
+                 {name:"Inventario de forms", completed:false},
+                 {name:"Definición de prioridades por área", completed:false},
+                 {name:"Depuración de funcionalidades", completed:false}
+             ]},
+            {id:2, name:"Diseño & Arquitectura", period:"Q2 2026", status:"active",
+             tasks:[
+                 {name:"Diseño UX/UI web", completed:false},
+                 {name:"Arquitectura APEX", completed:false},
+                 {name:"Estándares de desarrollo", completed:false}
+             ]},
+            {id:3, name:"Desarrollo Módulo 1", period:"Q3 2026", status:"next",
+             tasks:[
+                 {name:"Desarrollo Login / Main Page", completed:false},
+                 {name:"Migración de funcionalidades actuales", completed:false},
+                 {name:"Pruebas unitarias", completed:false},
+                 {name:"Documentación e instructivos", completed:false}
+             ]},
+            {id:4, name:"Roll-out & Go Live", period:"Q1 2027", status:"future",
+             tasks:[
+                 {name:"Piloto usuarios clave", completed:false},
+                 {name:"Lanzamiento general · Entregables Fase 1", completed:false},
+                 {name:"Capacitación masiva", completed:false}
+             ]}
+        ]
+    };
+}
+
+// Calcular porcentaje de una fase basado en tareas completadas
+function calculatePhaseProgress(phase) {
+    if (!phase.tasks || phase.tasks.length === 0) return 0;
+    const completedTasks = phase.tasks.filter(task => task.completed).length;
+    return Math.floor((completedTasks / phase.tasks.length) * 100);
+}
+
+// Calcular progreso total del roadmap
+function calculateTotalProgress(phases) {
+    let totalTasks = 0;
+    let completedTasks = 0;
+    
+    phases.forEach(phase => {
+        if (phase.tasks) {
+            totalTasks += phase.tasks.length;
+            completedTasks += phase.tasks.filter(task => task.completed).length;
+        }
+    });
+    
+    if (totalTasks === 0) return 0;
+    return Math.floor((completedTasks / totalTasks) * 100);
+}
+
+// Renderizar el roadmap
+function renderRoadmap() {
+    if (!roadmapData) return;
+    
+    const phasesContainer = document.getElementById('roadmapPhases');
+    if (!phasesContainer) return;
+    
+    phasesContainer.innerHTML = '';
+    
+    roadmapData.phases.forEach((phase, index) => {
+        const progress = calculatePhaseProgress(phase);
+        const isActive = phase.status === 'active';
+        const isNext = phase.status === 'next';
+        
+        let badgeClass = 'badge-next';
+        let badgeText = 'Próximo';
+        let phaseDotClass = '';
+        let phaseNumClass = '';
+        
+        if (isActive) {
+            badgeClass = 'badge-wip';
+            badgeText = 'En Curso';
+            phaseDotClass = 'active';
+            phaseNumClass = 'active';
+        } else if (isNext) {
+            badgeClass = 'badge-next';
+            badgeText = 'Próximo';
+        } else {
+            badgeClass = 'badge-next';
+            badgeText = 'Futuro';
+        }
+        
+        const tasksHtml = phase.tasks.map(task => task.name).join('<br>');
+        
+        const phaseHtml = `
+            <div class="phase-item reveal" data-progress="${progress}">
+                <div class="phase-dot ${phaseDotClass}"><div class="phase-dot-inner"></div></div>
+                <div class="phase-num ${phaseNumClass}">0${phase.id}</div>
+                <div class="phase-name">${phase.name}</div>
+                <div class="phase-period">${phase.period}</div>
+                <div class="phase-prog-label">Avance de fase</div>
+                <div class="phase-prog-wrap"><div class="phase-prog-bar" data-target="${progress}"></div></div>
+                <div class="phase-tasks">${tasksHtml}</div>
+                <span class="phase-badge ${badgeClass}">${badgeText}</span>
+            </div>
+        `;
+        
+        phasesContainer.innerHTML += phaseHtml;
+    });
+    
+    // Re-aplicar observer para las nuevas barras
+    const pObs = new IntersectionObserver((es) => {
+        es.forEach(e => {
+            if (e.isIntersecting) {
+                const b = e.target.querySelector('.phase-prog-bar');
+                const progress = e.target.dataset.progress || 0;
+                if (b) setTimeout(() => b.style.width = progress + '%', 300);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    document.querySelectorAll('.phase-item[data-progress]').forEach(el => pObs.observe(el));
+    
+    // Re-aplicar reveal
+    document.querySelectorAll('#roadmapPhases .reveal').forEach(el => rObs.observe(el));
+}
+
+// Actualizar barra principal
+function updateRoadmapProgress() {
+    if (!roadmapData) return;
+    
+    const totalProgress = calculateTotalProgress(roadmapData.phases);
+    const lineProgress = document.getElementById('lineProgress');
+    
+    if (lineProgress) {
+        lineProgress.style.width = totalProgress + '%';
+        console.log(`📊 Progreso total del roadmap: ${totalProgress}%`);
+    }
+}
+
+// Forzar recarga manual
+async function forceReloadRoadmap() {
+    const btn = event?.target;
+    if (btn) {
+        btn.innerHTML = '⏳ Cargando...';
+        btn.disabled = true;
+    }
+    
+    await loadRoadmap();
+    
+    if (btn) {
+        btn.innerHTML = '🔄 Recargar Roadmap';
+        btn.disabled = false;
+    }
+    alert('✅ Roadmap actualizado desde el servidor');
+}
 
 </script>
 </body>
