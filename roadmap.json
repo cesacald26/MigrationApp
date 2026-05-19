@@ -1,0 +1,51 @@
+{
+  "lastUpdated": "2026-05-19",
+  "phases": [
+    {
+      "id": 1,
+      "name": "Diagnóstico",
+      "period": "Q2 2026",
+      "status": "active",
+      "tasks": [
+        {"name": "Análisis de complejidad", "completed": true},
+        {"name": "Inventario de forms", "completed": true},
+        {"name": "Definición de prioridades por área", "completed": false},
+        {"name": "Depuración de funcionalidades", "completed": false}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Diseño & Arquitectura",
+      "period": "Q2 2026",
+      "status": "active",
+      "tasks": [
+        {"name": "Diseño UX/UI web", "completed": false},
+        {"name": "Arquitectura APEX", "completed": false},
+        {"name": "Estándares de desarrollo", "completed": false}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Desarrollo Módulo 1",
+      "period": "Q3 2026",
+      "status": "next",
+      "tasks": [
+        {"name": "Desarrollo Login / Main Page", "completed": false},
+        {"name": "Migración de funcionalidades actuales", "completed": false},
+        {"name": "Pruebas unitarias", "completed": false},
+        {"name": "Documentación e instructivos", "completed": false}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Roll-out & Go Live",
+      "period": "Q1 2027",
+      "status": "future",
+      "tasks": [
+        {"name": "Piloto usuarios clave", "completed": false},
+        {"name": "Lanzamiento general · Entregables Fase 1", "completed": false},
+        {"name": "Capacitación masiva", "completed": false}
+      ]
+    }
+  ]
+}
