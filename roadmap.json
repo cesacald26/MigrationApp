@@ -8,7 +8,7 @@
       "status": "active",
       "tasks": [
         {"name": "Análisis de complejidad", "completed": true},
-        {"name": "Inventario de forms", "completed": true},
+        {"name": "Inventario de forms", "completed": false},
         {"name": "Definición de prioridades por área", "completed": false},
         {"name": "Depuración de funcionalidades", "completed": false}
       ]
