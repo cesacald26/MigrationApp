@@ -502,6 +502,7 @@ footer{background:var(--dark);border-top:1px solid rgba(236,119,35,.15);padding:
     </div>
   </div>
 
+  <!--se comenta cuenta regresiva
   <div class="countdown-bar">
     <span class="countdown-label">Cuenta regresiva al lanzamiento</span>
     <div class="cd-units">
@@ -513,7 +514,7 @@ footer{background:var(--dark);border-top:1px solid rgba(236,119,35,.15);padding:
       <span class="cd-sep">:</span>
       <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">Segundos</span></div>
     </div>
-  </div>
+  </div>-->
 </section>
 
 <!-- ══════════════════ QUÉ CAMBIA ══════════════════ -->
@@ -954,35 +955,6 @@ tick(); setInterval(tick,1000);
 const rObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el=>rObs.observe(el));
 
-loadRoadmap();
-
-new IntersectionObserver(es => {
-    es.forEach(e => {
-        if (e.isIntersecting) {
-            updateRoadmapProgress();
-        }
-    });
-}, { threshold: 0.3 }).observe(document.getElementById('roadmap'));
-
-const pObs=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting){
-    const b=e.target.querySelector('.phase-prog-bar');
-    if(b) setTimeout(()=>b.style.width=(e.target.dataset.progress||0)+'%',300);
-  }});
-},{threshold:0.2});
-document.querySelectorAll('.phase-item[data-progress]').forEach(el=>pObs.observe(el));
-
-loadProposals();
-
-// Asignar links de demo
-document.getElementById('demo1Btn').href = DEMO_LINK_1;
-document.getElementById('demo2Btn').href = DEMO_LINK_2;
-
-// Pequeña comprobación para asegurar que los enlaces no están vacíos
-if(DEMO_LINK_1 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_1 con la URL real de GitHub Pages');
-if(DEMO_LINK_2 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_2 con la URL real de GitHub Pages');
-
-
 const ROADMAP_JSON_URL = 'https://cesacald26.github.io/MigrationApp/roadmap.json';
 let roadmapData = null;
 
@@ -1164,6 +1136,38 @@ async function forceReloadRoadmap() {
     }
     alert('✅ Roadmap actualizado desde el servidor');
 }
+// ------
+loadRoadmap();
+// Actualizar roadmap automáticamente cada 30 segundos
+setInterval(() => {
+    loadRoadmap();
+}, 30000);
+
+new IntersectionObserver(es => {
+    es.forEach(e => {
+        if (e.isIntersecting) {
+            updateRoadmapProgress();
+        }
+    });
+}, { threshold: 0.3 }).observe(document.getElementById('roadmap'));
+
+const pObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){
+    const b=e.target.querySelector('.phase-prog-bar');
+    if(b) setTimeout(()=>b.style.width=(e.target.dataset.progress||0)+'%',300);
+  }});
+},{threshold:0.2});
+document.querySelectorAll('.phase-item[data-progress]').forEach(el=>pObs.observe(el));
+
+loadProposals();
+
+// Asignar links de demo
+document.getElementById('demo1Btn').href = DEMO_LINK_1;
+document.getElementById('demo2Btn').href = DEMO_LINK_2;
+
+// Pequeña comprobación para asegurar que los enlaces no están vacíos
+if(DEMO_LINK_1 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_1 con la URL real de GitHub Pages');
+if(DEMO_LINK_2 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_2 con la URL real de GitHub Pages');
 
 </script>
 </body>
