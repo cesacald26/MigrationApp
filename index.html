@@ -434,6 +434,23 @@ footer{background:var(--dark);border-top:1px solid rgba(236,119,35,.15);padding:
   justify-content: center;
 }
 
+#roadmapPhases {
+    min-height: 400px;
+}
+
+#roadmapPhases:empty::before {
+    content: "🔄 Cargando roadmap...";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    text-align: center;
+    color: var(--light-gray);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
 </style>
 </head>
 <body>
@@ -787,10 +804,6 @@ async function loadProposals() {
     }
 }
 
-setInterval(() => {
-    loadProposals();
-}, 30000); // Actualiza cada 30 segundos
-
 function getDefaultProposals() {
     return [
         {id:1, name:'NAFNXT', desc:'Evolucionamos a las nuevas tecnologías', votes:0}
@@ -945,10 +958,14 @@ document.addEventListener('mousemove',e=>{
 function tick(){
   const diff=new Date('2026-09-01T08:00:00')-new Date();
   if(diff<=0)return;
-  document.getElementById('cd-d').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');
-  document.getElementById('cd-h').textContent=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
-  document.getElementById('cd-m').textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
-  document.getElementById('cd-s').textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  const cdD = document.getElementById('cd-d');
+  const cdH = document.getElementById('cd-h');
+  const cdM = document.getElementById('cd-m');
+  const cdS = document.getElementById('cd-s');
+  if(cdD) cdD.textContent=String(Math.floor(diff/86400000)).padStart(2,'0');
+  if(cdH) cdH.textContent=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  if(cdM) cdM.textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  if(cdS) cdS.textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
 }
 tick(); setInterval(tick,1000);
 
@@ -1136,12 +1153,6 @@ async function forceReloadRoadmap() {
     }
     alert('✅ Roadmap actualizado desde el servidor');
 }
-// ------
-loadRoadmap();
-// Actualizar roadmap automáticamente cada 30 segundos
-setInterval(() => {
-    loadRoadmap();
-}, 30000);
 
 new IntersectionObserver(es => {
     es.forEach(e => {
@@ -1151,14 +1162,15 @@ new IntersectionObserver(es => {
     });
 }, { threshold: 0.3 }).observe(document.getElementById('roadmap'));
 
-const pObs=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting){
-    const b=e.target.querySelector('.phase-prog-bar');
-    if(b) setTimeout(()=>b.style.width=(e.target.dataset.progress||0)+'%',300);
-  }});
-},{threshold:0.2});
-document.querySelectorAll('.phase-item[data-progress]').forEach(el=>pObs.observe(el));
+// Actualizar roadmap automáticamente cada 30 segundos
+setInterval(() => {
+    loadProposals();
+    loadRoadmap();
+    console.log('🔄 Datos actualizados automáticamente');
+}, 30000);
 
+//inicializa
+loadRoadmap();
 loadProposals();
 
 // Asignar links de demo
