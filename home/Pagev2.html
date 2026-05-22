@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NAF Next — Home Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --or:#e85d04;--or-dk:#c44d00;--or-lt:#fff3eb;--or-mid:#ffd4bb;
+  --blk:#1a1a1a;--blk2:#242424;
+  --wh:#fff;--bg:#f0f0f0;
+  --g1:#f7f7f7;--g2:#e6e6e6;--g3:#ccc;--g4:#999;
+  --tx:#1c1c1c;--tx2:#555;--tx3:#999;
+  --sh:0 1px 4px rgba(0,0,0,0.09);--sh-md:0 4px 18px rgba(0,0,0,0.13);--sh-lg:0 8px 32px rgba(0,0,0,0.16);
+  --font:'Lato',system-ui,sans-serif;--rad:4px;--radlg:10px;
+}
+html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);background:var(--bg);overflow:hidden}
+.app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* ═══ SHELL ═══ */
+.shell{height:48px;background:var(--blk);display:flex;align-items:center;flex-shrink:0;z-index:300;position:relative}
+.sh-logo{padding:0 16px;border-right:1px solid rgba(255,255,255,.09);height:48px;display:flex;align-items:center;gap:9px;flex-shrink:0}
+.sh-logo img{height:32px;width:auto;object-fit:contain}
+.sh-brand{color:#fff;font-size:14px;font-weight:900;letter-spacing:-.3px}
+.sh-brand span{color:var(--or)}
+.sh-home{padding:0 14px;height:48px;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.6);font-size:12.5px;font-weight:700;cursor:pointer;border:none;background:transparent;border-right:1px solid rgba(255,255,255,.09);transition:all .12s;flex-shrink:0;font-family:var(--font)}
+.sh-home:hover,.sh-home.on{color:#fff;background:rgba(232,93,4,.15);border-bottom:2.5px solid var(--or)}
+.sh-bc{flex:1;display:flex;align-items:center;gap:5px;padding:0 14px;font-size:11.5px}
+.bc-a{color:rgba(255,255,255,.45);cursor:pointer;font-weight:700;transition:color .1s}
+.bc-a:hover{color:rgba(255,255,255,.85)}
+.bc-s{color:rgba(255,255,255,.2)}
+.bc-b{color:rgba(255,255,255,.78);font-weight:700}
+.bc-c{color:rgba(255,255,255,.45)}
+.sh-right{display:flex;align-items:center;gap:2px;padding:0 10px;flex-shrink:0;border-left:1px solid rgba(255,255,255,.09);position:relative}
+.sh-ico{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);font-size:14px;cursor:pointer;border:none;background:transparent;position:relative;font-family:var(--font);transition:all .12s}
+.sh-ico:hover{background:rgba(255,255,255,.08);color:#fff}
+.sh-ico.logout{color:rgba(255,255,255,.38)}
+.sh-ico.logout:hover{background:rgba(220,53,53,.18)!important;color:#ff6b6b!important}
+.sh-emp-selector{position:relative}
+.sh-emp-btn{display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:24px;cursor:pointer;border:none;background:transparent;transition:all .12s;font-family:var(--font)}
+.sh-emp-btn:hover{background:rgba(255,255,255,.1)}
+.sh-emp-arrow{color:rgba(255,255,255,.4);font-size:10px;margin-left:2px;transition:transform .15s}
+.sh-emp-btn.open .sh-emp-arrow{transform:rotate(180deg)}
+.sh-emp-nm{color:rgba(255,255,255,.82);font-size:11.5px;font-weight:700;text-align:right;white-space:nowrap}
+.sh-emp-rl{color:rgba(255,255,255,.32);font-size:10px;text-align:right}
+.sh-av{width:30px;height:30px;border-radius:50%;background:var(--or);color:#fff;font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.emp-drop{position:absolute;top:48px;right:0;width:280px;background:var(--blk2);border:1px solid rgba(255,255,255,.09);border-radius:12px;box-shadow:var(--sh-lg);z-index:600;display:none}
+.emp-drop.open{display:block}
+.ed-hdr{padding:8px 13px;font-size:9.5px;font-weight:900;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.07)}
+.ed-item{display:flex;align-items:center;gap:9px;padding:9px 13px;cursor:pointer;transition:background .1s;border-bottom:1px solid rgba(255,255,255,.05)}
+.ed-item:hover{background:rgba(255,255,255,.06)}
+.ed-av{width:26px;height:26px;border-radius:var(--rad);color:#fff;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ed-nm{font-size:12px;font-weight:700;color:rgba(255,255,255,.8)}
+.ed-ruc{font-size:9.5px;color:rgba(255,255,255,.3)}
+.ed-chk{color:var(--or);margin-left:auto;font-size:14px}
+.ed-sep{height:1px;background:rgba(255,255,255,.06);margin:4px 0}
+.ed-logout{display:flex;align-items:center;gap:9px;padding:9px 13px;cursor:pointer;transition:background .1s;color:rgba(255,100,100,.7);font-size:12px;font-weight:700}
+.ed-logout:hover{background:rgba(220,53,53,.1);color:#ff6b6b}
+
+/* ═══ BODY ═══ */
+.body{flex:1;display:flex;overflow:hidden}
+.content{flex:1;overflow-y:auto;background:var(--bg)}
+.content::-webkit-scrollbar{width:5px}.content::-webkit-scrollbar-thumb{background:var(--g2);border-radius:3px}
+
+/* ═══ HOME ═══ */
+.hero{background:var(--blk);padding:22px 32px 20px;position:relative}
+.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.hero-left{}
+.hero-greet{color:#fff;font-size:20px;font-weight:900;margin-bottom:3px}
+.hero-date{color:rgba(255,255,255,.3);font-size:11.5px;margin-bottom:16px}
+.emp-info-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:12px;padding:8px 15px}
+.ep-av{width:36px;height:36px;border-radius:8px;background:var(--or);color:#fff;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ep-nm{color:#fff;font-size:13px;font-weight:700}
+.ep-ruc{color:rgba(255,255,255,.45);font-size:10px}
+.hero-kpis{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.kpi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radlg);padding:10px 13px;min-width:108px;cursor:pointer;transition:all .15s}
+.kpi:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.kpi-v{color:#fff;font-size:18px;font-weight:900;line-height:1}
+.kpi-l{color:rgba(255,255,255,.32);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.kpi-d{font-size:10px;margin-top:2px}
+.up{color:#52c986}.dn{color:#ff7060}.wa{color:#f0a929}.neu{color:rgba(255,255,255,.28)}
+
+.domains{padding:20px 32px 32px}
+/*.dom-sec{margin-bottom:22px}
+.dom-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.dom-ic{font-size:15px;flex-shrink:0}
+.dom-lbl{font-size:11px;font-weight:900;color:var(--tx2);text-transform:uppercase;letter-spacing:.9px;white-space:nowrap}
+.dom-line{flex:1;height:1px;background:var(--g2)}
+.dom-desc{font-size:10px;color:var(--tx3);font-weight:700;white-space:nowrap}
+.agg{display:flex;flex-wrap:wrap;gap:7px}*/
+.dom-sec {
+    margin-bottom: 28px;
+}
+
+.dom-hdr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.dom-ic {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.dom-lbl {
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--tx2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+}
+
+.dom-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--g2), transparent);
+}
+
+.dom-desc {
+    font-size: 10.5px;
+    color: var(--tx3);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.agg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/*.ac{width:104px;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;border-radius:var(--radlg);background:var(--wh);border:1px solid var(--g2);box-shadow:var(--sh);padding:9px 6px;position:relative;transition:all .18s;text-align:center}
+.ac:hover{box-shadow:var(--sh-md);border-color:var(--or-mid);transform:translateY(-2px)}
+.ac.on{border-color:var(--or);box-shadow:0 0 0 2.5px var(--or-lt)}
+.ac-ico{width:42px;height:42px;border-radius:var(--radlg);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ac-lbl{font-size:10.5px;font-weight:700;color:var(--tx);line-height:1.25}
+.ac-badge{position:absolute;top:5px;right:5px;border-radius:20px;font-size:8px;font-weight:900;padding:1px 5px;min-width:15px;text-align:center;color:#fff}*/
+.ac {
+    width: 108px;
+    min-height: 96px;
+    background: var(--wh);
+    border: 1px solid var(--g2);
+    border-radius: var(--radlg);
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    position: relative;
+    box-shadow: var(--sh);
+}
+
+.ac:hover {
+    box-shadow: var(--sh-md);
+    border-color: var(--or-mid);
+    transform: translateY(-3px);
+}
+
+.ac.on {
+    border-color: var(--or);
+    box-shadow: 0 0 0 2.5px var(--or-lt);
+}
+
+.ac-ico {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: transform 0.15s ease;
+}
+
+.ac:hover .ac-ico {
+    transform: scale(1.05);
+}
+
+.ac-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--tx);
+    line-height: 1.3;
+}
+
+
+.ab-or{background:var(--or)}.ab-r{background:#c0392b}
+
+/* ═══ VIEWS ═══ */
+#v-sections{display:none}
+.sec-shell{display:flex;flex-direction:column;height:100%}
+.sec-topbar{background:var(--wh);border-bottom:1px solid var(--g2);padding:0 24px;height:52px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.sec-back{width:28px;height:28px;border-radius:50%;border:none;background:var(--g1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--tx2);transition:all .12s;flex-shrink:0;font-family:var(--font)}
+.sec-back:hover{background:var(--g2);color:var(--tx)}
+.sec-proc-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.sec-proc-nm{font-size:14px;font-weight:900;color:var(--tx);flex:1}
+.sec-proc-dom{font-size:11px;color:var(--tx3);margin-top:1px}
+.sec-content{flex:1;overflow-y:auto;padding:24px 32px 32px}
+.sec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+/*.sc{background:var(--wh);border:1px solid var(--g2);border-radius:var(--radlg);padding:20px 16px 18px;cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--sc-clr,var(--or));transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.sc:hover{box-shadow:var(--sh-lg);border-color:var(--sc-clr,var(--or));transform:translateY(-3px)}
+.sc:hover::after{transform:scaleX(1)}
+.sc-ico-wrap{width:56px;height:56px;border-radius:14px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .2s}
+.sc:hover .sc-ico-wrap{transform:scale(1.08)}
+.sc-nm{font-size:12.5px;font-weight:900;color:var(--tx);line-height:1.3}*/
+.sc {
+    background: var(--wh);
+    border: 1px solid var(--g2);
+    border-radius: var(--radlg);
+    padding: 24px 16px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--sh);
+}
+
+.sc::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--sc-clr, var(--or));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+.sc:hover {
+    box-shadow: var(--sh-md);
+    border-color: var(--sc-clr, var(--or));
+    transform: translateY(-4px);
+}
+
+.sc:hover::after {
+    transform: scaleX(1);
+}
+
+.sc-ico-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: all 0.2s ease;
+}
+
+.sc:hover .sc-ico-wrap {
+    transform: scale(1.08);
+    background: var(--sc-clr, var(--or)) !important;
+    color: #fff !important;
+}
+
+.sc-nm {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--tx);
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+}
+
+#v-detail{display:none}
+.det-shell{display:flex;height:100%}
+.det-sb{width:240px;min-width:240px;background:var(--wh);border-right:1px solid var(--g2);display:flex;flex-direction:column;flex-shrink:0}
+.det-sb-hdr{height:52px;background:var(--blk);display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.det-sb-back{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.7);flex-shrink:0;transition:all .12s;font-family:var(--font)}
+.det-sb-back:hover{background:rgba(255,255,255,.18);color:#fff}
+.det-sb-ico{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.det-sb-nm{color:#fff;font-size:12px;font-weight:900;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.det-sb-fade{position:relative;flex:1;overflow:hidden;display:flex;flex-direction:column}
+.det-sb-fade::before{content:'';position:absolute;top:0;left:0;right:0;height:16px;background:linear-gradient(var(--wh),transparent);z-index:2;pointer-events:none}
+.det-sb-fade::after{content:'';position:absolute;bottom:0;left:0;right:0;height:20px;background:linear-gradient(transparent,var(--wh));z-index:2;pointer-events:none}
+.det-sb-scroll{flex:1;overflow-y:auto;padding:6px 0 16px}
+.sbi{display:flex;align-items:center;padding:6.5px 13px 6.5px 15px;cursor:pointer;color:var(--tx2);font-size:12px;font-weight:700;border-left:3px solid transparent;transition:all .1s;gap:6px}
+.sbi:hover{background:var(--g1);color:var(--tx)}
+.sbi.on{background:var(--or-lt);color:var(--or);border-left-color:var(--or)}
+.sbi-arr{margin-left:auto;font-size:9px;color:var(--g3);flex-shrink:0;transition:transform .15s}
+.sbi.exp .sbi-arr{transform:rotate(90deg)}
+.sbi-sub{display:none;background:var(--g1)}
+.sbi-sub.open{display:block}
+.sbi2{display:flex;align-items:center;padding:5.5px 13px 5.5px 27px;cursor:pointer;color:var(--tx2);font-size:11.5px;font-weight:700;border-left:3px solid transparent;transition:all .1s;gap:5px}
+.sbi2:hover{background:var(--g2);color:var(--tx)}
+.sbi2.on{color:var(--or);border-left-color:var(--or);background:var(--or-lt)}
+.sbi3{display:flex;align-items:center;padding:5px 13px 5px 40px;cursor:pointer;color:var(--tx3);font-size:11px;border-left:3px solid transparent;transition:all .1s}
+.sbi3:hover{background:var(--g2);color:var(--tx2)}
+.sbi3.on{color:var(--or);background:var(--or-lt)}
+.det-main{flex:1;overflow-y:auto;background:var(--bg)}
+.det-topbar{background:var(--wh);border-bottom:1px solid var(--g2);padding:0 20px;height:52px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.det-topbar-t{font-size:14px;font-weight:900;color:var(--tx)}
+.det-topbar-s{font-size:11.5px;color:var(--tx3);margin-top:1px}
+.det-body{padding:20px}
+.det-placeholder{background:var(--wh);border:1px solid var(--g2);border-radius:var(--radlg);padding:52px 24px;text-align:center;box-shadow:var(--sh)}
+.det-ph-ico{font-size:36px;margin-bottom:12px}
+.det-ph-t{font-size:15px;font-weight:900;color:var(--tx);margin-bottom:6px}
+.det-ph-s{font-size:12px;color:var(--tx2);max-width:380px;margin:0 auto 20px;line-height:1.6}
+.det-ph-tag{display:inline-flex;align-items:center;gap:6px;background:var(--or-lt);border:1px solid var(--or-mid);color:var(--or-dk);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700}
+
+.logout-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.logout-overlay.open{display:flex}
+.logout-modal{background:var(--wh);border-radius:16px;padding:28px 28px 22px;width:340px;box-shadow:var(--sh-lg);text-align:center;animation:pop .2s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.lm-ico{font-size:36px;margin-bottom:12px}
+.lm-t{font-size:16px;font-weight:900;color:var(--tx);margin-bottom:6px}
+.lm-s{font-size:12px;color:var(--tx2);margin-bottom:20px;line-height:1.5}
+.lm-btns{display:flex;gap:8px}
+.lm-cancel{flex:1;height:38px;border-radius:8px;border:1.5px solid var(--g2);background:var(--wh);color:var(--tx2);font-family:var(--font);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .12s}
+.lm-cancel:hover{background:var(--g1)}
+.lm-confirm{flex:1;height:38px;border-radius:8px;border:none;background:#c44d00;color:#fff;font-family:var(--font);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .12s}
+.lm-confirm:hover{background:#51565B}
+
+/* Asegurar que las vistas se muestren correctamente */
+#v-home { display: block; }
+#v-sections { display: none; }
+#v-detail { display: none; }
+
+.sec-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.det-shell {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.sec-intro {
+    font-size: 12px;
+    color: var(--tx3);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--g2);
+}
+
+/* Estado de carga inicial */
+.loading-init {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    color: var(--tx3);
+    font-size: 13px;
+}
+
+.hide-until-ready {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.hide-until-ready.ready {
+    opacity: 1;
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="shell">
+  <div class="sh-logo">
+    <img src="https://cesacald26.github.io/MigrationApp/logoResideñado.png">
+    <!--<div class="sh-brand"><span>NAF Next</span>ERP</div>-->
+  </div>
+  <button class="sh-home on" id="sh-home" onclick="goHome()">⊞ Inicio</button>
+  <div class="sh-bc" id="sh-bc" style="display:none">
+    <span class="bc-a" id="bc-a" onclick="goHome()"></span>
+    <span class="bc-s">›</span>
+    <span class="bc-b" id="bc-b" style="cursor:pointer" onclick="goSections()"></span>
+    <span class="bc-s" id="bc-s2" style="display:none">›</span>
+    <span class="bc-c" id="bc-c" style="display:none"></span>
+  </div>
+  <div class="sh-right">
+    <button class="sh-ico logout" title="Cerrar sesión" onclick="showLogout()">⏻</button>
+    <div class="sh-emp-selector">
+      <button class="sh-emp-btn" onclick="toggleEmp()">
+        <div>
+          <div class="sh-emp-nm" id="emp-nm"></div>
+          <div class="sh-emp-rl" id="sh-emp-rl"></div>
+        </div>
+        <div class="sh-av" id="emp-av"></div>
+        <span class="sh-emp-arrow">▼</span>
+      </button>
+      <div class="emp-drop" id="emp-drop">
+        <div class="ed-hdr">Cambiar empresa</div>
+        <div id="emp-drop-list"></div>
+        <div class="ed-sep"></div>
+        <div class="ed-logout" onclick="showLogout()"><span>⏻</span> Cerrar sesión</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+<div class="content" id="content">
+
+<div id="v-home" class="hide-until-ready">
+    <div class="hero">
+        <div class="hero-row">
+            <div class="hero-left">
+                <div class="hero-greet" id="hero-greet"></div>
+                <div class="hero-date" id="hero-date"></div>
+            </div>
+            <div class="emp-info-card">
+                <div class="ep-av" id="ep-av"></div>
+                <div>
+                    <div class="ep-nm" id="ep-nm"></div>
+                    <div class="ep-ruc" id="ep-ruc"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-kpis" id="hero-kpis"></div>
+    </div>
+    <div class="domains" id="domains"></div>
+</div>
+
+  <div id="v-sections" class="sec-shell">
+    <div class="sec-topbar">
+      <button class="sec-back" onclick="goHome()">←</button>
+      <div class="sec-proc-ico" id="sec-proc-ico"></div>
+      <div>
+        <div class="sec-proc-nm" id="sec-proc-nm"></div>
+        <div class="sec-proc-dom" id="sec-proc-dom"></div>
+      </div>
+    </div>
+    <div class="sec-content">
+      <div class="sec-intro" id="sec-intro">Selecciona una sección para ver sus opciones y formularios.</div>
+      <div class="sec-grid" id="sec-grid"></div>
+    </div>
+  </div>
+
+  <div id="v-detail" class="det-shell">
+    <div class="det-sb">
+      <div class="det-sb-hdr">
+        <button class="det-sb-back" onclick="goSections()">←</button>
+        <div class="det-sb-ico" id="det-sb-ico"></div>
+        <div class="det-sb-nm" id="det-sb-nm"></div>
+      </div>
+      <div class="det-sb-fade">
+        <div class="det-sb-scroll" id="det-sb-scroll"></div>
+      </div>
+    </div>
+    <div class="det-main">
+      <div class="det-topbar">
+        <div>
+          <div class="det-topbar-t" id="det-t"></div>
+          <div class="det-topbar-s" id="det-s"></div>
+        </div>
+      </div>
+      <div class="det-body">
+        <div class="det-placeholder">
+          <div class="det-ph-ico" id="det-ico"></div>
+          <div class="det-ph-t" id="det-pt"></div>
+          <div class="det-ph-s" id="det-ps"></div>
+          <div class="det-ph-tag">📋 Formulario conectado a Oracle Forms migrado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<div class="logout-overlay" id="logout-overlay" onclick="hideLogout(event)">
+  <div class="logout-modal">
+    <div class="lm-ico">⏻</div>
+    <div class="lm-t">¿Cerrar sesión?</div>
+    <div class="lm-s">Serás redirigido a la pantalla de inicio de sesión.<br>Asegúrate de guardar tu trabajo antes de salir.</div>
+    <div class="lm-btns">
+      <button class="lm-cancel" onclick="hideLogout()">Cancelar</button>
+      <button class="lm-confirm" onclick="doLogout()">Cerrar sesión</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════
+   DATA - DOMAINS Y PROCESOS (simplificado)
+════════════════════════════════════════════ */
+const C = 'Configuración';
+const SECTION_ICONS = {
+  'Configuración':'⚙️','Pedidos':'📝','Proformas y Cotizaciones':'📋',
+  'Picking y Despacho':'📦','Consultas':'🔍','Reportes':'📊','Cierres':'🔒',
+  'Solicitudes de Crédito':'💳','Gestión de Estado':'🔄',
+  'Gestión de Visitas':'🗺️','Herramientas CRM':'🎯','Comisiones':'💰',
+  'Comisiones CxC':'💰','Programación de Visitas':'📅',
+  'Actividades y Material':'🎨','Política Comercial':'📜',
+  'Promociones y Ofertas':'🏷️','Gestión de Campañas':'📣',
+  'Gestión de Atención':'📞','Operación de Caja':'🏪','Clientes PV':'👥',
+  'Cierre de Día — PV':'🔒','Cierre de Día — Ventas':'🔒',
+  'Cierre de Día — CxC':'🔒','Cierre de Día — CxP':'🔒',
+  'Cierre de Día — Facturación':'🔒','Cierre de Día — Bodega':'🔒',
+  'Cierre de Día — Distribución':'🔒',
+  'Emisión de Documentos':'📄','Devoluciones y Notas de Crédito':'↩️',
+  'Guías de Remisión':'🚛','Documentos Electrónicos':'⚡',
+  'Retenciones Electrónicas':'📑','Retenciones':'📑',
+  'Cobros':'💵','Notas de Crédito en Valor':'📋',
+  'Saldos y Ajustes':'⚖️','Cheques':'🏦',
+  'Revisión de Cupos de Crédito':'📊',
+  'Ingreso y Proceso de Documentos':'📥','Gastos Especiales':'💳',
+  'Detalle de Pago':'💸','Cambios de Estado':'🔄',
+  'Saldos Menores por Ajustar':'⚖️','Movimientos Meses Cerrados':'📆',
+  'Asientos Contables':'📒','Presupuesto':'📊',
+  'Otros Meses':'📆','Generador de EEFF':'📈',
+  'Emisión y Gestión de Pagos':'💸','Otros Movimientos':'📋',
+  'Cheques Caducados':'⏰','Retenciones ISD':'🌍',
+  'Conciliación Bancaria':'🏦','Procesos de Activos':'🏗',
+  'Solicitudes de Bienes y Servicios':'📋','Cotizaciones':'📨',
+  'Órdenes de Compra':'🛒','Pedidos Especiales':'⭐',
+  'Suministros':'📦','Producción Interna':'🏭',
+  'Gastos de Mercadeo':'📣','Cierres y Anulaciones':'🔒',
+  'Movimientos':'📦','Transferencias':'🔄','Consignaciones':'📦',
+  'Obsequios y Donaciones':'🎁','Ajuste de Costos':'⚖️',
+  'Toma Física':'📋','Reclamo a Proveedores':'⚠️',
+  'Kits y Reordenamiento':'🔧',
+  'Modelo de Inventario (Sugerido)':'🤖',
+  'Pedidos de Importación':'📦','Proformas y Notas de Pedido':'📋',
+  'Facturas de Proveedor':'🧾','Pago de Anticipo':'💵',
+  'Impuestos Aduanales':'🛃','Nacionalización':'🌍','Seguimiento':'📍',
+  'Manifiestos de Carga':'🚢','Liquidación':'💰',
+  'Reclutamiento':'👔','Maestro de Empleados':'👤',
+  'Acciones de Personal':'📋','Estructura Salarial':'💰',
+  'Capacitación':'🎓','Tarjetas y Asistencia':'⏱',
+  'Movimientos de Nómina':'📝','Cálculos y Liquidaciones':'🧮',
+  'Liquidación de Empleado':'📑',
+  'Cheques y Transferencias de Sueldos':'💳',
+  'IESS y Ministerio':'🏛','Procesos':'⚙️',
+  'Solicitudes de Compra Internas':'🛍',
+  'Requisiciones de Cheques':'✏️',
+  'Requisiciones de Suministros':'📦',
+  'Consumo Interno':'🏢','Presupuesto Operativo':'📊',
+  'Dashboards Ejecutivos':'📈','Reportes Gerenciales':'📊',
+  'Permisos':'🔑','Auditoría':'🔎',
+  'Generales':'🌐','Por Compañía':'🏢',
+  'Gastos de Viaje (Vendedores)':'✈️',
+  'Reportes de Desempeño':'📊'
+};
+
+const DOMAINS = [
+{key:'comercial',label:'Gestión Comercial',icon:'🛍',color:'#e85d04',desc:'Ventas · Clientes · Fuerza de ventas · Mercadeo',procs:[
+  {key:'pedidos',label:'Toma de Pedidos',icon:'📝',color:'#e85d04',menu:[
+    {l:C,t:'M',c:[{l:'Tipos de Documento de Venta',t:'O'},{l:'Formas de Pago',t:'O'},{l:'Motivos por Tipo de Documento',t:'O'},{l:'Segmentos de Mercado',t:'O'},{l:'Formularios',t:'O'},{l:'Habilitar Vía de Pedido por Vendedor',t:'O'},{l:'Parámetros de Aprobación',t:'O'}]},
+    {l:'Pedidos',t:'M',c:[{l:'Entrada de Pedidos',t:'O'},{l:'Pedidos Especiales',t:'O'},{l:'Pedidos Industriales',t:'O'},{l:'Pedidos — Proyectos',t:'O'},{l:'Pedidos Promocionales',t:'O'},{l:'Aprobación de Pedidos (Crédito)',t:'O'},{l:'Aprobación de Plazo — Supervisores',t:'O'},{l:'Anulación de Pedidos',t:'O'},{l:'Cierre de Pedidos Pendientes',t:'O'}]},
+    {l:'Proformas y Cotizaciones',t:'M',c:[{l:'Entrada de Proformas',t:'O'},{l:'Cotizaciones',t:'O'},{l:'Aprobación de Proformas',t:'O'},{l:'Anulación de Proformas',t:'O'},{l:'Reporte de Proformas',t:'O'}]},
+    {l:'Picking y Despacho',t:'M',c:[{l:'Selección de Pedidos para Picking',t:'O'},{l:'Confirmación de Existencias',t:'O'},{l:'Reporte para Despacho',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Pedidos por Estado',t:'O'},{l:'Historial de Pedidos por Cliente',t:'O'},{l:'Demanda No Satisfecha',t:'O'},{l:'Pedidos Pendientes de Despacho',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Reporte Pedidos por Estado',t:'O'},{l:'Ventas por Vendedor',t:'O'},{l:'Ventas por Cliente y Artículo',t:'O'},{l:'Ranking de Clientes',t:'O'},{l:'Ventas por Centro y Clasificación',t:'O'}]}
+  ]},
+  {key:'clientes',label:'Clientes',icon:'👤',color:'#c44d00',menu:[
+    {l:C,t:'M',c:[{l:'Maestro de Clientes',t:'O'},{l:'Locales de Clientes',t:'O'},{l:'Tipos de Cliente',t:'O'},{l:'Corporaciones',t:'O'},{l:'Zonas Geográficas',t:'O'},{l:'Asignación Cobrador — Cliente',t:'O'},{l:'Asignación Vendedor — Cliente',t:'O'},{l:'Plazos y Límites de Crédito',t:'O'}]},
+    {l:'Solicitudes de Crédito',t:'M',c:[{l:'Entrada de Solicitudes',t:'O'},{l:'Aprobación de Solicitudes',t:'O'},{l:'Actualización de Solicitudes',t:'O'}]},
+    {l:'Gestión de Estado',t:'M',c:[{l:'Cambio de Estado Individual',t:'O'},{l:'Cambio de Estado Masivo',t:'O'},{l:'Actualización Datos del Cliente',t:'O'},{l:'Recategorización de Clientes',t:'O'},{l:'Inactivación de Local',t:'O'},{l:'Aprobación de Sobregiros',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Consulta de Clientes',t:'O'},{l:'Clientes con Aprobación Automática',t:'O'},{l:'Histórico de Cambios de Estado',t:'O'},{l:'Clientes con Protesto',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Alfabético de Clientes',t:'O'},{l:'Clientes por Ruta y Zona',t:'O'},{l:'Clientes Reactivados',t:'O'},{l:'Bitácora de Cambios de Estado',t:'O'}]}
+  ]},
+  {key:'fuerza_ventas',label:'Fuerza de Ventas',icon:'👔',color:'#b71c1c',menu:[
+    {l:C,t:'M',c:[{l:'Asesores Comerciales',t:'O'},{l:'Supervisores y Gerentes',t:'O'},{l:'Grupos de Ruta',t:'O'},{l:'Rutas y Zonas',t:'O'},{l:'Metas por Vendedor',t:'O'},{l:'Prioridad de Ejecutivos',t:'O'}]},
+    {l:'Gestión de Visitas',t:'M',c:[{l:'Programación de Visitas',t:'O'},{l:'Carga de Planificación por Archivo',t:'O'},{l:'Consulta de Visitas Programadas',t:'O'},{l:'Cumplimiento del Plan de Visitas',t:'O'},{l:'Ingreso de Actividades',t:'O'},{l:'Cotización División Industrial',t:'O'}]},
+    {l:'Herramientas CRM',t:'M',c:[{l:'RFM — Recencia, Frecuencia, Monto',t:'O'},{l:'RFM Comparativo Mensual',t:'O'},{l:'Penetración de Portafolio',t:'O'},{l:'Historial Items Vendidos por Cliente',t:'O'},{l:'Convenios',t:'O'},{l:'Análisis de Marcas',t:'O'},{l:'Alertas Comerciales',t:'O'}]},
+    {l:'Comisiones',t:'M',c:[{l:'Parámetros de Comisiones',t:'O'},{l:'Generación de Comisiones',t:'O'},{l:'Comisiones Vendedores',t:'O'},{l:'Comisiones Jefes / Gerentes',t:'O'},{l:'Traspaso a Nómina',t:'O'}]},
+    {l:'Gastos de Viaje (Vendedores)',t:'M',c:[{l:'Consulta de Anticipos',t:'O'},{l:'Aprobación de Anticipos',t:'O'},{l:'Declaración de Reembolsos',t:'O'},{l:'Aprobación de Reembolsos',t:'O'}]},
+    {l:'Reportes de Desempeño',t:'M',c:[{l:'Ventas por Vendedor y SubGrupo',t:'O'},{l:'Gestión de Portafolio',t:'O'},{l:'Reporte Venta Perdida',t:'O'},{l:'Cumplimiento de Cuotas',t:'O'},{l:'Cumplimiento Plan de Visitas',t:'O'}]}
+  ]},
+  {key:'mercaderistas',label:'Mercaderistas',icon:'🏬',color:'#6a1b9a',menu:[
+    {l:C,t:'M',c:[{l:'Mercaderistas Activos',t:'O'},{l:'Asignación de Zonas y Rutas',t:'O'},{l:'Tiendas y Puntos de Venta',t:'O'},{l:'Planogramas',t:'O'}]},
+    {l:'Programación de Visitas',t:'M',c:[{l:'Programación — Consumo',t:'O'},{l:'Programación — Mercadeo',t:'O'},{l:'Carga de Planificación',t:'O'},{l:'Confirmación de Visitas',t:'O'},{l:'Consulta de Cobertura',t:'O'}]},
+    {l:'Actividades y Material',t:'M',c:[{l:'Ingreso de Actividades',t:'O'},{l:'Solicitud de Material Publicitario',t:'O'},{l:'Autorización de Material',t:'O'},{l:'Salida de Material',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Cobertura por Zona',t:'O'},{l:'Visitas Realizadas vs Planificadas',t:'O'},{l:'Ejecución de Planogramas',t:'O'}]}
+  ]},
+  {key:'campanas',label:'Campañas y Política Comercial',icon:'🎯',color:'#4a148c',menu:[
+    {l:C,t:'M',c:[{l:'Tipos de Campaña',t:'O'},{l:'Segmentos Objetivo',t:'O'},{l:'Presupuesto de Campañas',t:'O'}]},
+    {l:'Política Comercial',t:'M',c:[{l:'Configuración de Política Comercial',t:'O'},{l:'Asignación Grupos a Jefes de Marca',t:'O'},{l:'Análisis de Precios y Márgenes',t:'O'},{l:'Política de Despachos',t:'O'}]},
+    {l:'Promociones y Ofertas',t:'M',c:[{l:'Ofertas Porcentuales',t:'O'},{l:'Ofertas por Artículo',t:'O'},{l:'Ofertas por Artículos Alternos',t:'O'},{l:'Ventas Bonificadas',t:'O'},{l:'Descuentos Generales',t:'O'}]},
+    {l:'Gestión de Campañas',t:'M',c:[{l:'Creación y Activación de Campaña',t:'O'},{l:'Seguimiento de Campaña',t:'O'},{l:'Confirmación de Activaciones',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Estadísticas por Campaña',t:'O'},{l:'Cumplimiento de Metas Comerciales',t:'O'},{l:'Presupuesto de Ventas',t:'O'}]}
+  ]},
+  {key:'call_center',label:'Call Center',icon:'📞',color:'#880e4f',menu:[
+    {l:C,t:'M',c:[{l:'Parámetros Iniciales',t:'O'},{l:'Definición de Novedades',t:'O'},{l:'Asignaciones de Ejecutivos',t:'O'},{l:'Prioridad Ejecutivos',t:'O'},{l:'Actualización de Teléfonos',t:'O'}]},
+    {l:'Gestión de Atención',t:'M',c:[{l:'Ingreso de Reclamos',t:'O'},{l:'Revisión de Reclamos',t:'O'},{l:'Consulta de Reclamos',t:'O'},{l:'Ingreso de Encuesta',t:'O'},{l:'Consulta General Call Center',t:'O'},{l:'Consulta Resumen de Cliente',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Cumplimiento de Margen de Ventas',t:'O'},{l:'Satisfacción del Cliente',t:'O'},{l:'Reclamos por Tipo',t:'O'}]}
+  ]},
+  {key:'punto_venta',label:'Punto de Venta',icon:'🏪',color:'#333',menu:[
+    {l:C,t:'M',c:[{l:'Tiendas',t:'O'},{l:'Cajas y Cajeros',t:'O'},{l:'Tipos de Documento PV',t:'O'},{l:'Formas de Pago',t:'O'},{l:'Bancos y Emisores',t:'O'},{l:'Lista Negra',t:'O'}]},
+    {l:'Clientes PV',t:'M',c:[{l:'Tipos de Cliente',t:'O'},{l:'Maestro de Clientes',t:'O'},{l:'Descuentos Generales',t:'O'},{l:'Digitación de Ofertas',t:'O'},{l:'Ventas Bonificadas',t:'O'}]},
+    {l:'Operación de Caja',t:'M',c:[{l:'Apertura de Turno',t:'O'},{l:'Facturas',t:'O'},{l:'Apartados y Abonos',t:'O'},{l:'Certificado de Regalo',t:'O'},{l:'Notas de Crédito',t:'O'},{l:'Anticipos',t:'O'},{l:'Devolución de Facturas',t:'O'},{l:'Anulación de Factura',t:'O'},{l:'Cierre de Turno',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Ofertas Vigentes',t:'O'},{l:'Existencias por Tienda',t:'O'},{l:'Histórico de Precios',t:'O'},{l:'Clientes y Movimientos',t:'O'}]},
+    {l:'Cierre de Día — PV',t:'M',c:[{l:'Reporte para Arqueo',t:'O'},{l:'Cierre de Caja',t:'O'},{l:'Cierre Cajero',t:'O'},{l:'Asiento Contable PV',t:'O'},{l:'Cierre de Tienda',t:'O'},{l:'Cierre Mensual PV',t:'O'}]}
+  ]},
+  {key:'cierre_comercial',label:'Cierre de Día Comercial',icon:'🔒',color:'#4e342e',menu:[
+    {l:'Cierre de Día — Ventas',t:'M',c:[{l:'Documentos Pendientes',t:'O'},{l:'Revisión Contable por Documento',t:'O'},{l:'Revisión Contable por Cuenta',t:'O'},{l:'Generación del Asiento Contable',t:'O'},{l:'Cierre Diario',t:'O'},{l:'Cierre Periódico',t:'O'}]},
+    {l:'Cierre de Día — Distribución',t:'M',c:[{l:'Resumen de Liquidación',t:'O'},{l:'Liquidación de Montos',t:'O'},{l:'Liquidación de Unidades',t:'O'}]},
+    {l:'Cierre de Día — CxC',t:'M',c:[{l:'Cierre Diario CxC',t:'O'},{l:'Revisión Contable',t:'O'},{l:'Generación Asiento Contable',t:'O'},{l:'Cierre Periódico',t:'O'}]}
+  ]}
+]},
+{key:'financiero',label:'Gestión Financiera',icon:'💹',color:'#1565a8',desc:'Facturación · CxC · CxP · Contabilidad · Bancos · Activos',procs:[
+  {key:'facturacion',label:'Facturación',icon:'📄',color:'#e85d04',badge:'143',menu:[
+    {l:C,t:'M',c:[{l:'Compañías y Calendarios',t:'O'},{l:'Tipos de Documento',t:'O'},{l:'Precios',t:'M',c:[{l:'Asignación de Precios',t:'O'},{l:'Mantenimiento de Precios',t:'O'},{l:'Actualización de Precios',t:'O'},{l:'Histórico de Precios',t:'O'}]},{l:'Formularios',t:'O'},{l:'Centros de Facturación',t:'O'},{l:'Motivos de Rechazo',t:'O'}]},
+    {l:'Emisión de Documentos',t:'M',c:[{l:'Emisión de Facturas',t:'O'},{l:'Facturas Ventanilla Crédito',t:'O'},{l:'Facturas Ventanilla Contado',t:'O'},{l:'Facturación de Servicios',t:'O'},{l:'Facturación de Consignaciones',t:'O'},{l:'Reimpresión de Facturas',t:'O'},{l:'Anulación de Facturas',t:'O'}]},
+    {l:'Devoluciones y Notas de Crédito',t:'M',c:[{l:'Devolución / Canje de Facturas',t:'O'},{l:'Devolución de Servicios',t:'O'},{l:'Nota de Crédito por Devolución',t:'O'},{l:'Reporte Devoluciones Pendientes',t:'O'}]},
+    {l:'Guías de Remisión',t:'M',c:[{l:'Emisión de Guías',t:'O'},{l:'Reimpresión de Guías',t:'O'},{l:'Reportes de Guías',t:'O'}]},
+    {l:'Documentos Electrónicos',t:'M',c:[{l:'Facturas Electrónicas',t:'O'},{l:'Guías Electrónicas',t:'O'},{l:'Devoluciones Electrónicas',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Consulta de Facturas',t:'O'},{l:'Historial de Documentos',t:'O'},{l:'Estadísticas de Venta',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Listado de Facturación',t:'O'},{l:'Ventas por Vendedor y Subgrupo',t:'O'},{l:'Análisis de Costos',t:'O'},{l:'Ventas por Margen de Grupo',t:'O'},{l:'Control de Facturación Diaria',t:'O'}]},
+    {l:'Cierre de Día — Facturación',t:'M',c:[{l:'Cierre Diario',t:'O'},{l:'Revisión Contable por Documento',t:'O'},{l:'Revisión Contable por Cuenta',t:'O'},{l:'Generación Asiento Contable',t:'O'},{l:'Cierre Periódico',t:'O'}]}
+  ]},
+  {key:'cxc',label:'Cuentas por Cobrar',icon:'💰',color:'#c44d00',badge:'$42k',badgeType:'r',menu:[
+    {l:C,t:'M',c:[{l:'Tipos de Documento',t:'O'},{l:'Formas de Pago',t:'O'},{l:'Plazos de Pago',t:'O'},{l:'Tarjetas de Crédito',t:'O'},{l:'Grupos Contables',t:'O'},{l:'Cobradores',t:'O'}]},
+    {l:'Retenciones Electrónicas',t:'M',c:[{l:'Ingreso de Retenciones',t:'O'},{l:'Carga XML',t:'O'},{l:'Procesar Retenciones',t:'O'},{l:'Aprobación Retenciones',t:'O'},{l:'Reporte de Retenciones',t:'O'}]},
+    {l:'Cobros',t:'M',c:[{l:'Entrada de Movimientos',t:'O'},{l:'Ingreso de Cobro',t:'O'},{l:'Cobro Factura al Contado',t:'O'},{l:'Ingreso Otros Recibos',t:'O'},{l:'Anular Recibo de Cobro',t:'O'},{l:'Cobros Masivos',t:'O'}]},
+    {l:'Notas de Crédito en Valor',t:'M',c:[{l:'Parametrización',t:'O'},{l:'Generación / Aprobación / Emisión',t:'O'},{l:'Envío NC a Nómina',t:'O'}]},
+    {l:'Saldos y Ajustes',t:'M',c:[{l:'Aplicación de Saldos a Favor',t:'O'},{l:'Reasignación de Recibos',t:'O'},{l:'Saldos Menores por Ajustar',t:'O'},{l:'Actualización de Movimientos',t:'O'},{l:'Anulación de Documentos',t:'O'}]},
+    {l:'Cheques',t:'M',c:[{l:'Cheques Devueltos',t:'O'},{l:'Cheques Postfechados',t:'O'},{l:'Confirmación de Cobros',t:'O'}]},
+    {l:'Comisiones CxC',t:'M',c:[{l:'Generación de Comisiones',t:'O'},{l:'Comisiones Vendedores',t:'O'},{l:'Comisiones Cobradores',t:'O'},{l:'Traspaso a Nómina',t:'O'}]},
+    {l:'Revisión de Cupos de Crédito',t:'M',c:[{l:'Porcentajes a Aplicar',t:'O'},{l:'Revisión de Cupos',t:'O'},{l:'Consulta Cupos Reajustados',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Estado de Cuenta',t:'O'},{l:'Estado de Cuenta por Corporación',t:'O'},{l:'Historial de Documentos',t:'O'},{l:'Consulta de Cobros',t:'O'},{l:'Documentos Vencidos',t:'O'},{l:'Cartera Vencida',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Antigüedad de Saldos',t:'O'},{l:'Proyección de Pagos',t:'O'},{l:'Vencimiento Total',t:'O'},{l:'Cobranzas por Vendedor',t:'O'},{l:'Estado de Cuenta Histórico',t:'O'}]},
+    {l:'Cierre de Día — CxC',t:'M',c:[{l:'Cierre Diario',t:'O'},{l:'Revisión Contable',t:'O'},{l:'Generación Asiento Contable',t:'O'},{l:'Cierre Periódico',t:'O'}]}
+  ]},
+  {key:'cxp',label:'Cuentas por Pagar',icon:'📤',color:'#555',menu:[
+    {l:C,t:'M',c:[{l:'Proveedores',t:'O'},{l:'Clases de Proveedores',t:'O'},{l:'Tipos de Documento',t:'O'},{l:'Grupos Contables',t:'O'},{l:'Plazos y Dividendos',t:'O'},{l:'Retenciones Incluidas',t:'O'},{l:'Formularios',t:'O'}]},
+    {l:'Ingreso y Proceso de Documentos',t:'M',c:[{l:'Entrada de Movimientos',t:'O'},{l:'Actualización de Movimientos',t:'O'},{l:'Corrección de Documentos',t:'O'},{l:'Anulación de Documentos',t:'O'}]},
+    {l:'Retenciones',t:'M',c:[{l:'Retenciones',t:'O'},{l:'Impresión de Retenciones',t:'O'},{l:'Anulación de Retenciones',t:'O'},{l:'Doc. Electrónicos — Retenciones',t:'O'}]},
+    {l:'Gastos Especiales',t:'M',c:[{l:'Gastos Tarjeta Crédito',t:'O'},{l:'Gastos de Viajes',t:'O'},{l:'Gastos de Publicidad',t:'O'},{l:'Envío a Nómina',t:'O'}]},
+    {l:'Detalle de Pago',t:'M',c:[{l:'Generación Documentos por Pagar',t:'O'},{l:'Selección de Documentos',t:'O'},{l:'Generación Detalle de Pago',t:'O'}]},
+    {l:'Movimientos Meses Cerrados',t:'M',c:[{l:'Entrada — Meses Cerrados',t:'O'},{l:'Actualización — Meses Cerrados',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Estado de Cuenta por Proveedor',t:'O'},{l:'Historial de Documentos',t:'O'},{l:'Consulta de Proveedores',t:'O'},{l:'CxP Vencimientos',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Facturas a Pagar',t:'O'},{l:'Facturas Vencidas',t:'O'},{l:'Flujo de Pago',t:'O'},{l:'Antigüedad de Saldos',t:'O'},{l:'Listado de Retenciones',t:'O'}]},
+    {l:'Cierre de Día — CxP',t:'M',c:[{l:'Cierre Diario',t:'O'},{l:'Revisión Contable',t:'O'},{l:'Generación Asiento Contable',t:'O'},{l:'Cierre Mensual',t:'O'}]}
+  ]},
+  {key:'contabilidad',label:'Contabilidad General',icon:'📒',color:'#1565a8',menu:[
+    {l:C,t:'M',c:[{l:'Catálogo de Cuentas',t:'O'},{l:'Catálogo de Diarios',t:'O'},{l:'Centro de Costos',t:'O'},{l:'Tipos de Cambio',t:'O'},{l:'Asientos Fijos',t:'O'},{l:'Calendarios de Procesos',t:'O'}]},
+    {l:'Asientos Contables',t:'M',c:[{l:'Asiento de Apertura',t:'O'},{l:'Entrada de Movimientos',t:'O'},{l:'Aprobación de Asientos',t:'O'},{l:'Emisión del Comprobante',t:'O'},{l:'Mayorización de Asientos',t:'O'},{l:'Desmayorización',t:'O'},{l:'Anulación de Asiento',t:'O'}]},
+    {l:'Presupuesto',t:'M',c:[{l:'Entrada de Presupuesto',t:'O'},{l:'Aprobación',t:'O'},{l:'Reasignación',t:'O'},{l:'Acumulación',t:'O'}]},
+    {l:'Otros Meses',t:'M',c:[{l:'Entrada Movimientos Otros Meses',t:'O'},{l:'Mayorización Otros Meses',t:'O'}]},
+    {l:'Generador de EEFF',t:'M',c:[{l:'Estructura de EEFF',t:'O'},{l:'Emisión Estados Financieros',t:'O'},{l:'Catálogo de EEFF',t:'O'}]},
+    {l:'Cierres',t:'M',c:[{l:'Diferencial Cambiario',t:'O'},{l:'Distribución de Costos',t:'O'},{l:'Cierre Mensual',t:'O'},{l:'Libro de Compras',t:'O'},{l:'Libro de Ventas',t:'O'},{l:'Libro Diario',t:'O'},{l:'Libro Mayor',t:'O'},{l:'Cierre Anual',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Consulta de Saldos',t:'O'},{l:'Consulta de Movimientos',t:'O'},{l:'Movimientos por Centro de Costo',t:'O'},{l:'Impuestos por Tercero',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Balance de Comprobación',t:'O'},{l:'Balance de Situación',t:'O'},{l:'Estado de Pérdidas y Ganancias',t:'O'},{l:'Mayor Auxiliar por Mes',t:'O'},{l:'Presupuesto vs Real',t:'O'}]}
+  ]},
+  {key:'bancos',label:'Bancos y Conciliaciones',icon:'🏦',color:'#0d47a1',menu:[
+    {l:C,t:'M',c:[{l:'Bancos',t:'O'},{l:'Cuentas Bancarias',t:'O'},{l:'Tipos de Documento',t:'O'},{l:'Formularios',t:'O'}]},
+    {l:'Emisión y Gestión de Pagos',t:'M',c:[{l:'Pagos Fijos',t:'O'},{l:'Solicitud Cheques / Transferencias',t:'O'},{l:'Emisión de Cheques',t:'O'},{l:'Reimpresión de Cheques',t:'O'},{l:'Actualización de Cheques',t:'O'},{l:'Entrega y Devolución de Cheques',t:'O'}]},
+    {l:'Otros Movimientos',t:'M',c:[{l:'Entrada de Otros Movimientos',t:'O'},{l:'Actualización',t:'O'},{l:'Carga Masiva',t:'O'},{l:'Traslados de Fondos',t:'O'},{l:'Anulación',t:'O'}]},
+    {l:'Cheques Caducados',t:'M',c:[{l:'Antigüedad en Circulación',t:'O'},{l:'Caducación de Cheques',t:'O'},{l:'Reporte de Cheques Caducados',t:'O'}]},
+    {l:'Retenciones ISD',t:'M',c:[{l:'Revisión Carga Masiva ISD',t:'O'},{l:'Actualización Retención ISD',t:'O'},{l:'Vincular ISD con Transferencia',t:'O'}]},
+    {l:'Conciliación Bancaria',t:'M',c:[{l:'Entrada del Extracto Bancario',t:'O'},{l:'Carga del Extracto',t:'O'},{l:'Cálculo de la Conciliación',t:'O'},{l:'Resumen de la Conciliación',t:'O'},{l:'Reversión de Conciliación',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Consulta de Cheques',t:'O'},{l:'Consulta de Transferencias',t:'O'},{l:'Saldos Consolidados por Banco',t:'O'},{l:'Saldos por Cuenta',t:'O'},{l:'Histórico de Conciliación',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Informe Diario Consolidado',t:'O'},{l:'Libro de Bancos',t:'O'},{l:'Libro de Cheques',t:'O'},{l:'Comprobante de Egreso',t:'O'},{l:'Movimiento Mensual',t:'O'}]},
+    {l:'Cierres',t:'M',c:[{l:'Cierre Diario',t:'O'},{l:'Generación Asiento Contable',t:'O'},{l:'Cierre Mensual',t:'O'}]}
+  ]},
+  {key:'activos',label:'Activos Fijos',icon:'🏗',color:'#37474f',menu:[
+    {l:C,t:'M',c:[{l:'Tipos de Activo',t:'O'},{l:'Grupos y Subgrupos',t:'O'},{l:'Marcas de Activos',t:'O'},{l:'Ubicaciones',t:'O'},{l:'Custodios Responsables',t:'O'}]},
+    {l:'Procesos de Activos',t:'M',c:[{l:'Creación de Activos',t:'O'},{l:'Actualización de Datos',t:'O'},{l:'Generar Transacción por Compra',t:'O'},{l:'Movimientos de Activos',t:'O'},{l:'Cálculo de Depreciación',t:'O'},{l:'Revalorización Automática',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Consulta de Activos Fijos',t:'O'},{l:'Activos por Fecha de Compra',t:'O'},{l:'Consulta de Depreciación',t:'O'},{l:'Historial de Movimientos',t:'O'},{l:'Activos Totalmente Depreciados',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Depreciación por Código',t:'O'},{l:'Depreciación por Departamento',t:'O'},{l:'Depreciación por Centro de Costo',t:'O'},{l:'Acta de Entrega',t:'O'},{l:'Acta de Baja',t:'O'},{l:'Listado de Activos',t:'O'}]},
+    {l:'Cierres',t:'M',c:[{l:'Revisión de Depreciación',t:'O'},{l:'Generación Asiento de Depreciación',t:'O'},{l:'Asiento de Movimientos',t:'O'},{l:'Cierre Mensual',t:'O'}]}
+  ]}
+]},
+{key:'administrativo',label:'Gestión Administrativa',icon:'🏛',color:'#4e342e',desc:'Caja Chica · Requisiciones · Presupuesto · BI',procs:[
+  {key:'fondo_fijo',label:'Fondo Fijo / Caja Chica',icon:'💵',color:'#5d4037',menu:[
+    {l:C,t:'M',c:[{l:'Apertura de Caja Chica',t:'O'},{l:'Modificación de Monto',t:'O'},{l:'Clausura de Caja Chica',t:'O'},{l:'Tipos de Gasto',t:'O'},{l:'Personas Autorizadas',t:'O'},{l:'Proveedores',t:'O'}]},
+    {l:'Procesos',t:'M',c:[{l:'Entrada de Documentos',t:'O'},{l:'Actualización de Documentos',t:'O'},{l:'Autorización de Egresos',t:'O'},{l:'Registro de Comprobantes',t:'O'},{l:'Liquidación de Comprobantes',t:'O'},{l:'Reversión / Anulación',t:'O'},{l:'Reintegro de Caja',t:'O'},{l:'Retenciones',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Saldos por Caja',t:'O'},{l:'Comprobantes',t:'O'},{l:'Total de Movimientos por Mes',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Egresos por Fechas',t:'O'},{l:'Comprobantes Pendientes de Liquidar',t:'O'},{l:'Detalle de Movimientos por Mes',t:'O'}]},
+    {l:'Cierres',t:'M',c:[{l:'Revisión Contable',t:'O'},{l:'Generación Asiento Contable',t:'O'},{l:'Cierre Mensual',t:'O'}]}
+  ]},
+  {key:'requisiciones',label:'Requisiciones y Solicitudes',icon:'📋',color:'#4e342e',menu:[
+    {l:C,t:'M',c:[{l:'Tipos de Requisición',t:'O'},{l:'Departamentos Solicitantes',t:'O'},{l:'Parámetros de Aprobación',t:'O'}]},
+    {l:'Solicitudes de Compra Internas',t:'M',c:[{l:'Nueva Solicitud de Compra',t:'O'},{l:'Solicitudes Pendientes',t:'O'},{l:'Aprobación de Solicitudes',t:'O'},{l:'Anulación de Solicitudes',t:'O'}]},
+    {l:'Requisiciones de Cheques',t:'M',c:[{l:'Solicitud de Cheque',t:'O'},{l:'Aprobación',t:'O'},{l:'Envío al Banco',t:'O'},{l:'Consulta de Solicitudes',t:'O'}]},
+    {l:'Requisiciones de Suministros',t:'M',c:[{l:'Catálogo de Suministros',t:'O'},{l:'Solicitud de Requisición',t:'O'},{l:'Aprobación',t:'O'},{l:'Despacho de Requisiciones',t:'O'}]},
+    {l:'Consumo Interno',t:'M',c:[{l:'Solicitud de Consumo Interno',t:'O'},{l:'Autorización',t:'O'},{l:'Actualizar Consumo',t:'O'},{l:'Devolución',t:'O'}]}
+  ]},
+  {key:'presupuesto_bi',label:'Presupuesto y BI',icon:'📊',color:'#1a237e',menu:[
+    {l:C,t:'M',c:[{l:'Estructura de Presupuesto',t:'O'},{l:'Centros de Costo',t:'O'},{l:'Parámetros BI',t:'O'}]},
+    {l:'Presupuesto Operativo',t:'M',c:[{l:'Ingreso de Presupuesto',t:'O'},{l:'Aprobación',t:'O'},{l:'Reasignación',t:'O'},{l:'Consulta de Presupuesto',t:'O'}]},
+    {l:'Dashboards Ejecutivos',t:'M',c:[{l:'Dashboard Gerencial General',t:'O'},{l:'Dashboard de Ventas',t:'O'},{l:'Dashboard Financiero',t:'O'},{l:'Dashboard de Inventario',t:'O'},{l:'Dashboard de RRHH',t:'O'}]},
+    {l:'Reportes Gerenciales',t:'M',c:[{l:'Presupuesto Mensual',t:'O'},{l:'Presupuesto Anual',t:'O'},{l:'Presupuesto vs Real',t:'O'},{l:'Estado de Resultados',t:'O'},{l:'Flujo de Caja Proyectado',t:'O'},{l:'KPIs',t:'O'}]}
+  ]}
+]},
+{key:'suministros',label:'Cadena de Suministro',icon:'🔗',color:'#2e7d32',desc:'Compras · Inventario · Importaciones · Distribución',procs:[
+  {key:'compras',label:'Compras',icon:'🛒',color:'#2e7d32',menu:[
+    {l:C,t:'M',c:[{l:'Compañías',t:'O'},{l:'Prioridades',t:'O'},{l:'Monedas',t:'O'},{l:'Productos y Servicios',t:'O'},{l:'Formularios',t:'O'}]},
+    {l:'Solicitudes de Bienes y Servicios',t:'M',c:[{l:'Generación por Reorden',t:'O'},{l:'Mantenimiento de Solicitudes',t:'O'},{l:'Solicitudes Pendientes',t:'O'}]},
+    {l:'Cotizaciones',t:'M',c:[{l:'Selección de Proveedores',t:'O'},{l:'Generación de Cotizaciones',t:'O'},{l:'Adjudicación',t:'O'},{l:'Listado de Cotizaciones Pendientes',t:'O'}]},
+    {l:'Órdenes de Compra',t:'M',c:[{l:'Generación de Órdenes',t:'O'},{l:'Mantenimiento',t:'O'},{l:'Emisión de Órdenes',t:'O'},{l:'Ingreso de Facturas',t:'O'},{l:'Recepción de Artículos',t:'O'}]},
+    {l:'Pedidos Especiales',t:'M',c:[{l:'Orden de Compra Especial',t:'O'},{l:'Facturas Pedidos Especiales',t:'O'},{l:'Costeo',t:'O'}]},
+    {l:'Suministros',t:'M',c:[{l:'Orden de Compra Suministros',t:'O'},{l:'Recepción de Suministros',t:'O'},{l:'Confirmación',t:'O'}]},
+    {l:'Cierres y Anulaciones',t:'M',c:[{l:'Cierre de Solicitudes',t:'O'},{l:'Anulación de Solicitudes',t:'O'},{l:'Cierre de Órdenes',t:'O'},{l:'Anulación de Órdenes',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Consulta de Solicitudes',t:'O'},{l:'Consulta de Órdenes de Compra',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Proveedores por Productos',t:'O'},{l:'Análisis de Retrasos',t:'O'},{l:'Solicitudes Vencidas',t:'O'},{l:'Órdenes Vencidas',t:'O'}]}
+  ]},
+  {key:'inventario',label:'Inventario',icon:'📦',color:'#1b5e20',menu:[
+    {l:C,t:'M',c:[{l:'Bodegas',t:'O'},{l:'Grupos de Artículos',t:'O'},{l:'Líneas y Sublíneas',t:'O'},{l:'Unidades de Medida',t:'O'},{l:'Catálogo de Artículos',t:'O'},{l:'Tipos de Documento',t:'O'}]},
+    {l:'Movimientos',t:'M',c:[{l:'Entrada de Compras',t:'O'},{l:'Devolución de Compras',t:'O'},{l:'Actualización de Movimientos',t:'O'},{l:'Reporte Movimientos Pendientes',t:'O'}]},
+    {l:'Transferencias',t:'M',c:[{l:'Solicitud de Transferencias',t:'O'},{l:'Aprobación y Consolidación',t:'O'},{l:'Transferencia Interbodega',t:'O'},{l:'Actualización',t:'O'}]},
+    {l:'Consignaciones',t:'M',c:[{l:'Aprobación de Consignación',t:'O'},{l:'Inventario Físico Consignación',t:'O'},{l:'Devolución de Consignaciones',t:'O'}]},
+    {l:'Obsequios y Donaciones',t:'M',c:[{l:'Solicitud',t:'O'},{l:'Autorización',t:'O'},{l:'Salida de Artículos',t:'O'}]},
+    {l:'Ajuste de Costos',t:'M',c:[{l:'Ajuste Automático',t:'O'},{l:'Selección de Artículos',t:'O'},{l:'Actualización de Ajustes',t:'O'}]},
+    {l:'Toma Física',t:'M',c:[{l:'Lista para Anotación',t:'O'},{l:'Reporte Comparativo',t:'O'},{l:'Ajuste Físico Teórico',t:'O'},{l:'Inventario Anual',t:'O'}]},
+    {l:'Reclamo a Proveedores',t:'M',c:[{l:'Solicitud de Reclamo',t:'O'},{l:'Mantenimiento',t:'O'},{l:'Acta de Destrucción',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Historial de Documentos',t:'O'},{l:'Movimientos con Costo',t:'O'},{l:'Consulta General de Artículos',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Movimientos por Producto',t:'O'},{l:'Listado de Existencias',t:'O'},{l:'Kardex de Movimientos',t:'O'},{l:'Inventario Valorizado',t:'O'},{l:'Artículos sin Movimientos',t:'O'}]},
+    {l:'Cierre de Día — Bodega',t:'M',c:[{l:'Cierre Diario',t:'O'},{l:'Revisión Contable',t:'O'},{l:'Generación Asiento Contable',t:'O'},{l:'Recosteo Manual',t:'O'},{l:'Cierre Periódico',t:'O'}]}
+  ]},
+  {key:'importaciones',label:'Importaciones',icon:'🌐',color:'#00695c',menu:[
+    {l:C,t:'M',c:[{l:'Tipos de Factura y Contenedores',t:'O'},{l:'Embarcadores y Agencias',t:'O'},{l:'Códigos Arancelarios',t:'O'},{l:'Términos de Negociación',t:'O'},{l:'Modelo de Inventario',t:'O'}]},
+    {l:'Modelo de Inventario (Sugerido)',t:'M',c:[{l:'Generación de Variables',t:'O'},{l:'Determinación de la Demanda',t:'O'},{l:'Sugerido de Pedidos',t:'O'},{l:'Carga de Unidades',t:'O'}]},
+    {l:'Pedidos de Importación',t:'M',c:[{l:'Ingreso de Pedidos',t:'O'},{l:'Aprobación de Pedidos',t:'O'},{l:'Consulta de Pedidos',t:'O'},{l:'Anulación',t:'O'}]},
+    {l:'Proformas y Notas de Pedido',t:'M',c:[{l:'Proforma',t:'O'},{l:'Aprobación de Proformas',t:'O'},{l:'Notas de Pedido',t:'O'},{l:'Aprobación de Notas',t:'O'}]},
+    {l:'Facturas de Proveedor',t:'M',c:[{l:'Ingreso de Facturas',t:'O'},{l:'Aprobación de Facturas',t:'O'},{l:'Emisión del DAV',t:'O'}]},
+    {l:'Impuestos Aduanales',t:'M',c:[{l:'Declaración de Impuestos',t:'O'},{l:'Reporte de Declaración',t:'O'},{l:'Provisión ISD',t:'O'}]},
+    {l:'Nacionalización',t:'M',c:[{l:'Ingreso Costos de Nacionalización',t:'O'},{l:'Conteo de Mercadería',t:'O'},{l:'Recepción en Bodega',t:'O'},{l:'Costear Importación',t:'O'},{l:'Aprobación del Trámite',t:'O'}]},
+    {l:'Seguimiento',t:'M',c:[{l:'Seguimiento de Importación',t:'O'},{l:'Pedidos Pendientes de Llegar',t:'O'},{l:'Fechas Estimadas',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Histórico Trámite de Importación',t:'O'},{l:'Consulta General',t:'O'},{l:'Gastos de Importación',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Gastos por Embarque',t:'O'},{l:'Liquidación de Importación',t:'O'},{l:'Pedidos Llegados',t:'O'},{l:'Reporte de Costeo',t:'O'}]},
+    {l:'Cierres',t:'M',c:[{l:'Cierre Mensual',t:'O'},{l:'Revisión Contable',t:'O'}]}
+  ]},
+  {key:'distribucion',label:'Distribución',icon:'🚚',color:'#33691e',menu:[
+    {l:C,t:'M',c:[{l:'Vendedores Ruteros',t:'O'},{l:'Bodegas Vendedor',t:'O'},{l:'Grupos de Ruta',t:'O'},{l:'Rutas',t:'O'},{l:'Asignación de Clientes a Rutas',t:'O'}]},
+    {l:'Manifiestos de Carga',t:'M',c:[{l:'Ingreso de Manifiestos',t:'O'},{l:'Manifiestos Pendientes',t:'O'},{l:'Despacho de Manifiestos',t:'O'},{l:'Actualización',t:'O'}]},
+    {l:'Liquidación',t:'M',c:[{l:'Conteo Físico',t:'O'},{l:'Entrada de Documentos',t:'O'},{l:'Reporte Tesorería',t:'O'},{l:'Facturas por Liquidación',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Histórico de Liquidación',t:'O'}]},
+    {l:'Cierre de Día — Distribución',t:'M',c:[{l:'Resumen de Liquidación',t:'O'},{l:'Liquidación de Montos',t:'O'},{l:'Liquidación de Unidades',t:'O'}]}
+  ]}
+]},
+{key:'rrhh',label:'Recursos Humanos',icon:'👥',color:'#37474f',desc:'Empleados · Nómina · IESS · Capacitación',procs:[
+  {key:'rrhh_gestion',label:'Gestión de Personal',icon:'👤',color:'#455a64',menu:[
+    {l:C,t:'M',c:[{l:'Estructura Departamental',t:'O'},{l:'Cargos y Puestos',t:'O'},{l:'Tipos de Empleados',t:'O'},{l:'Días Feriados',t:'O'}]},
+    {l:'Reclutamiento',t:'M',c:[{l:'Requerimiento de Personal',t:'O'},{l:'Solicitudes de Empleo',t:'O'},{l:'Entrevista de Solicitantes',t:'O'},{l:'Contratación de Empleados',t:'O'}]},
+    {l:'Maestro de Empleados',t:'M',c:[{l:'Maestro de Empleados',t:'O'},{l:'Ficha de Empleados',t:'O'},{l:'Familiares',t:'O'},{l:'Expedientes',t:'O'},{l:'Evaluación',t:'O'},{l:'Gastos Personales',t:'O'}]},
+    {l:'Acciones de Personal',t:'M',c:[{l:'Tipos de Acciones',t:'O'},{l:'Ingreso de Acciones',t:'O'},{l:'Emisión',t:'O'},{l:'Historial de Acciones',t:'O'}]},
+    {l:'Capacitación',t:'M',c:[{l:'Tipos de Cursos',t:'O'},{l:'Seminarios y Cursos',t:'O'},{l:'Becas de Empleados',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Empleados por Departamento',t:'O'},{l:'Cumpleaños Empleados',t:'O'},{l:'Tiempo de Servicio',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Básico de Empleados',t:'O'},{l:'Libro de Vacaciones',t:'O'},{l:'Cartas de Personal',t:'O'},{l:'Evaluación Empleados',t:'O'}]}
+  ]},
+  {key:'nomina',label:'Nómina',icon:'💼',color:'#37474f',menu:[
+    {l:C,t:'M',c:[{l:'Compañías y Cuentas Bancarias',t:'O'},{l:'Horarios',t:'O'},{l:'Códigos de Nómina',t:'O'},{l:'Ingresos',t:'O'},{l:'Deducciones',t:'O'},{l:'Tabla de Impuesto a la Renta',t:'O'},{l:'Parámetros del Sistema',t:'O'}]},
+    {l:'Tarjetas y Asistencia',t:'M',c:[{l:'Carga de Marcas',t:'O'},{l:'Entrada de Tarjetas',t:'O'},{l:'Generar Ingresos de Marcas',t:'O'},{l:'Registro de Ausencias',t:'O'}]},
+    {l:'Movimientos de Nómina',t:'M',c:[{l:'Entrada de Ingresos',t:'O'},{l:'Entrada de Deducciones',t:'O'},{l:'Entrada de Préstamos',t:'O'},{l:'Entrada de Anticipos',t:'O'},{l:'Generación Automática',t:'O'}]},
+    {l:'Cálculos y Liquidaciones',t:'M',c:[{l:'Cálculo de Nómina',t:'O'},{l:'Décimo Tercero',t:'O'},{l:'Décimo Cuarto',t:'O'},{l:'Fondos de Reserva',t:'O'},{l:'Liquidación de Vacaciones',t:'O'},{l:'Formulario 107',t:'O'},{l:'Cálculo de Utilidades',t:'O'}]},
+    {l:'Liquidación de Empleado',t:'M',c:[{l:'Generar Ingresos de Liquidación',t:'O'},{l:'Cálculo de Liquidación',t:'O'},{l:'Reporte de Liquidación',t:'O'}]},
+    {l:'Cheques y Transferencias de Sueldos',t:'M',c:[{l:'Preparación de Cheques',t:'O'},{l:'Emisión de Cheques',t:'O'},{l:'Archivo para el Banco',t:'O'},{l:'Traslado a Tesorería',t:'O'}]},
+    {l:'IESS y Ministerio',t:'M',c:[{l:'Historia Laboral',t:'O'},{l:'Planilla IESS',t:'O'},{l:'Archivos MRL',t:'O'}]},
+    {l:'Consultas',t:'M',c:[{l:'Nóminas en Proceso',t:'O'},{l:'Nóminas Históricas',t:'O'},{l:'Detalle de Préstamos',t:'O'},{l:'Vacaciones Pendientes',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Reporte de Nómina',t:'O'},{l:'Nómina Resumen',t:'O'},{l:'Deducciones',t:'O'},{l:'Ingresos',t:'O'},{l:'Libro de Salarios',t:'O'}]},
+    {l:'Cierres',t:'M',c:[{l:'Asiento de Nómina',t:'O'},{l:'Cierre de Nómina',t:'O'},{l:'Reporte Asiento Contable',t:'O'}]}
+  ]}
+]},
+{key:'tributario',label:'Tributario / SRI',icon:'🧾',color:'#b71c1c',desc:'Documentos electrónicos · Anexos · Declaraciones',procs:[
+  {key:'sri',label:'SRI — Tributario',icon:'📋',color:'#c62828',menu:[
+    {l:C,t:'M',c:[{l:'Registro de Compañías',t:'O'},{l:'Tipos de Transacción',t:'O'},{l:'% IVA',t:'O'},{l:'% Retención IVA',t:'O'},{l:'Concepto Retención en la Fuente',t:'O'},{l:'Tipos de Comprobantes',t:'O'},{l:'Sustento del Comprobante',t:'O'}]},
+    {l:'Procesos',t:'M',c:[{l:'Elabora REOC',t:'O'},{l:'Elabora Anexo Transaccional (ATS)',t:'O'},{l:'Genera XML — Nuevo ATS',t:'O'},{l:'Genera XML — REOC',t:'O'},{l:'Modificación de Documentos',t:'O'},{l:'Ingreso Documentos Manuales',t:'O'}]},
+    {l:'Cierres',t:'M',c:[{l:'Cierre de Mes SRI',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Retenciones en la Fuente',t:'O'},{l:'Compras',t:'O'},{l:'Compras con RISE',t:'O'},{l:'Reporte Dinardap',t:'O'}]}
+  ]}
+]},
+{key:'plataforma',label:'Plataforma / Sistema',icon:'⚙',color:'#1a1a1a',desc:'Configuración global · Seguridad · Parámetros',procs:[
+  {key:'config_global',label:'Configuración Global',icon:'⚙',color:'#1a1a1a',menu:[
+    {l:'Generales',t:'M',c:[{l:'Tipos de Identificadores',t:'O'},{l:'Condiciones Tributarias',t:'O'},{l:'Países / Provincias / Cantones',t:'O'},{l:'Bancos',t:'O'},{l:'Sector y Actividad Económica',t:'O'},{l:'Terceros',t:'O'},{l:'Corporaciones',t:'O'}]},
+    {l:'Por Compañía',t:'M',c:[{l:'Impuestos y Grupos',t:'O'},{l:'Relaciones Tributarias',t:'O'},{l:'Regulaciones de Gobierno',t:'O'}]}
+  ]},
+  {key:'seguridad',label:'Seguridad y Accesos',icon:'🔐',color:'#333',menu:[
+    {l:C,t:'M',c:[{l:'Módulos',t:'O'},{l:'Usuarios',t:'O'},{l:'Definición de Roles',t:'O'},{l:'Opciones de Menú',t:'O'}]},
+    {l:'Permisos',t:'M',c:[{l:'Asignación de Roles a Menú',t:'O'},{l:'Asignación de Roles a Usuarios',t:'O'}]},
+    {l:'Auditoría',t:'M',c:[{l:'Log de Accesos',t:'O'},{l:'Auditoría de Cambios',t:'O'}]},
+    {l:'Reportes',t:'M',c:[{l:'Matriz Menú vs Roles',t:'O'},{l:'Usuarios con Roles',t:'O'}]}
+  ]}
+]}
+];
+
+// DATOS MAESTROS DE EMPRESAS (única fuente de verdad)
+const MASTER_COMPANIES = {
+    'EP': { id: 'EP', name: 'L.HENRIQUES & CIA S.A.', ruc: '0990331928001', color: '#e85d04' },
+    'FN': { id: 'FN', name: 'NUTRIHOME S.A.', ruc: '0992600950001', color: '#555' },
+    'MS': { id: 'MS', name: 'PROHOME S.A.', ruc: '0992635622001', color: '#2e7d32' },
+    'CI': { id: 'CI', name: 'MASCORP S.A.', ruc: '0991174192001', color: '#8d292b' }
+};
+
+// MAPEO DE EMPRESAS POR USUARIO (qué empresas puede ver cada usuario)
+const USER_COMPANIES = {
+    'ccalderon': ['EP', 'FN', 'MS', 'CI'],
+    'scruz': ['FN'],
+    'iquinde': ['EP', 'FN']
+};
+
+const PROCS={};
+DOMAINS.forEach(d=>d.procs.forEach(p=>{p.domain=d.label;p.domKey=d.key;p.domColor=d.color;PROCS[p.key]=p;}));
+let curProc=null, curSection=null;
+
+/* ════════════════════════════════════════════
+   USER SESSION & PERMISSIONS
+════════════════════════════════════════════ */
+
+const USER_PROFILES = {
+    'ccalderon': { role: 'admin', name: 'César Calderón', short: 'César', modules: ['comercial', 'financiero', 'administrativo', 'suministros', 'tributario', 'rrhh', 'plataforma'] },
+    'scruz': { role: 'comercial', name: 'Steven Cruz', short: 'Santiago', modules: ['comercial', 'suministros'] },
+    'iquinde': { role: 'financiero', name: 'Isabel Quinde', short: 'Isabel', modules: ['financiero', 'tributario', 'administrativo'] }
+};
+
+const USER_OPTION_ACCESS = {
+    'ccalderon': { 
+        'comercial': ['all'], 
+        'financiero': ['all'], 
+        'suministros': ['all'], 
+        'tributario': ['all'], 
+        'administrativo': ['all'],
+        'rrhh': ['all'],
+        'plataforma': ['all']
+    },
+    'scruz': { 
+        'comercial': ['Toma de Pedidos', 'Clientes', 'Consultas'], 
+        'suministros': ['Inventario'] 
+    },
+    'iquinde': { 
+        'financiero': ['Facturación', 'Cuentas por Cobrar', 'Cuentas por Pagar', 'Bancos y Conciliaciones'], 
+        'tributario': ['SRI — Tributario'], 
+        'administrativo': ['Nómina'] 
+    }
+};
+
+// KPIs maestros (definidos una sola vez)
+const MASTER_KPIS = {
+    'ventas_mes': { label: 'Ventas del mes', value: '$284k', change: '▲ 12.4%', changeType: 'up', proc: 'facturacion' },
+    'cxc_vencida': { label: 'CxC vencida', value: '$42k', change: '3 facturas', changeType: 'dn', proc: 'cxc' },
+    'cxp_pendiente': { label: 'CxP pendiente', value: '$128k', change: '9 docs', changeType: 'wa', proc: 'cxp' },
+    'saldo_bancos': { label: 'Saldo bancos', value: '$186k', change: '3 cuentas', changeType: 'neu', proc: 'bancos' },
+    'sri_pendiente': { label: 'Sin autorizar SRI', value: '4', change: 'Acción requerida', changeType: 'wa', proc: 'sri' },
+    'stock_critico': { label: 'Stock crítico', value: '7', change: 'Reorden urgente', changeType: 'dn', proc: 'inventario' },
+    'pedidos_pendientes': { label: 'Pedidos pendientes', value: '23', change: 'Pendiente despacho', changeType: 'wa', proc: 'pedidos' },
+    'clientes_nuevos': { label: 'Clientes nuevos', value: '+12', change: 'Este mes', changeType: 'up', proc: 'clientes' },
+    'nomina_estimada': { label: 'Nómina estimada', value: '$48k', change: 'Pendiente', changeType: 'wa', proc: 'nomina' }
+};
+
+// KPIs por rol (solo se definen los IDs, no se repite la estructura)
+const ROLE_KPIS = {
+    'admin': ['ventas_mes', 'cxc_vencida', 'cxp_pendiente', 'saldo_bancos', 'sri_pendiente', 'stock_critico', 'nomina_estimada'],
+    'comercial': ['ventas_mes', 'pedidos_pendientes', 'clientes_nuevos', 'stock_critico'],
+    'financiero': ['cxc_vencida', 'cxp_pendiente', 'saldo_bancos', 'sri_pendiente']
+};
+
+let currentUserData = null;
+
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get('user');
+    const companyId = params.get('company');
+    const companyName = params.get('companyName');
+    const ruc = params.get('ruc');
+    const profile = USER_PROFILES[username?.toLowerCase()];
+    
+    if (profile) {
+        return {
+            username: username,
+            name: profile.name,
+            short: profile.short,
+            role: profile.role,
+            modules: profile.modules,
+            companyId: companyId || 'EP',
+            companyName: companyName || 'L.HENRIQUES & CIA S.A.',
+            ruc: ruc || '0990331928001'
+        };
+    }
+    return {
+        username: username || 'usuario',
+        name: username || 'Usuario',
+        short: (username || 'US').substring(0, 2).toUpperCase(),
+        role: 'comercial',
+        modules: ['comercial'],
+        companyId: companyId || 'EP',
+        companyName: companyName || 'L.HENRIQUES & CIA S.A.',
+        ruc: ruc || '0990331928001'
+    };
+}
+
+function getFilteredDomains() {
+    if (!currentUserData) return DOMAINS;
+    return DOMAINS.filter(domain => currentUserData.modules.includes(domain.key));
+}
+
+function hasAccessToOption(procKey, optionLabel) {
+    if (!currentUserData) return true;
+    if (currentUserData.role === 'admin') return true;
+    const userAccess = USER_OPTION_ACCESS[currentUserData.username];
+    if (!userAccess) return false;
+    const proc = PROCS[procKey];
+    if (!proc) return false;
+    const allowedOptions = userAccess[proc.domKey];
+    if (!allowedOptions) return false;
+    if (allowedOptions.includes('all')) return true;
+    return allowedOptions.includes(optionLabel);
+}
+
+function buildKPIs() {
+    const kpisContainer = document.getElementById('hero-kpis');
+    if (!kpisContainer) return;
+    kpisContainer.innerHTML = '';
+    
+    // Obtener los IDs de KPIs según el rol
+    const kpiIds = ROLE_KPIS[currentUserData?.role] || ROLE_KPIS.admin;
+    
+    kpiIds.forEach(kpiId => {
+        const kpi = MASTER_KPIS[kpiId];
+        if (!kpi) return;
+        
+        const kpiEl = document.createElement('div');
+        kpiEl.className = 'kpi';
+        kpiEl.onclick = () => { 
+            if (kpi.proc && PROCS[kpi.proc]) openProc(kpi.proc); 
+        };
+        kpiEl.innerHTML = `
+            <div class="kpi-v">${kpi.value}</div>
+            <div class="kpi-l">${kpi.label}</div>
+            <div class="kpi-d ${kpi.changeType}">${kpi.change}</div>
+        `;
+        kpisContainer.appendChild(kpiEl);
+    });
+}
+
+function updateUserUI() {
+    if (!currentUserData) return;
+    
+    // Actualizar saludo (si existe el elemento)
+    const heroGreet = document.getElementById('hero-greet');
+    if (heroGreet) heroGreet.textContent = `Bienvenido, ${currentUserData.name}`;
+    
+    // Actualizar fecha (si existe el elemento)
+    const heroDate = document.getElementById('hero-date');
+    if (heroDate) {
+        heroDate.textContent = new Date().toLocaleDateString('es-EC', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ` · ${currentUserData.companyName || 'Empresa'}`;
+    }
+    
+    // Header derecho - empresa
+    const empNm = document.getElementById('emp-nm');
+    if (empNm) empNm.textContent = currentUserData.companyName || 'Sin empresa';
+    
+    // Header derecho - rol
+    const shEmpRl = document.getElementById('sh-emp-rl');
+    if (shEmpRl) {
+        const roleText = currentUserData.role === 'admin' ? 'Administrador' : currentUserData.role === 'comercial' ? 'Comercial' : 'Financiero';
+        shEmpRl.textContent = `${currentUserData.name} · ${roleText}`;
+    }
+    
+    // Tarjeta central - nombre empresa
+    const epNm = document.getElementById('ep-nm');
+    if (epNm) epNm.textContent = currentUserData.companyName || 'Sin empresa';
+    
+    // Tarjeta central - RUC
+    const epRuc = document.getElementById('ep-ruc');
+    if (epRuc) epRuc.textContent = `RUC: ${currentUserData.ruc || 'N/A'}`;
+    
+    // Iniciales del avatar
+    const initials = currentUserData.short.substring(0, 2).toUpperCase();
+    
+    const empAv = document.getElementById('emp-av');
+    if (empAv) empAv.textContent = initials;
+    
+    const epAv = document.getElementById('ep-av');
+    if (epAv) epAv.textContent = initials;
+    
+    // Obtener color desde MASTER_COMPANIES
+    const companyData = MASTER_COMPANIES[currentUserData.companyId];
+    const avatarColor = companyData?.color || '#e85d04';
+    
+    if (empAv) empAv.style.background = avatarColor;
+    if (epAv) epAv.style.background = avatarColor;
+    
+    // Actualizar dropdown de empresas
+    updateCompanyDropdown();
+}
+
+function updateCompanyDropdown() {
+    const dropList = document.getElementById('emp-drop-list');
+    if (!dropList) return;
+    dropList.innerHTML = '';
+    
+    const authorizedIds = USER_COMPANIES[currentUserData?.username] || ['EP', 'FN', 'MS', 'CI'];
+    
+    authorizedIds.forEach(id => {
+        const co = MASTER_COMPANIES[id];
+        if (!co) return;
+        const item = document.createElement('div');
+        item.className = 'ed-item';
+        if (currentUserData?.companyId === id) item.style.background = 'rgba(232,93,4,.15)';
+        item.innerHTML = `
+            <div class="ed-av" style="background:${co.color}">${co.id}</div>
+            <div>
+                <div class="ed-nm">${co.name}</div>
+                <div class="ed-ruc">RUC: ${co.ruc}</div>
+            </div>
+            ${currentUserData?.companyId === id ? '<div class="ed-chk">✓</div>' : ''}
+        `;
+        item.onclick = () => selEmp(co.id);  // ← ahora solo pasa el ID
+        dropList.appendChild(item);
+    });
+}
+
+function selEmp(companyId) {
+    // Obtener datos de la empresa desde MASTER_COMPANIES
+    const co = MASTER_COMPANIES[companyId];
+    if (!co) return;
+    
+    // Actualizar header derecho
+    document.getElementById('emp-nm').textContent = co.name;
+    document.getElementById('emp-av').textContent = co.id;
+    document.getElementById('emp-av').style.background = co.color;
+    
+    // Actualizar tarjeta central
+    document.getElementById('ep-nm').textContent = co.name;
+    document.getElementById('ep-av').textContent = co.id;
+    document.getElementById('ep-av').style.background = co.color;
+    document.getElementById('ep-ruc').textContent = `RUC: ${co.ruc}`;
+    
+    // Actualizar currentUserData
+    currentUserData.companyId = co.id;
+    currentUserData.companyName = co.name;
+    currentUserData.ruc = co.ruc;
+    
+    // Actualizar dropdown (marcar como seleccionada)
+    const items = document.querySelectorAll('.ed-item');
+    items.forEach(item => {
+        const itemId = item.querySelector('.ed-av')?.textContent;
+        const chk = item.querySelector('.ed-chk');
+        if (itemId === co.id) {
+            item.style.background = 'rgba(232,93,4,.15)';
+            if (!chk) item.innerHTML += '<div class="ed-chk">✓</div>';
+        } else {
+            item.style.background = '';
+            if (chk) chk.remove();
+        }
+    });
+    
+    // Cerrar dropdown
+    document.getElementById('emp-drop').classList.remove('open');
+    document.querySelector('.sh-emp-btn')?.classList.remove('open');
+}
+
+function buildHome() {
+    const homeContainer = document.getElementById('v-home');
+    
+    buildKPIs();
+    const wrap = document.getElementById('domains');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    
+    const filteredDomains = getFilteredDomains();
+    if (filteredDomains.length === 0) { 
+        wrap.innerHTML = '<div style="text-align:center; padding:40px; color:rgba(255,255,255,.5);">No tienes módulos asignados.</div>'; 
+    } else {
+        filteredDomains.forEach(dom => {
+            const sec = document.createElement('div'); sec.className = 'dom-sec';
+            sec.innerHTML = `<div class="dom-hdr"><span class="dom-ic">${dom.icon}</span><span class="dom-lbl">${dom.label}</span><div class="dom-line"></div><span class="dom-desc">${dom.desc}</span></div><div class="agg" id="g-${dom.key}"></div>`;
+            wrap.appendChild(sec);
+            dom.procs.forEach(p => {
+                const c = document.createElement('div'); c.className = 'ac'; c.id = 'c-' + p.key;
+                c.innerHTML = `<div class="ac-ico" style="background:${p.color}1a;color:${p.color}">${p.icon}</div><div class="ac-lbl">${p.label}</div>`;
+                c.onclick = () => openProc(p.key);
+                sec.querySelector('.agg').appendChild(c);
+            });
+        });
+    }
+    
+    // Mostrar el contenido después de construido
+    if (homeContainer) {
+        homeContainer.classList.add('ready');
+        // Remover el loading si existe
+        const loadingEl = homeContainer.querySelector('.loading-init');
+        if (loadingEl) loadingEl.remove();
+    }
+}
+
+function showScreen(id) { document.querySelectorAll('#v-home, #v-sections, #v-detail').forEach(s => s.style.display = 'none'); document.getElementById(id).style.display = id === 'v-sections' ? 'flex' : 'block'; }
+function goHome() { curProc = null; curSection = null; document.getElementById('sh-home').classList.add('on'); document.getElementById('sh-bc').style.display = 'none'; showScreen('v-home'); }
+function goSections() { document.getElementById('bc-s2').style.display = 'none'; document.getElementById('bc-c').style.display = 'none'; showScreen('v-sections'); }
+function toggleEmp() { const btn = document.querySelector('.sh-emp-btn'); const drop = document.getElementById('emp-drop'); btn.classList.toggle('open'); drop.classList.toggle('open'); }
+function showLogout() { document.getElementById('logout-overlay').classList.add('open'); }
+function hideLogout(e) { if (!e || e.target === document.getElementById('logout-overlay')) document.getElementById('logout-overlay').classList.remove('open'); }
+//function doLogout() { window.location.href = 'https://cesacald26.github.io/MigrationApp/demoLoginv1.html'; }
+function doLogout() { window.location.href = 'https://cesacald26.github.io/MigrationApp/Version2/Loginv2.html'; }
+document.addEventListener('click', e => { if (!e.target.closest('.sh-emp-btn') && !e.target.closest('.emp-drop')) { document.getElementById('emp-drop').classList.remove('open'); document.querySelector('.sh-emp-btn')?.classList.remove('open'); } });
+
+function openProc(pk) {
+    const p = PROCS[pk]; 
+    if (!p) return;
+    curProc = pk;
+    
+    // Actualizar breadcrumb
+    document.getElementById('sh-home').classList.remove('on');
+    document.getElementById('sh-bc').style.display = 'flex';
+    document.getElementById('bc-a').textContent = p.domain;
+    document.getElementById('bc-b').textContent = p.label;
+    document.getElementById('bc-s2').style.display = 'none';
+    document.getElementById('bc-c').style.display = 'none';
+    
+    // Actualizar header de secciones
+    document.getElementById('sec-proc-ico').textContent = p.icon;
+    document.getElementById('sec-proc-ico').style.background = p.color + '1a';
+    document.getElementById('sec-proc-ico').style.color = p.color;
+    document.getElementById('sec-proc-nm').textContent = p.label;
+    document.getElementById('sec-proc-dom').textContent = p.domain;
+    
+    // 🔧 Mejorar el texto introductorio con más separación visual
+    const introText = document.getElementById('sec-intro');
+    if (introText) {
+        introText.innerHTML = `<span style="font-weight: 600;">${p.domain}</span> › <span style="font-weight: 600;">${p.label}</span> · Selecciona una sección`;
+        introText.style.marginBottom = '24px';
+        introText.style.paddingBottom = '12px';
+        introText.style.borderBottom = '1px solid var(--g2)';
+    }
+    
+    buildSectionCards(pk);
+    
+    // Cambiar vista
+    document.getElementById('v-home').style.display = 'none';
+    document.getElementById('v-sections').style.display = 'flex';
+    document.getElementById('v-detail').style.display = 'none';
+}
+
+function buildSectionCards(pk) {
+    const p = PROCS[pk]; 
+    if (!p) return;
+    const grid = document.getElementById('sec-grid'); 
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    let sectionsToShow = p.menu;
+    if (currentUserData?.role !== 'admin') {
+        const userAccess = USER_OPTION_ACCESS[currentUserData?.username];
+        if (userAccess && userAccess[p.domKey] && !userAccess[p.domKey].includes('all')) {
+            const allowedOptions = userAccess[p.domKey];
+            sectionsToShow = p.menu.filter(sec => {
+                const checkAccess = (items) => {
+                    if (!items) return false;
+                    for (const item of items) {
+                        if (allowedOptions.includes(item.l)) return true;
+                        if (item.c && item.c.length && checkAccess(item.c)) return true;
+                    }
+                    return false;
+                };
+                return checkAccess(sec.c || []);
+            });
+        }
+    }
+    
+    if (sectionsToShow.length === 0) {
+        grid.innerHTML = '<div style="text-align:center; padding:40px; color:var(--tx3);">No tienes acceso a ninguna sección de este módulo.</div>';
+        const introText = document.getElementById('sec-intro');
+        if (introText) {
+            introText.innerHTML = `${p.domain} › ${p.label} · No tienes secciones asignadas`;
+        }
+        return;
+    }
+    
+    sectionsToShow.forEach(sec => {
+        const ico = SECTION_ICONS[sec.l] || '📌';
+        const card = document.createElement('div'); 
+        card.className = 'sc'; 
+        card.style.setProperty('--sc-clr', p.color);
+        card.innerHTML = `
+            <div class="sc-ico-wrap" style="background: ${p.color}12; color: ${p.color};">${ico}</div>
+            <div class="sc-nm">${sec.l}</div>
+        `;
+        card.onclick = () => openSection(pk, sec);
+        grid.appendChild(card);
+    });
+}
+
+function openSection(pk, sec) {
+    const p = PROCS[pk]; 
+    if (!p) return;
+    curSection = sec;
+    
+    // Actualizar breadcrumb
+    document.getElementById('bc-s2').style.display = 'inline';
+    document.getElementById('bc-c').style.display = 'inline';
+    document.getElementById('bc-c').textContent = sec.l;
+    
+    // Sidebar header
+    const sidebarIco = SECTION_ICONS[sec.l] || '📌';
+    document.getElementById('det-sb-ico').textContent = sidebarIco;
+    document.getElementById('det-sb-ico').style.background = p.color + '20';
+    document.getElementById('det-sb-ico').style.color = p.color;
+    document.getElementById('det-sb-nm').textContent = sec.l;
+    
+    // Main header
+    document.getElementById('det-t').textContent = sec.l;
+    document.getElementById('det-s').textContent = `${p.domain} › ${p.label} › ${sec.l}`;
+    document.getElementById('det-ico').textContent = sidebarIco;
+    document.getElementById('det-pt').textContent = sec.l;
+    document.getElementById('det-ps').textContent = 'Selecciona una opción del menú lateral para acceder al formulario correspondiente.';
+    
+    buildDetailSidebar(sec, p.color);
+    
+    // Cambiar vista
+    document.getElementById('v-home').style.display = 'none';
+    document.getElementById('v-sections').style.display = 'none';
+    document.getElementById('v-detail').style.display = 'flex';
+}
+
+function buildDetailSidebar(sec, clr) {
+    const sb = document.getElementById('det-sb-scroll'); 
+    if (!sb) return;
+    sb.innerHTML = '';
+    
+    function renderItems(items, container, depth) {
+        if (!items || !items.length) return;
+        
+        items.forEach(item => {
+            const hasAccess = hasAccessToOption(curProc, item.l);
+            
+            if (item.t === 'M' && item.c && item.c.length) {
+                // Filtrar hijos con acceso
+                const filteredChildren = item.c.filter(child => hasAccessToOption(curProc, child.l));
+                if (filteredChildren.length === 0 && !hasAccess) return;
+                
+                const group = document.createElement('div');
+                const header = document.createElement('div');
+                header.className = depth === 0 ? 'sbi' : 'sbi2';
+                if (depth > 0) header.style.paddingLeft = (15 + depth * 14) + 'px';
+                header.innerHTML = `<span style="flex:1; ${!hasAccess ? 'opacity:0.5;' : ''}">${item.l}</span><span class="sbi-arr">›</span>`;
+                
+                if (!hasAccess) {
+                    header.style.cursor = 'not-allowed';
+                    header.style.opacity = '0.5';
+                }
+                
+                const subMenu = document.createElement('div');
+                subMenu.className = 'sbi-sub';
+                let expanded = false;
+                
+                header.onclick = (e) => {
+                    e.stopPropagation();
+                    if (!hasAccess) return;
+                    expanded = !expanded;
+                    subMenu.classList.toggle('open', expanded);
+                    header.classList.toggle('exp', expanded);
+                };
+                
+                group.appendChild(header);
+                renderItems(filteredChildren, subMenu, depth + 1);
+                group.appendChild(subMenu);
+                container.appendChild(group);
+            } else {
+                if (!hasAccess) return;
+                
+                const option = document.createElement('div');
+                option.className = depth === 0 ? 'sbi' : (depth === 1 ? 'sbi2' : 'sbi3');
+                if (depth > 0) option.style.paddingLeft = (15 + depth * 14) + 'px';
+                option.innerHTML = `<span style="font-size:7px;color:${clr};flex-shrink:0;margin-right:3px">●</span><span style="flex:1" title="${item.l}">${item.l}</span>`;
+                
+                // 🔥 ONCLICK CORREGIDO - Usar closure para capturar el valor correcto
+                option.onclick = (function(optionLabel) {
+                    return function() {
+                        // Actualizar títulos
+                        const detTitle = document.getElementById('det-t');
+                        const detPlaceholderTitle = document.getElementById('det-pt');
+                        if (detTitle) detTitle.textContent = optionLabel;
+                        if (detPlaceholderTitle) detPlaceholderTitle.textContent = optionLabel;
+                        
+                        // Obtener el contenedor principal
+                        const detBody = document.querySelector('.det-body');
+                        if (!detBody) return;
+                        
+                        // 🔥 SIMULACIÓN: Verificar qué opción se seleccionó
+                        if (optionLabel === 'Entrada de Pedidos') {
+                            detBody.innerHTML = getFormularioPedidoHTML(optionLabel);
+                        } else {
+                            // Restaurar placeholder normal
+                            detBody.innerHTML = `
+                                <div class="det-placeholder">
+                                    <div class="det-ph-ico">📋</div>
+                                    <div class="det-ph-t">${optionLabel}</div>
+                                    <div class="det-ph-s">Formulario: ${optionLabel}. Este formulario está conectado a la base de datos migrada desde Oracle Forms.</div>
+                                    <div class="det-ph-tag">📋 Formulario conectado a Oracle Forms migrado</div>
+                                </div>
+                            `;
+                        }
+                    };
+                })(item.l);
+                
+                container.appendChild(option);
+            }
+        });
+    }
+    
+    // Filtrar y renderizar solo las opciones con acceso
+    if (sec.c && sec.c.length) {
+        const filteredItems = sec.c.filter(item => hasAccessToOption(curProc, item.l));
+        renderItems(filteredItems, sb, 0);
+    }
+}
+  
+currentUserData = getUrlParams();
+updateUserUI();
+buildHome();
+
+// Asegurar que el home se muestre correctamente después de un pequeño retraso
+setTimeout(() => {
+    const homeContainer = document.getElementById('v-home');
+    if (homeContainer && !homeContainer.classList.contains('ready')) {
+        homeContainer.classList.add('ready');
+        const loadingEl = homeContainer.querySelector('.loading-init');
+        if (loadingEl) loadingEl.remove();
+    }
+}, 500);
+
+// ========== SIMULACIÓN DE FORMULARIOS ==========
+function showFormularioPedido() {
+    const detBody = document.querySelector('.det-body');
+    if (!detBody) return;
+    
+    // Guardar el estado actual para poder volver
+    detBody.setAttribute('data-original-content', 'pedido');
+    
+    detBody.innerHTML = `
+        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.09);">
+            <div style="border-bottom: 2px solid #e85d04; padding-bottom: 12px; margin-bottom: 20px;">
+                <div style="font-size: 18px; font-weight: 900; color: #1a1a1a;">Entrada de Pedidos</div>
+                <div style="font-size: 11px; color: #999;">Ver. 13-05-2021 - Ffa40_20</div>
+            </div>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="font-weight: 900; font-size: 14px; color: #e85d04;">L.HENRIQUES - GUAYAQUIL</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Centro Distribución</label><div style="font-weight: 700; font-size: 13px;">01 GUAYAQUIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Centro Facturación</label><div style="font-weight: 700; font-size: 13px;">MOV DISPOSITIVO MOVIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Transacción Nº</label><div style="font-weight: 700; font-size: 13px;">--</div></div>
+                <div><label style="font-size: 10px; color: #999;">Pedido Nº</label><div style="font-weight: 700; font-size: 13px; color: #e85d04;">P-2026-0001</div></div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Tipo de pago</label><div style="font-weight: 700; font-size: 13px;">Crédito</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha</label><div style="font-weight: 700; font-size: 13px;">${new Date().toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha Vence</label><div style="font-weight: 700; font-size: 13px;">${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Plazo especial</label><div style="font-weight: 700; font-size: 13px;">30 días</div></div>
+            </div>
+            
+            <div style="background: #fff3eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div><label style="font-size: 10px; color: #999;">Cliente</label><div style="font-weight: 700; font-size: 13px;">DISTRIBUIDORA ALIMENTICIA DEL ECUADOR</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Subcliente</label><div style="font-weight: 700; font-size: 13px;">SUCURSAL NORTE</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo cliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$12,450.00</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo subcliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$8,230.00</div></div>
+                </div>
+            </div>
+            
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background: #1a1a1a; color: white;">
+                        <th style="padding: 8px; text-align: left;">Línea</th>
+                        <th style="padding: 8px; text-align: left;">Artículo</th>
+                        <th style="padding: 8px; text-align: right;">Cantidad</th>
+                        <th style="padding: 8px; text-align: right;">Precio</th>
+                        <th style="padding: 8px; text-align: right;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">1</td><td style="padding: 8px;">ACEITE VEGETAL 1L</td><td style="padding: 8px; text-align: right;">100</td><td style="padding: 8px; text-align: right;">$2.50</td><td style="padding: 8px; text-align: right;">$250.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">2</td><td style="padding: 8px;">ARROZ 5LB</td><td style="padding: 8px; text-align: right;">200</td><td style="padding: 8px; text-align: right;">$3.75</td><td style="padding: 8px; text-align: right;">$750.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">3</td><td style="padding: 8px;">LECHE 1L</td><td style="padding: 8px; text-align: right;">150</td><td style="padding: 8px; text-align: right;">$1.20</td><td style="padding: 8px; text-align: right;">$180.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">4</td><td style="padding: 8px;">AZÚCAR 2LB</td><td style="padding: 8px; text-align: right;">80</td><td style="padding: 8px; text-align: right;">$1.85</td><td style="padding: 8px; text-align: right;">$148.00</td></tr>
+                </tbody>
+            </table>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">Subtotal:</span><span>$1,328.00</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">IVA (12%):</span><span>$159.36</span></div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 8px;"><span style="font-weight: 900; font-size: 16px;">TOTAL:</span><span style="font-weight: 900; font-size: 16px; color: #e85d04;">$1,487.36</span></div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button onclick="alert('✅ Pedido procesado correctamente (Demo)')" style="padding: 8px 16px; background: #e85d04; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">Procesar Pedido</button>
+                <button onclick="location.reload()" style="padding: 8px 16px; background: #666; color: white; border: none; border-radius: 6px; cursor: pointer;">Cancelar</button>
+            </div>
+            
+            <div style="margin-top: 16px; font-size: 10px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 12px;">📋 Formulario simulado - Datos de ejemplo</div>
+        </div>
+    `;
+}
+
+function restoreDefaultContent(optionLabel) {
+    const detBody = document.querySelector('.det-body');
+    if (!detBody) return;
+    
+    detBody.innerHTML = `
+        <div class="det-placeholder">
+            <div class="det-ph-ico">📋</div>
+            <div class="det-ph-t">${optionLabel}</div>
+            <div class="det-ph-s">Formulario: ${optionLabel}. Este formulario está conectado a la base de datos migrada desde Oracle Forms.</div>
+            <div class="det-ph-tag">📋 Formulario conectado a Oracle Forms migrado</div>
+        </div>
+    `;
+}
+
+function getFormularioPedidoHTML(optionLabel) {
+    return `
+        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.09);">
+            <div style="border-bottom: 2px solid #e85d04; padding-bottom: 12px; margin-bottom: 20px;">
+                <div style="font-size: 18px; font-weight: 900; color: #1a1a1a;">${optionLabel}</div>
+                <div style="font-size: 11px; color: #999;">Ver. 13-05-2021 - Ffa40_20</div>
+            </div>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="font-weight: 900; font-size: 14px; color: #e85d04;">L.HENRIQUES - GUAYAQUIL</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Centro Distribución</label><div style="font-weight: 700; font-size: 13px;">01 GUAYAQUIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Centro Facturación</label><div style="font-weight: 700; font-size: 13px;">MOV DISPOSITIVO MOVIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Transacción Nº</label><div style="font-weight: 700; font-size: 13px;">--</div></div>
+                <div><label style="font-size: 10px; color: #999;">Pedido Nº</label><div style="font-weight: 700; font-size: 13px; color: #e85d04;">P-2026-0001</div></div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Tipo de pago</label><div style="font-weight: 700; font-size: 13px;">Crédito</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha</label><div style="font-weight: 700; font-size: 13px;">${new Date().toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha Vence</label><div style="font-weight: 700; font-size: 13px;">${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Plazo especial</label><div style="font-weight: 700; font-size: 13px;">30 días</div></div>
+            </div>
+            
+            <div style="background: #fff3eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div><label style="font-size: 10px; color: #999;">Cliente</label><div style="font-weight: 700; font-size: 13px;">DISTRIBUIDORA ALIMENTICIA DEL ECUADOR</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Subcliente</label><div style="font-weight: 700; font-size: 13px;">SUCURSAL NORTE</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo cliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$12,450.00</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo subcliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$8,230.00</div></div>
+                </div>
+            </div>
+            
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background: #1a1a1a; color: white;">
+                        <th style="padding: 8px; text-align: left;">Línea</th>
+                        <th style="padding: 8px; text-align: left;">Artículo</th>
+                        <th style="padding: 8px; text-align: right;">Cantidad</th>
+                        <th style="padding: 8px; text-align: right;">Precio</th>
+                        <th style="padding: 8px; text-align: right;">Subtotal</th>
+                    <th
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">1</td><td style="padding: 8px;">ACEITE VEGETAL 1L</td><td style="padding: 8px; text-align: right;">100</td><td style="padding: 8px; text-align: right;">$2.50</td><td style="padding: 8px; text-align: right;">$250.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">2</td><td style="padding: 8px;">ARROZ 5LB</td><td style="padding: 8px; text-align: right;">200</td><td style="padding: 8px; text-align: right;">$3.75</td><td style="padding: 8px; text-align: right;">$750.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">3</td><td style="padding: 8px;">LECHE 1L</td><td style="padding: 8px; text-align: right;">150</td><td style="padding: 8px; text-align: right;">$1.20</td><td style="padding: 8px; text-align: right;">$180.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">4</td><td style="padding: 8px;">AZÚCAR 2LB</td><td style="padding: 8px; text-align: right;">80</td><td style="padding: 8px; text-align: right;">$1.85</td><td style="padding: 8px; text-align: right;">$148.00</td></tr>
+                </tbody>
+            </table>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">Subtotal:</span><span>$1,328.00</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">IVA (12%):</span><span>$159.36</span></div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 8px;"><span style="font-weight: 900; font-size: 16px;">TOTAL:</span><span style="font-weight: 900; font-size: 16px; color: #e85d04;">$1,487.36</span></div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button onclick="alert('✅ Pedido procesado correctamente (Demo)')" style="padding: 8px 16px; background: #e85d04; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">Procesar Pedido</button>
+                <button onclick="location.reload()" style="padding: 8px 16px; background: #666; color: white; border: none; border-radius: 6px; cursor: pointer;">Cancelar</button>
+            </div>
+            
+            <div style="margin-top: 16px; font-size: 10px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 12px;">📋 Formulario simulado - Datos de ejemplo</div>
+        </div>
+    `;
+}
+
+function forceShowHome() {
+    const homeContainer = document.getElementById('v-home');
+    if (homeContainer) {
+        homeContainer.classList.add('ready');
+        const loadingEl = homeContainer.querySelector('.loading-init');
+        if (loadingEl) loadingEl.remove();
+    }
+}
+
+// Ejecutar después de buildHome con un timeout garantizado
+setTimeout(() => {
+    forceShowHome();
+}, 1000);
+
+</script>
+</body>
+</html>
