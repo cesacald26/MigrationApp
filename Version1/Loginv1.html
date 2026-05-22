@@ -23,46 +23,27 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(r
 .card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:220px;height:1px;background:linear-gradient(90deg,transparent,rgba(232,93,4,.7),transparent)}
 
 .logo{display:flex;flex-direction:column;align-items:center;margin-bottom:16px}
-.logo-mark{
-  width:58px;
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:6px;
-  background: transparent;
-  box-shadow: none;
-  overflow: visible;
-  position: relative;
-}
-.logo-mark::after{display:none;}
-.logo-img{
-  width:180px;
-  height:180px;
-  object-fit:contain;
-}
+.logo-mark{width:58px;height:58px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;background:transparent;box-shadow:none;overflow:visible;position:relative}
+.logo-mark::after{display:none}
+.logo-img{width:180px;height:180px;object-fit:contain}
 
-/* SCREENS */
 .scr{display:none;animation:fu .22s ease}
 .scr.on{display:block}
 @keyframes fu{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 
-/* AD BANNER */
 .ad-banner{display:flex;align-items:center;gap:10px;background:rgba(21,101,168,.12);border:1px solid rgba(21,101,168,.2);border-radius:8px;padding:10px 13px;margin-bottom:16px}
 .ad-ico{width:28px;height:28px;background:#1565a8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .ad-txt{font-size:11px;color:rgba(255,255,255,.5);line-height:1.4}
 .ad-txt strong{color:rgba(255,255,255,.78);font-size:11.5px}
 
-/* ALERT */
 .alert{display:none;padding:9px 12px;border-radius:8px;font-size:11.5px;margin-bottom:14px;line-height:1.5;gap:8px;align-items:center}
 .alert.on{display:flex}
 .alert-r{background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.22);color:#ef9a9a}
 
-/* FIELDS */
 .field{margin-bottom:11px}
 .fi{position:relative}
 .fi-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--muted);pointer-events:none;z-index:1;transition:color .15s}
-.inp{width:100%;height:48px;border-radius:var(--rad);border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font);font-size:12px;padding:0 44px 0 42px;outline:none;transition:all .15s}
+.inp{width:100%;height:48px;border-radius:var(--rad);border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#fff;font-family:var(--font);font-size:13px;padding:0 44px 0 42px;outline:none;transition:all .15s}
 .inp::placeholder{color:var(--muted)}
 .inp:focus{border-color:var(--or);background:var(--or-lt);box-shadow:0 0 0 3px rgba(232,93,4,.1)}
 .inp:focus ~ .fi-ico{color:var(--or)}
@@ -70,24 +51,15 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(r
 .fi-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--muted);font-size:14px;border:none;background:transparent;padding:4px;transition:color .12s;z-index:1}
 .fi-eye:hover{color:var(--soft)}
 
-/* CORRECCIÓN AUTOFILL - Usuario y Contraseña */
-.inp:-webkit-autofill,
-.inp:-webkit-autofill:hover,
-.inp:-webkit-autofill:focus,
-.inp:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px rgba(232,93,4,.1) inset !important;
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #ffffff !important;
-  transition: background-color 5000s ease-in-out 0s;
-  border-color: rgba(255,255,255,.2) !important;
+.inp:-webkit-autofill,.inp:-webkit-autofill:hover,.inp:-webkit-autofill:focus,.inp:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 1000px rgba(232,93,4,.1) inset !important;
+  -webkit-text-fill-color:#ffffff !important;
+  caret-color:#ffffff !important;
+  transition:background-color 5000s ease-in-out 0s;
+  border-color:rgba(255,255,255,.2) !important
 }
+.inp:-webkit-autofill:focus{-webkit-box-shadow:0 0 0 1000px var(--or-lt) inset,0 0 0 3px rgba(232,93,4,.1) !important;border-color:var(--or) !important}
 
-.inp:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px var(--or-lt) inset, 0 0 0 3px rgba(232,93,4,.1) !important;
-  border-color: var(--or) !important;
-}
-
-/* COMPANY DROPDOWN - Siempre habilitado */
 .co-wrap{margin-bottom:11px;position:relative}
 .co-btn{width:100%;height:48px;border-radius:var(--rad);border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:var(--muted);font-family:var(--font);font-size:13px;padding:0 42px 0 13px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:9px;transition:all .15s;position:relative}
 .co-btn:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.09)}
@@ -115,7 +87,6 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(r
 .co-dd::-webkit-scrollbar{width:6px}
 .co-dd::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:4px}
 
-/* CHECKBOX & LINK */
 .row-bot{display:flex;align-items:center;justify-content:space-between;margin-top:2px;margin-bottom:2px}
 .chk-l{display:flex;align-items:center;gap:7px;cursor:pointer}
 .chk{width:15px;height:15px;border-radius:4px;border:1.5px solid rgba(255,255,255,.2);background:transparent;cursor:pointer;appearance:none;-webkit-appearance:none;flex-shrink:0;transition:all .15s;position:relative}
@@ -125,7 +96,6 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(r
 .link{color:var(--or);font-size:11.5px;font-weight:700;cursor:pointer;background:none;border:none;font-family:var(--font);transition:opacity .12s}
 .link:hover{opacity:.7}
 
-/* BUTTON */
 .btn-p{width:100%;height:50px;border-radius:var(--rad);border:none;background:var(--or);color:#fff;font-family:var(--font);font-size:14.5px;font-weight:900;cursor:pointer;letter-spacing:.3px;position:relative;overflow:hidden;margin-top:18px;transition:all .15s;display:flex;align-items:center;justify-content:center}
 .btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,.1),transparent);pointer-events:none}
 .btn-p:hover:not(:disabled){background:var(--or-dk);transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,93,4,.42)}
@@ -135,7 +105,6 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(r
 .btn-p.ld .btn-txt{display:none}.btn-p.ld .spinner{display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* LOADING SCREEN */
 .load-simple{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:260px;gap:14px}
 .load-check{width:58px;height:58px;border-radius:14px;background:linear-gradient(135deg,#66bb6a,#43a047);display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;font-weight:900;transform-origin:center;box-shadow:0 8px 24px rgba(76,175,80,.45),inset 0 1px 2px rgba(255,255,255,.25);animation:pop .35s ease,glow 1.2s ease infinite alternate}
 @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
@@ -146,7 +115,6 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(r
 .load-bar-fill{height:100%;width:0;background:var(--or);transition:width .2s ease}
 .load-msg{font-size:11px;color:rgba(255,255,255,.4);margin-top:8px;min-height:16px}
 
-/* FORGOT */
 .f-cards{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
 .f-card{display:flex;align-items:center;gap:12px;padding:12px 13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:9px}
 .f-card-ico{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
@@ -156,27 +124,9 @@ body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(r
 .footer em{color:var(--or);font-style:normal}
 html,body{overflow-x:hidden !important;overflow-y:auto !important}
 .card{overflow:visible !important}
-/* Corrección para pantalla de recuperar acceso */
-.forgot-header {
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.forgot-lock {
-  font-size: 42px;
-  display: block;
-  margin-bottom: 8px;
-}
-
-#s-forgot .scr-ttl {
-  font-size: 14px;
-  font-weight: 700;
-  color: rgba(255,255,255,.9);
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 18px;
-}
+.forgot-header{text-align:center;margin-bottom:12px}
+.forgot-lock{font-size:42px;display:block;margin-bottom:8px}
+#s-forgot .scr-ttl{font-size:14px;font-weight:700;color:rgba(255,255,255,.9);text-align:center;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px}
 </style>
 </head>
 <body>
@@ -189,7 +139,6 @@ html,body{overflow-x:hidden !important;overflow-y:auto !important}
     </div>
   </div>
 
-  <!-- SCREEN: LOGIN -->
   <div class="scr on" id="s-login">
     <div class="ad-banner">
       <div class="ad-ico">🏢</div>
@@ -218,7 +167,6 @@ html,body{overflow-x:hidden !important;overflow-y:auto !important}
       </div>
     </div>
 
-    <!-- TODAS LAS EMPRESAS SIEMPRE VISIBLES Y HABILITADAS -->
     <div class="co-wrap">
       <button class="co-btn" id="co-btn" onclick="toggleDD()" type="button">
         <span class="co-av-sm" id="co-av-sm" style="display:none"></span>
@@ -247,7 +195,6 @@ html,body{overflow-x:hidden !important;overflow-y:auto !important}
     </button>
   </div>
 
-  <!-- SCREEN: CARGANDO -->
   <div class="scr" id="s-loading">
     <div class="load-simple">
       <div class="load-check">✓</div>
@@ -260,39 +207,34 @@ html,body{overflow-x:hidden !important;overflow-y:auto !important}
     </div>
   </div>
 
-    <!-- RECUPERAR CONTRASEÑA -->
-<div class="scr" id="s-forgot">
-  <div class="forgot-header">
-    <div class="forgot-lock">🔒</div>
-    <div class="scr-ttl">Recuperar acceso</div>
-  </div>
-  
-  <div style="text-align:center;font-size:12px;color:var(--soft);margin-bottom:20px;line-height:1.7">
-    Tu contraseña es administrada por el<br>
-    <strong style="color:#fff">Active Directory corporativo</strong>
-  </div>
-  
-  <!-- Opciones de recuperación - Diseño horizontal -->
-  <div style="font-size:11px; font-weight:700; color:var(--or); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; text-align:center;">Opciones de recuperación</div>
-  
-  <div style="display:flex; gap:12px; margin-bottom:20px;">
-    <div style="flex:1; background:rgba(21,101,168,.12); border:1px solid rgba(21,101,168,.2); border-radius:12px; padding:14px; text-align:center;">
-      <div style="font-size:24px; margin-bottom:8px;">📞</div>
-      <div style="color:#fff; font-size:13px; font-weight:700; margin-bottom:4px;">Mesa de ayuda TI</div>
-      <div style="color:var(--muted); font-size:11px;">Ext. 135</div>
+  <div class="scr" id="s-forgot">
+    <div class="forgot-header">
+      <div class="forgot-lock">🔒</div>
+      <div class="scr-ttl">Recuperar acceso</div>
     </div>
-    <div style="flex:1; background:rgba(232,93,4,.08); border:1px solid rgba(232,93,4,.15); border-radius:12px; padding:14px; text-align:center;">
-      <div style="font-size:24px; margin-bottom:8px;">✉️</div>
-      <div style="color:#fff; font-size:13px; font-weight:700; margin-bottom:4px;">Correo electrónico</div>
-      <div style="color:var(--muted); font-size:11px;">sistemas@lhenriques.com</div>
+    <div style="text-align:center;font-size:12px;color:var(--soft);margin-bottom:20px;line-height:1.7">
+      Tu contraseña es administrada por el<br>
+      <strong style="color:#fff">Active Directory corporativo</strong>
     </div>
+    <div style="font-size:11px; font-weight:700; color:var(--or); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; text-align:center;">Opciones de recuperación</div>
+    <div style="display:flex; gap:12px; margin-bottom:20px;">
+      <div style="flex:1; background:rgba(21,101,168,.12); border:1px solid rgba(21,101,168,.2); border-radius:12px; padding:14px; text-align:center;">
+        <div style="font-size:24px; margin-bottom:8px;">📞</div>
+        <div style="color:#fff; font-size:13px; font-weight:700; margin-bottom:4px;">Mesa de ayuda TI</div>
+        <div style="color:var(--muted); font-size:11px;">Ext. 135</div>
+      </div>
+      <div style="flex:1; background:rgba(232,93,4,.08); border:1px solid rgba(232,93,4,.15); border-radius:12px; padding:14px; text-align:center;">
+        <div style="font-size:24px; margin-bottom:8px;">✉️</div>
+        <div style="color:#fff; font-size:13px; font-weight:700; margin-bottom:4px;">Correo electrónico</div>
+        <div style="color:var(--muted); font-size:11px;">sistemas@lhenriques.com</div>
+      </div>
+    </div>
+    <button class="btn-p" type="button" onclick="showScr('s-login')" style="margin-top:8px;">
+      <span class="btn-txt">← Volver al inicio de sesión</span>
+    </button>
   </div>
-  
-  <button class="btn-p" type="button" onclick="showScr('s-login')" style="margin-top:8px;">
-    <span class="btn-txt">← Volver al inicio de sesión</span>
-  </button>
-</div>
 
+</div>
 <div class="footer">
   <em>NAF Next</em> v1.0 · Sistema de Gestión Empresarial<br>
   Made with <em>❤</em> in lhenriques
@@ -300,7 +242,7 @@ html,body{overflow-x:hidden !important;overflow-y:auto !important}
 </div>
 
 <script>
-// LISTA MAESTRA DE TODAS LAS EMPRESAS (TODAS VISIBLES)
+// ========== DATOS ==========
 const ALL_COMPANIES = [
   {id:'EP', nm:'L.HENRIQUES & CIA S.A.',  ruc:'0990331928001', clr:'#e85d04'},
   {id:'FN', nm:'NUTRIHOME S.A.', ruc:'0992600950001', clr:'#555'},
@@ -308,7 +250,6 @@ const ALL_COMPANIES = [
   {id:'CI', nm:'MASCORP S.A.',  ruc:'0991174192001', clr:'#8d292b'}
 ];
 
-// BASE DE USUARIOS
 const AD_USERS = [
   { username: 'ccalderon', password: 'admin123', authorizedCompanies: ['EP', 'FN', 'MS', 'CI'] },
   { username: 'scruz', password: 'scruz2024', authorizedCompanies: ['FN'] },
@@ -318,6 +259,7 @@ const AD_USERS = [
 let selectedCompany = null;
 let ddOpen = false;
 
+// ========== FUNCIONES ==========
 function showScr(id) {
   document.querySelectorAll('.scr').forEach(s => s.classList.remove('on'));
   document.getElementById(id).classList.add('on');
@@ -330,7 +272,6 @@ function togglePwd() {
   else { inp.type = 'password'; btn.textContent = '👁'; }
 }
 
-// Cargar TODAS las empresas - SIN filtros de acceso, SIN candados
 function loadAllCompanies() {
   const listContainer = document.getElementById('co-list');
   listContainer.innerHTML = '';
@@ -338,7 +279,6 @@ function loadAllCompanies() {
   ALL_COMPANIES.forEach(co => {
     const item = document.createElement('div');
     item.className = 'co-dd-item' + (selectedCompany?.id === co.id ? ' sel' : '');
-    
     item.innerHTML = `
       <div class="co-av" style="background:${co.clr}">${co.id}</div>
       <div class="co-info">
@@ -347,31 +287,25 @@ function loadAllCompanies() {
       </div>
       <span class="co-chk">✓</span>
     `;
-    
     item.onclick = () => {
       selectedCompany = co;
       const av = document.getElementById('co-av-sm');
       av.style.cssText = `display:flex;background:${co.clr};width:22px;height:22px;border-radius:5px;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;flex-shrink:0`;
       av.textContent = co.id;
-      const txt = document.getElementById('co-btn-txt');
-      txt.textContent = co.nm;
-      txt.classList.add('selected');
-      
-      // Actualizar checkmarks
+      document.getElementById('co-btn-txt').textContent = co.nm;
+      document.getElementById('co-btn-txt').classList.add('selected');
       document.querySelectorAll('.co-dd-item').forEach(el => {
         const nm = el.querySelector('.co-nm')?.innerText;
         if (nm === co.nm) el.classList.add('sel');
         else el.classList.remove('sel');
       });
-      
       closeDD();
     };
-    
     listContainer.appendChild(item);
   });
 }
 
-function positionDD(){
+function positionDD() {
   const btn = document.getElementById('co-btn');
   const rect = btn.getBoundingClientRect();
   const dd = document.getElementById('co-dd');
@@ -380,10 +314,10 @@ function positionDD(){
   dd.style.width = rect.width + 'px';
 }
 
-function toggleDD(){
+function toggleDD() {
   ddOpen = !ddOpen;
   const dd = document.getElementById('co-dd');
-  if(ddOpen){
+  if(ddOpen) {
     positionDD();
     dd.classList.add('open');
     document.getElementById('co-btn').classList.add('open');
@@ -403,7 +337,6 @@ function closeDD() {
 
 document.addEventListener('click', e => { if (!e.target.closest('.co-wrap')) closeDD(); });
 
-// Filtro de búsqueda
 document.addEventListener('input', e => {
   if (e.target.id === 'co-search') {
     const filter = e.target.value.toLowerCase();
@@ -414,7 +347,7 @@ document.addEventListener('input', e => {
   }
 });
 
-// VALIDACIÓN SOLO AL HACER CLIC EN "INGRESAR AL SISTEMA"
+// ========== LOGIN ==========
 function doLogin() {
   const errEl = document.getElementById('err-login');
   errEl.classList.remove('on');
@@ -423,7 +356,6 @@ function doLogin() {
   const username = document.getElementById('inp-u').value.trim();
   const password = document.getElementById('inp-p').value;
   
-  // Validación 1: Usuario ingresado
   if (!username) {
     document.getElementById('err-login-txt').innerHTML = '❌ Ingresa tu usuario.';
     errEl.classList.add('on');
@@ -431,7 +363,6 @@ function doLogin() {
     return;
   }
   
-  // Validación 2: Contraseña ingresada
   if (!password) {
     document.getElementById('err-login-txt').innerHTML = '❌ Ingresa tu contraseña.';
     errEl.classList.add('on');
@@ -439,25 +370,21 @@ function doLogin() {
     return;
   }
   
-  // Validación 3: Empresa seleccionada
   if (!selectedCompany) {
     document.getElementById('err-login-txt').innerHTML = '❌ Selecciona una empresa.';
     errEl.classList.add('on');
     return;
   }
   
-  // Validación 4: Usuario existe en AD (búsqueda case-insensitive)
-  const normalizedUsername = username.toLowerCase().trim();
-  const user = AD_USERS.find(u => u.username.toLowerCase() === normalizedUsername);
-
+  const user = AD_USERS.find(u => u.username.toLowerCase() === username.toLowerCase());
+  
   if (!user) {
-    document.getElementById('err-login-txt').innerHTML = `❌ Usuario "${username}" no existe en el AD.`;
+    document.getElementById('err-login-txt').innerHTML = `❌ Usuario "${username}" no existe.`;
     errEl.classList.add('on');
     document.getElementById('inp-u').classList.add('er');
     return;
   }
   
-  // Validación 5: Contraseña correcta
   if (user.password !== password) {
     document.getElementById('err-login-txt').innerHTML = '❌ Contraseña incorrecta.';
     errEl.classList.add('on');
@@ -465,34 +392,13 @@ function doLogin() {
     return;
   }
   
-  // Validación 6: Acceso a la empresa seleccionada (SOLO AQUÍ SE VALIDA)
   if (!user.authorizedCompanies.includes(selectedCompany.id)) {
     document.getElementById('err-login-txt').innerHTML = `❌ No tienes acceso a "${selectedCompany.nm}".`;
     errEl.classList.add('on');
     return;
   }
   
-  // ✅ TODAS LAS VALIDACIONES PASARON
-  
-  // Guardar sesión
-  const sessionData = {
-    username: username,
-    companyId: selectedCompany.id,
-    companyName: selectedCompany.nm,
-    companyRuc: selectedCompany.ruc,
-    companyColor: selectedCompany.clr,
-    loginTime: new Date().toISOString()
-  };
-  localStorage.setItem('naf_session', JSON.stringify(sessionData));
-  
-  // Guardar usuario si "Recordar"
-  if (document.getElementById('rem').checked) {
-    localStorage.setItem('snerp_saved_user', username);
-  } else {
-    localStorage.removeItem('snerp_saved_user');
-  }
-  
-  // Mostrar pantalla de carga
+  // ✅ Todo correcto - mostrar loading
   const btn = document.getElementById('btn-login');
   btn.classList.add('ld');
   btn.disabled = true;
@@ -504,9 +410,11 @@ function doLogin() {
   }, 800);
 }
 
+// ========== LOADING Y REDIRECCIÓN ==========
 function showLoadingScreen() {
   showScr('s-loading');
-  document.getElementById('load-user').textContent = document.getElementById('inp-u').value.trim();
+  const username = document.getElementById('inp-u').value.trim();
+  document.getElementById('load-user').textContent = username;
   document.getElementById('load-company').textContent = selectedCompany.nm;
   
   const bar = document.getElementById('load-bar');
@@ -534,21 +442,15 @@ function showLoadingScreen() {
           companyName: selectedCompany.nm,
           ruc: selectedCompany.ruc
         });
-        window.location.href = `https://cesacald26.github.io/MigrationApp/home/Page.html`;
+        window.location.href = `https://cesacald26.github.io/MigrationApp/home/Page.html?${urlParams}`;
       }, 500);
     }
   }, 400);
 }
 
-// Cargar usuario guardado al iniciar
+// ========== INICIALIZACIÓN ==========
 window.addEventListener('load', () => {
   loadAllCompanies();
-  const saved = localStorage.getItem('snerp_saved_user');
-  if (saved) {
-    document.getElementById('inp-u').value = saved;
-    document.getElementById('rem').checked = true;
-    document.getElementById('inp-p').focus();
-  }
 });
 
 // Enter para hacer login
@@ -558,60 +460,40 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Limpiar errores cuando el usuario empieza a escribir - VERSIÓN CORREGIDA
-const usernameInput = document.getElementById('inp-u');
-const passwordInput = document.getElementById('inp-p');
-const errorAlert = document.getElementById('err-login');
-
-usernameInput.addEventListener('input', function() {
-    errorAlert.classList.remove('on');
-    this.classList.remove('er');
+// Limpiar errores al escribir
+document.getElementById('inp-u').addEventListener('input', function() {
+  document.getElementById('err-login').classList.remove('on');
+  this.classList.remove('er');
 });
 
-passwordInput.addEventListener('input', function() {
-    errorAlert.classList.remove('on');
-    this.classList.remove('er');
+document.getElementById('inp-p').addEventListener('input', function() {
+  document.getElementById('err-login').classList.remove('on');
+  this.classList.remove('er');
 });
 
-// DEMO EXITOSO - Ctrl+D autocompleta con usuario válido y hace login automático
+// DEMO: Ctrl+D autocompleta
 document.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.key === 'd') {
-        e.preventDefault();
-        
-        // Autocompletar campos
-        document.getElementById('inp-u').value = 'ccalderon';
-        document.getElementById('inp-p').value = 'admin123';
-        document.getElementById('rem').checked = true;
-        
-        // Recargar empresas
-        loadAllCompanies();
-        
-        // Seleccionar primera empresa automáticamente
-        if (ALL_COMPANIES.length > 0) {
-            // Simular selección de la primera empresa
-            const primeraEmpresa = ALL_COMPANIES[0];
-            selectedCompany = primeraEmpresa;
-            
-            const av = document.getElementById('co-av-sm');
-            av.style.cssText = `display:flex;background:${primeraEmpresa.clr};width:22px;height:22px;border-radius:5px;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;flex-shrink:0`;
-            av.textContent = primeraEmpresa.id;
-            const txt = document.getElementById('co-btn-txt');
-            txt.textContent = primeraEmpresa.nm;
-            txt.classList.add('selected');
-            
-            // Actualizar checkmarks en dropdown
-            document.querySelectorAll('.co-dd-item').forEach(item => {
-                const nm = item.querySelector('.co-nm')?.innerText;
-                if (nm === primeraEmpresa.nm) item.classList.add('sel');
-                else item.classList.remove('sel');
-            });
-        }
-        
-        // Pequeña pausa y luego hacer login
-        setTimeout(() => {
-            doLogin();
-        }, 100);
+  if (e.ctrlKey && e.key === 'd') {
+    e.preventDefault();
+    document.getElementById('inp-u').value = 'ccalderon';
+    document.getElementById('inp-p').value = 'admin123';
+    document.getElementById('rem').checked = true;
+    loadAllCompanies();
+    if (ALL_COMPANIES.length > 0) {
+      const primeraEmpresa = ALL_COMPANIES[0];
+      selectedCompany = primeraEmpresa;
+      const av = document.getElementById('co-av-sm');
+      av.style.cssText = `display:flex;background:${primeraEmpresa.clr};width:22px;height:22px;border-radius:5px;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;flex-shrink:0`;
+      av.textContent = primeraEmpresa.id;
+      document.getElementById('co-btn-txt').textContent = primeraEmpresa.nm;
+      document.getElementById('co-btn-txt').classList.add('selected');
+      document.querySelectorAll('.co-dd-item').forEach(item => {
+        const nm = item.querySelector('.co-nm')?.innerText;
+        if (nm === primeraEmpresa.nm) item.classList.add('sel');
+        else item.classList.remove('sel');
+      });
     }
+  }
 });
 </script>
 </body>
