@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SynerERP — Portal Principal</title>
+<title>NAF Next — Home Page</title>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -22,7 +22,7 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
 /* ═══ SHELL ═══ */
 .shell{height:48px;background:var(--blk);display:flex;align-items:center;flex-shrink:0;z-index:300;position:relative}
 .sh-logo{padding:0 16px;border-right:1px solid rgba(255,255,255,.09);height:48px;display:flex;align-items:center;gap:9px;flex-shrink:0}
-.sh-mark{width:28px;height:28px;background:var(--or);border-radius:var(--rad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:900;letter-spacing:0}
+.sh-logo img{height:32px;width:auto;object-fit:contain}
 .sh-brand{color:#fff;font-size:14px;font-weight:900;letter-spacing:-.3px}
 .sh-brand span{color:var(--or)}
 .sh-home{padding:0 14px;height:48px;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.6);font-size:12.5px;font-weight:700;cursor:pointer;border:none;background:transparent;border-right:1px solid rgba(255,255,255,.09);transition:all .12s;flex-shrink:0;font-family:var(--font)}
@@ -38,20 +38,19 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
 .sh-ico:hover{background:rgba(255,255,255,.08);color:#fff}
 .sh-ico.logout{color:rgba(255,255,255,.38)}
 .sh-ico.logout:hover{background:rgba(220,53,53,.18)!important;color:#ff6b6b!important}
-.ndot{position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:#e53935;border:1.5px solid var(--blk)}
-.sh-emp-btn{display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:20px;cursor:pointer;border:none;background:transparent;transition:all .12s;font-family:var(--font)}
-.sh-emp-btn:hover{background:rgba(255,255,255,.07)}
+.sh-emp-selector{position:relative}
+.sh-emp-btn{display:flex;align-items:center;gap:7px;padding:4px 10px;border-radius:24px;cursor:pointer;border:none;background:transparent;transition:all .12s;font-family:var(--font)}
+.sh-emp-btn:hover{background:rgba(255,255,255,.1)}
+.sh-emp-arrow{color:rgba(255,255,255,.4);font-size:10px;margin-left:2px;transition:transform .15s}
+.sh-emp-btn.open .sh-emp-arrow{transform:rotate(180deg)}
 .sh-emp-nm{color:rgba(255,255,255,.82);font-size:11.5px;font-weight:700;text-align:right;white-space:nowrap}
 .sh-emp-rl{color:rgba(255,255,255,.32);font-size:10px;text-align:right}
 .sh-av{width:30px;height:30px;border-radius:50%;background:var(--or);color:#fff;font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-/* empresa dropdown */
-.emp-drop{position:absolute;top:48px;right:0;width:280px;background:var(--blk2);border:1px solid rgba(255,255,255,.09);border-radius:0 0 var(--radlg) var(--radlg);box-shadow:var(--sh-lg);z-index:600;display:none}
+.emp-drop{position:absolute;top:48px;right:0;width:280px;background:var(--blk2);border:1px solid rgba(255,255,255,.09);border-radius:12px;box-shadow:var(--sh-lg);z-index:600;display:none}
 .emp-drop.open{display:block}
 .ed-hdr{padding:8px 13px;font-size:9.5px;font-weight:900;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.07)}
 .ed-item{display:flex;align-items:center;gap:9px;padding:9px 13px;cursor:pointer;transition:background .1s;border-bottom:1px solid rgba(255,255,255,.05)}
 .ed-item:hover{background:rgba(255,255,255,.06)}
-.ed-item:last-child{border-bottom:none}
 .ed-av{width:26px;height:26px;border-radius:var(--rad);color:#fff;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ed-nm{font-size:12px;font-weight:700;color:rgba(255,255,255,.8)}
 .ed-ruc{font-size:9.5px;color:rgba(255,255,255,.3)}
@@ -71,103 +70,219 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
 .hero-left{}
 .hero-greet{color:#fff;font-size:20px;font-weight:900;margin-bottom:3px}
 .hero-date{color:rgba(255,255,255,.3);font-size:11.5px;margin-bottom:16px}
-/* ── EMPRESA PILL ── */
-.emp-pill{
-  display:flex;align-items:center;gap:11px;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);
-  border-radius:12px;padding:11px 15px;cursor:pointer;transition:all .15s;
-  position:relative;flex-shrink:0;margin-top:2px
-}
-.emp-pill:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.22)}
-.ep-badge{position:absolute;top:-8px;left:12px;background:#1565a8;border:1.5px solid var(--blk);color:#fff;font-size:8.5px;font-weight:900;padding:2px 8px;border-radius:20px;white-space:nowrap}
-.ep-av{width:40px;height:40px;border-radius:9px;background:var(--or);color:#fff;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(232,93,4,.35)}
-.ep-info{text-align:right}
-.ep-nm{color:#fff;font-size:14px;font-weight:900;line-height:1.2;white-space:nowrap}
-.ep-ruc{color:rgba(255,255,255,.35);font-size:10.5px;margin-top:2px}
-.ep-role{color:rgba(255,255,255,.45);font-size:10px;margin-top:1px}
-.ep-arr{color:rgba(255,255,255,.3);font-size:10px;margin-left:3px;align-self:center}
-
-/* kpis */
-.hero-kpis{display:flex;gap:9px;flex-wrap:wrap}
+.emp-info-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:12px;padding:8px 15px}
+.ep-av{width:36px;height:36px;border-radius:8px;background:var(--or);color:#fff;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ep-nm{color:#fff;font-size:13px;font-weight:700}
+.ep-ruc{color:rgba(255,255,255,.45);font-size:10px}
+.hero-kpis{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
 .kpi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:var(--radlg);padding:10px 13px;min-width:108px;cursor:pointer;transition:all .15s}
-.kpi:hover{background:rgba(255,255,255,.1)}
+.kpi:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
 .kpi-v{color:#fff;font-size:18px;font-weight:900;line-height:1}
 .kpi-l{color:rgba(255,255,255,.32);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
 .kpi-d{font-size:10px;margin-top:2px}
 .up{color:#52c986}.dn{color:#ff7060}.wa{color:#f0a929}.neu{color:rgba(255,255,255,.28)}
 
-/* domains */
 .domains{padding:20px 32px 32px}
-.dom-sec{margin-bottom:22px}
+/*.dom-sec{margin-bottom:22px}
 .dom-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .dom-ic{font-size:15px;flex-shrink:0}
 .dom-lbl{font-size:11px;font-weight:900;color:var(--tx2);text-transform:uppercase;letter-spacing:.9px;white-space:nowrap}
 .dom-line{flex:1;height:1px;background:var(--g2)}
 .dom-desc{font-size:10px;color:var(--tx3);font-weight:700;white-space:nowrap}
-.agg{display:flex;flex-wrap:wrap;gap:7px}
-/* app cards */
-.ac{width:104px;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;border-radius:var(--radlg);background:var(--wh);border:1px solid var(--g2);box-shadow:var(--sh);padding:9px 6px;position:relative;transition:all .18s;text-align:center}
+.agg{display:flex;flex-wrap:wrap;gap:7px}*/
+.dom-sec {
+    margin-bottom: 28px;
+}
+
+.dom-hdr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.dom-ic {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.dom-lbl {
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--tx2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+}
+
+.dom-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--g2), transparent);
+}
+
+.dom-desc {
+    font-size: 10.5px;
+    color: var(--tx3);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.agg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/*.ac{width:104px;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;border-radius:var(--radlg);background:var(--wh);border:1px solid var(--g2);box-shadow:var(--sh);padding:9px 6px;position:relative;transition:all .18s;text-align:center}
 .ac:hover{box-shadow:var(--sh-md);border-color:var(--or-mid);transform:translateY(-2px)}
 .ac.on{border-color:var(--or);box-shadow:0 0 0 2.5px var(--or-lt)}
 .ac-ico{width:42px;height:42px;border-radius:var(--radlg);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .ac-lbl{font-size:10.5px;font-weight:700;color:var(--tx);line-height:1.25}
-.ac-badge{position:absolute;top:5px;right:5px;border-radius:20px;font-size:8px;font-weight:900;padding:1px 5px;min-width:15px;text-align:center;color:#fff}
+.ac-badge{position:absolute;top:5px;right:5px;border-radius:20px;font-size:8px;font-weight:900;padding:1px 5px;min-width:15px;text-align:center;color:#fff}*/
+.ac {
+    width: 108px;
+    min-height: 96px;
+    background: var(--wh);
+    border: 1px solid var(--g2);
+    border-radius: var(--radlg);
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    position: relative;
+    box-shadow: var(--sh);
+}
+
+.ac:hover {
+    box-shadow: var(--sh-md);
+    border-color: var(--or-mid);
+    transform: translateY(-3px);
+}
+
+.ac.on {
+    border-color: var(--or);
+    box-shadow: 0 0 0 2.5px var(--or-lt);
+}
+
+.ac-ico {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: transform 0.15s ease;
+}
+
+.ac:hover .ac-ico {
+    transform: scale(1.05);
+}
+
+.ac-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--tx);
+    line-height: 1.3;
+}
+
+
 .ab-or{background:var(--or)}.ab-r{background:#c0392b}
 
-/* ═══ VIEW: SECCIÓN CARDS (sin sidebar) ═══ */
+/* ═══ VIEWS ═══ */
 #v-sections{display:none}
 .sec-shell{display:flex;flex-direction:column;height:100%}
-.sec-topbar{
-  background:var(--wh);border-bottom:1px solid var(--g2);
-  padding:0 24px;height:52px;display:flex;align-items:center;gap:12px;flex-shrink:0
-}
+.sec-topbar{background:var(--wh);border-bottom:1px solid var(--g2);padding:0 24px;height:52px;display:flex;align-items:center;gap:12px;flex-shrink:0}
 .sec-back{width:28px;height:28px;border-radius:50%;border:none;background:var(--g1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--tx2);transition:all .12s;flex-shrink:0;font-family:var(--font)}
 .sec-back:hover{background:var(--g2);color:var(--tx)}
 .sec-proc-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .sec-proc-nm{font-size:14px;font-weight:900;color:var(--tx);flex:1}
 .sec-proc-dom{font-size:11px;color:var(--tx3);margin-top:1px}
 .sec-content{flex:1;overflow-y:auto;padding:24px 32px 32px}
-.sec-content::-webkit-scrollbar{width:4px}.sec-content::-webkit-scrollbar-thumb{background:var(--g2);border-radius:2px}
-.sec-intro{font-size:12px;color:var(--tx3);margin-bottom:20px}
-/* section cards grid */
 .sec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-.sc{
-  background:var(--wh);border:1px solid var(--g2);border-radius:var(--radlg);
-  padding:20px 16px 18px;cursor:pointer;transition:all .2s;text-align:center;
-  position:relative;overflow:hidden
-}
+/*.sc{background:var(--wh);border:1px solid var(--g2);border-radius:var(--radlg);padding:20px 16px 18px;cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden}
 .sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--sc-clr,var(--or));transform:scaleX(0);transform-origin:left;transition:transform .2s}
 .sc:hover{box-shadow:var(--sh-lg);border-color:var(--sc-clr,var(--or));transform:translateY(-3px)}
 .sc:hover::after{transform:scaleX(1)}
-.sc-ico-wrap{
-  width:56px;height:56px;border-radius:14px;margin:0 auto 12px;
-  display:flex;align-items:center;justify-content:center;font-size:26px;
-  transition:transform .2s
-}
+.sc-ico-wrap{width:56px;height:56px;border-radius:14px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .2s}
 .sc:hover .sc-ico-wrap{transform:scale(1.08)}
-.sc-nm{font-size:12.5px;font-weight:900;color:var(--tx);line-height:1.3}
+.sc-nm{font-size:12.5px;font-weight:900;color:var(--tx);line-height:1.3}*/
+.sc {
+    background: var(--wh);
+    border: 1px solid var(--g2);
+    border-radius: var(--radlg);
+    padding: 24px 16px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--sh);
+}
 
-/* ═══ VIEW: OPCIÓN DETALLE (con sidebar) ═══ */
+.sc::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--sc-clr, var(--or));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+.sc:hover {
+    box-shadow: var(--sh-md);
+    border-color: var(--sc-clr, var(--or));
+    transform: translateY(-4px);
+}
+
+.sc:hover::after {
+    transform: scaleX(1);
+}
+
+.sc-ico-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: all 0.2s ease;
+}
+
+.sc:hover .sc-ico-wrap {
+    transform: scale(1.08);
+    background: var(--sc-clr, var(--or)) !important;
+    color: #fff !important;
+}
+
+.sc-nm {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--tx);
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+}
+
 #v-detail{display:none}
 .det-shell{display:flex;height:100%}
-
-/* sidebar de opciones */
 .det-sb{width:240px;min-width:240px;background:var(--wh);border-right:1px solid var(--g2);display:flex;flex-direction:column;flex-shrink:0}
-.det-sb-hdr{
-  height:52px;background:var(--blk);display:flex;align-items:center;
-  padding:0 12px;gap:8px;flex-shrink:0
-}
+.det-sb-hdr{height:52px;background:var(--blk);display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
 .det-sb-back{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.7);flex-shrink:0;transition:all .12s;font-family:var(--font)}
 .det-sb-back:hover{background:rgba(255,255,255,.18);color:#fff}
 .det-sb-ico{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .det-sb-nm{color:#fff;font-size:12px;font-weight:900;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* fade scroll */
 .det-sb-fade{position:relative;flex:1;overflow:hidden;display:flex;flex-direction:column}
 .det-sb-fade::before{content:'';position:absolute;top:0;left:0;right:0;height:16px;background:linear-gradient(var(--wh),transparent);z-index:2;pointer-events:none}
 .det-sb-fade::after{content:'';position:absolute;bottom:0;left:0;right:0;height:20px;background:linear-gradient(transparent,var(--wh));z-index:2;pointer-events:none}
 .det-sb-scroll{flex:1;overflow-y:auto;padding:6px 0 16px}
-.det-sb-scroll::-webkit-scrollbar{width:3px}.det-sb-scroll::-webkit-scrollbar-thumb{background:var(--g2);border-radius:2px}
-/* sidebar items */
 .sbi{display:flex;align-items:center;padding:6.5px 13px 6.5px 15px;cursor:pointer;color:var(--tx2);font-size:12px;font-weight:700;border-left:3px solid transparent;transition:all .1s;gap:6px}
 .sbi:hover{background:var(--g1);color:var(--tx)}
 .sbi.on{background:var(--or-lt);color:var(--or);border-left-color:var(--or)}
@@ -181,31 +296,17 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
 .sbi3{display:flex;align-items:center;padding:5px 13px 5px 40px;cursor:pointer;color:var(--tx3);font-size:11px;border-left:3px solid transparent;transition:all .1s}
 .sbi3:hover{background:var(--g2);color:var(--tx2)}
 .sbi3.on{color:var(--or);background:var(--or-lt)}
-
-/* detail main area */
 .det-main{flex:1;overflow-y:auto;background:var(--bg)}
-.det-main::-webkit-scrollbar{width:5px}.det-main::-webkit-scrollbar-thumb{background:var(--g2);border-radius:3px}
-.det-topbar{
-  background:var(--wh);border-bottom:1px solid var(--g2);
-  padding:0 20px;height:52px;display:flex;align-items:center;gap:10px;flex-shrink:0
-}
+.det-topbar{background:var(--wh);border-bottom:1px solid var(--g2);padding:0 20px;height:52px;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .det-topbar-t{font-size:14px;font-weight:900;color:var(--tx)}
 .det-topbar-s{font-size:11.5px;color:var(--tx3);margin-top:1px}
 .det-body{padding:20px}
-.det-placeholder{
-  background:var(--wh);border:1px solid var(--g2);border-radius:var(--radlg);
-  padding:52px 24px;text-align:center;box-shadow:var(--sh)
-}
+.det-placeholder{background:var(--wh);border:1px solid var(--g2);border-radius:var(--radlg);padding:52px 24px;text-align:center;box-shadow:var(--sh)}
 .det-ph-ico{font-size:36px;margin-bottom:12px}
 .det-ph-t{font-size:15px;font-weight:900;color:var(--tx);margin-bottom:6px}
 .det-ph-s{font-size:12px;color:var(--tx2);max-width:380px;margin:0 auto 20px;line-height:1.6}
-.det-ph-tag{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--or-lt);border:1px solid var(--or-mid);
-  color:var(--or-dk);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700
-}
+.det-ph-tag{display:inline-flex;align-items:center;gap:6px;background:var(--or-lt);border:1px solid var(--or-mid);color:var(--or-dk);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700}
 
-/* ═══ LOGOUT MODAL ═══ */
 .logout-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
 .logout-overlay.open{display:flex}
 .logout-modal{background:var(--wh);border-radius:16px;padding:28px 28px 22px;width:340px;box-shadow:var(--sh-lg);text-align:center;animation:pop .2s cubic-bezier(.34,1.56,.64,1)}
@@ -218,14 +319,62 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
 .lm-cancel:hover{background:var(--g1)}
 .lm-confirm{flex:1;height:38px;border-radius:8px;border:none;background:#c44d00;color:#fff;font-family:var(--font);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .12s}
 .lm-confirm:hover{background:#51565B}
+
+/* Asegurar que las vistas se muestren correctamente */
+#v-home { display: block; }
+#v-sections { display: none; }
+#v-detail { display: none; }
+
+.sec-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.det-shell {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.sec-intro {
+    font-size: 12px;
+    color: var(--tx3);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--g2);
+}
+
+/* Estado de carga inicial */
+.loading-init {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    color: var(--tx3);
+    font-size: 13px;
+}
+
+.hide-until-ready {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.hide-until-ready.ready {
+    opacity: 1;
+}
+
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- ═══ SHELL ═══ -->
 <div class="shell">
-  <div class="sh-logo"><div class="sh-mark">S</div><div class="sh-brand"><span>Syner</span>ERP</div></div>
+  <div class="sh-logo">
+    <img src="https://cesacald26.github.io/MigrationApp/logoResideñado.png">
+    <!--<div class="sh-brand"><span>NAF Next</span>ERP</div>-->
+  </div>
   <button class="sh-home on" id="sh-home" onclick="goHome()">⊞ Inicio</button>
   <div class="sh-bc" id="sh-bc" style="display:none">
     <span class="bc-a" id="bc-a" onclick="goHome()"></span>
@@ -235,65 +384,49 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
     <span class="bc-c" id="bc-c" style="display:none"></span>
   </div>
   <div class="sh-right">
-    <button class="sh-ico" title="Mensajes"><span>💬</span></button>
-    <button class="sh-ico" title="Notificaciones" style="position:relative"><span>🔔</span><div class="ndot"></div></button>
     <button class="sh-ico logout" title="Cerrar sesión" onclick="showLogout()">⏻</button>
-    <button class="sh-emp-btn" onclick="toggleEmp()">
-      <div>
-        <div class="sh-emp-nm" id="emp-nm">L.HENRIQUES & CIA S.A.</div>
-        <div class="sh-emp-rl">Ana Morales · Admin</div>
+    <div class="sh-emp-selector">
+      <button class="sh-emp-btn" onclick="toggleEmp()">
+        <div>
+          <div class="sh-emp-nm" id="emp-nm"></div>
+          <div class="sh-emp-rl" id="sh-emp-rl"></div>
+        </div>
+        <div class="sh-av" id="emp-av"></div>
+        <span class="sh-emp-arrow">▼</span>
+      </button>
+      <div class="emp-drop" id="emp-drop">
+        <div class="ed-hdr">Cambiar empresa</div>
+        <div id="emp-drop-list"></div>
+        <div class="ed-sep"></div>
+        <div class="ed-logout" onclick="showLogout()"><span>⏻</span> Cerrar sesión</div>
       </div>
-      <div class="sh-av" id="emp-av">EP</div>
-    </button>
-    <div class="emp-drop" id="emp-drop">
-      <div class="ed-hdr">Empresa activa</div>
-      <div class="ed-item" onclick="selEmp('L.HENRIQUES & CIA S.A.','EP','#e85d04',this)"><div class="ed-av" style="background:#e85d04">EP</div><div><div class="ed-nm">L.HENRIQUES & CIA S.A.</div><div class="ed-ruc">RUC: 0990331928001</div></div><div class="ed-chk">✓</div></div>
-      <div class="ed-item" onclick="selEmp('NUTRIHOME S.A.','FN','#555',this)"><div class="ed-av" style="background:#444">FN</div><div><div class="ed-nm">NUTRIHOME S.A.</div><div class="ed-ruc">RUC: 0992600950001</div></div></div>
-      <div class="ed-item" onclick="selEmp('PROHOME S.A.','MS','#2e7d32',this)"><div class="ed-av" style="background:#2e7d32">MS</div><div><div class="ed-nm">PROHOME S.A.</div><div class="ed-ruc">RUC: 0992635622001</div></div></div>
-      <div class="ed-item" onclick="selEmp('MASCORP S.A.','CI','#8d292b',this)"><div class="ed-av" style="background:#8d292b">CI</div><div><div class="ed-nm">MASCORP S.A.</div><div class="ed-ruc">RUC: 0991174192001</div></div></div>
-      <div class="ed-sep"></div>
-      <div class="ed-logout" onclick="showLogout()"><span>⏻</span> Cerrar sesión</div>
     </div>
   </div>
 </div>
 
-<!-- ═══ BODY ═══ -->
 <div class="body">
 <div class="content" id="content">
 
-  <!-- ── VIEW: HOME ── -->
-  <div id="v-home">
+<div id="v-home" class="hide-until-ready">
     <div class="hero">
-      <div class="hero-row">
-        <div class="hero-left">
-          <div class="hero-greet">Bienvenido, Ana Morales</div>
-          <div class="hero-date" id="hero-date"></div>
+        <div class="hero-row">
+            <div class="hero-left">
+                <div class="hero-greet" id="hero-greet"></div>
+                <div class="hero-date" id="hero-date"></div>
+            </div>
+            <div class="emp-info-card">
+                <div class="ep-av" id="ep-av"></div>
+                <div>
+                    <div class="ep-nm" id="ep-nm"></div>
+                    <div class="ep-ruc" id="ep-ruc"></div>
+                </div>
+            </div>
         </div>
-        <div class="emp-pill" onclick="toggleEmp()">
-          <div class="ep-badge">Empresa activa</div>
-          <div class="ep-info">
-            <div class="ep-nm" id="ep-nm">L.HENRIQUES & CIA S.A.</div>
-            <div class="ep-ruc">RUC: 0990331928001</div>
-            <div class="ep-role">Ana Morales · Administrador</div>
-          </div>
-          <div class="ep-av" id="ep-av">EP</div>
-          <span class="ep-arr">▾</span>
-        </div>
-      </div>
-      <div class="hero-kpis">
-        <div class="kpi" onclick="openProc('facturacion')"><div class="kpi-v">$284k</div><div class="kpi-l">Ventas del mes</div><div class="kpi-d up">▲ 12.4%</div></div>
-        <div class="kpi" onclick="openProc('cxc')"><div class="kpi-v">$42k</div><div class="kpi-l">CxC vencida</div><div class="kpi-d dn">3 facturas</div></div>
-        <div class="kpi" onclick="openProc('cxp')"><div class="kpi-v">$128k</div><div class="kpi-l">CxP pendiente</div><div class="kpi-d wa">9 docs</div></div>
-        <div class="kpi" onclick="openProc('bancos')"><div class="kpi-v">$186k</div><div class="kpi-l">Saldo bancos</div><div class="kpi-d neu">3 cuentas</div></div>
-        <div class="kpi" onclick="openProc('sri')"><div class="kpi-v">4</div><div class="kpi-l">Sin autorizar SRI</div><div class="kpi-d wa">Acción requerida</div></div>
-        <div class="kpi" onclick="openProc('nomina')"><div class="kpi-v">$48k</div><div class="kpi-l">Nómina estimada</div><div class="kpi-d wa">Pendiente</div></div>
-        <div class="kpi" onclick="openProc('inventario')"><div class="kpi-v">7</div><div class="kpi-l">Stock crítico</div><div class="kpi-d dn">Reorden urgente</div></div>
-      </div>
+        <div class="hero-kpis" id="hero-kpis"></div>
     </div>
     <div class="domains" id="domains"></div>
-  </div>
+</div>
 
-  <!-- ── VIEW: SECCIONES (grilla sin sidebar) ── -->
   <div id="v-sections" class="sec-shell">
     <div class="sec-topbar">
       <button class="sec-back" onclick="goHome()">←</button>
@@ -309,9 +442,7 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
     </div>
   </div>
 
-  <!-- ── VIEW: DETALLE (con sidebar de opciones) ── -->
   <div id="v-detail" class="det-shell">
-    <!-- sidebar -->
     <div class="det-sb">
       <div class="det-sb-hdr">
         <button class="det-sb-back" onclick="goSections()">←</button>
@@ -322,7 +453,6 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
         <div class="det-sb-scroll" id="det-sb-scroll"></div>
       </div>
     </div>
-    <!-- main -->
     <div class="det-main">
       <div class="det-topbar">
         <div>
@@ -341,11 +471,10 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
     </div>
   </div>
 
-</div><!-- /content -->
-</div><!-- /body -->
-</div><!-- /app -->
+</div>
+</div>
+</div>
 
-<!-- ═══ LOGOUT MODAL ═══ -->
 <div class="logout-overlay" id="logout-overlay" onclick="hideLogout(event)">
   <div class="logout-modal">
     <div class="lm-ico">⏻</div>
@@ -360,7 +489,7 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
 
 <script>
 /* ════════════════════════════════════════════
-   DATA
+   DATA - DOMAINS Y PROCESOS (simplificado)
 ════════════════════════════════════════════ */
 const C = 'Configuración';
 const SECTION_ICONS = {
@@ -421,7 +550,7 @@ const SECTION_ICONS = {
   'Reportes de Desempeño':'📊'
 };
 
-const DOMAINS=[
+const DOMAINS = [
 {key:'comercial',label:'Gestión Comercial',icon:'🛍',color:'#e85d04',desc:'Ventas · Clientes · Fuerza de ventas · Mercadeo',procs:[
   {key:'pedidos',label:'Toma de Pedidos',icon:'📝',color:'#e85d04',menu:[
     {l:C,t:'M',c:[{l:'Tipos de Documento de Venta',t:'O'},{l:'Formas de Pago',t:'O'},{l:'Motivos por Tipo de Documento',t:'O'},{l:'Segmentos de Mercado',t:'O'},{l:'Formularios',t:'O'},{l:'Habilitar Vía de Pedido por Vendedor',t:'O'},{l:'Parámetros de Aprobación',t:'O'}]},
@@ -654,183 +783,714 @@ const DOMAINS=[
 ]}
 ];
 
-/* flat proc lookup */
+// DATOS MAESTROS DE EMPRESAS (única fuente de verdad)
+const MASTER_COMPANIES = {
+    'EP': { id: 'EP', name: 'L.HENRIQUES & CIA S.A.', ruc: '0990331928001', color: '#e85d04' },
+    'FN': { id: 'FN', name: 'NUTRIHOME S.A.', ruc: '0992600950001', color: '#555' },
+    'MS': { id: 'MS', name: 'PROHOME S.A.', ruc: '0992635622001', color: '#2e7d32' },
+    'CI': { id: 'CI', name: 'MASCORP S.A.', ruc: '0991174192001', color: '#8d292b' }
+};
+
+// MAPEO DE EMPRESAS POR USUARIO (qué empresas puede ver cada usuario)
+const USER_COMPANIES = {
+    'ccalderon': ['EP', 'FN', 'MS', 'CI'],
+    'scruz': ['FN'],
+    'iquinde': ['EP', 'FN']
+};
+
 const PROCS={};
 DOMAINS.forEach(d=>d.procs.forEach(p=>{p.domain=d.label;p.domKey=d.key;p.domColor=d.color;PROCS[p.key]=p;}));
 let curProc=null, curSection=null;
 
-/* ════ BUILD HOME ════ */
-function buildHome(){
-  document.getElementById('hero-date').textContent =
-    new Date().toLocaleDateString('es-EC',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) + ' · Empresa Principal S.A.';
-  const wrap=document.getElementById('domains'); wrap.innerHTML='';
-  DOMAINS.forEach(dom=>{
-    const sec=document.createElement('div'); sec.className='dom-sec';
-    sec.innerHTML=`<div class="dom-hdr"><span class="dom-ic">${dom.icon}</span><span class="dom-lbl">${dom.label}</span><div class="dom-line"></div><span class="dom-desc">${dom.desc}</span></div><div class="agg" id="g-${dom.key}"></div>`;
-    wrap.appendChild(sec);
-    dom.procs.forEach(p=>{
-      const c=document.createElement('div'); c.className='ac'; c.id='c-'+p.key;
-      c.innerHTML=`<div class="ac-ico" style="background:${p.color}1a;color:${p.color}">${p.icon}</div><div class="ac-lbl">${p.label}</div>`;
-      if(p.badge) c.innerHTML+=`<div class="ac-badge ${p.badgeType==='r'?'ab-r':'ab-or'}">${p.badge}</div>`;
-      c.onclick=()=>openProc(p.key);
-      sec.querySelector('.agg').appendChild(c);
+/* ════════════════════════════════════════════
+   USER SESSION & PERMISSIONS
+════════════════════════════════════════════ */
+
+const USER_PROFILES = {
+    'ccalderon': { role: 'admin', name: 'César Calderón', short: 'César', modules: ['comercial', 'financiero', 'administrativo', 'suministros', 'tributario', 'rrhh', 'plataforma'] },
+    'scruz': { role: 'comercial', name: 'Steven Cruz', short: 'Santiago', modules: ['comercial', 'suministros'] },
+    'iquinde': { role: 'financiero', name: 'Isabel Quinde', short: 'Isabel', modules: ['financiero', 'tributario', 'administrativo'] }
+};
+
+const USER_OPTION_ACCESS = {
+    'ccalderon': { 
+        'comercial': ['all'], 
+        'financiero': ['all'], 
+        'suministros': ['all'], 
+        'tributario': ['all'], 
+        'administrativo': ['all'],
+        'rrhh': ['all'],
+        'plataforma': ['all']
+    },
+    'scruz': { 
+        'comercial': ['Toma de Pedidos', 'Clientes', 'Consultas'], 
+        'suministros': ['Inventario'] 
+    },
+    'iquinde': { 
+        'financiero': ['Facturación', 'Cuentas por Cobrar', 'Cuentas por Pagar', 'Bancos y Conciliaciones'], 
+        'tributario': ['SRI — Tributario'], 
+        'administrativo': ['Nómina'] 
+    }
+};
+
+// KPIs maestros (definidos una sola vez)
+const MASTER_KPIS = {
+    'ventas_mes': { label: 'Ventas del mes', value: '$284k', change: '▲ 12.4%', changeType: 'up', proc: 'facturacion' },
+    'cxc_vencida': { label: 'CxC vencida', value: '$42k', change: '3 facturas', changeType: 'dn', proc: 'cxc' },
+    'cxp_pendiente': { label: 'CxP pendiente', value: '$128k', change: '9 docs', changeType: 'wa', proc: 'cxp' },
+    'saldo_bancos': { label: 'Saldo bancos', value: '$186k', change: '3 cuentas', changeType: 'neu', proc: 'bancos' },
+    'sri_pendiente': { label: 'Sin autorizar SRI', value: '4', change: 'Acción requerida', changeType: 'wa', proc: 'sri' },
+    'stock_critico': { label: 'Stock crítico', value: '7', change: 'Reorden urgente', changeType: 'dn', proc: 'inventario' },
+    'pedidos_pendientes': { label: 'Pedidos pendientes', value: '23', change: 'Pendiente despacho', changeType: 'wa', proc: 'pedidos' },
+    'clientes_nuevos': { label: 'Clientes nuevos', value: '+12', change: 'Este mes', changeType: 'up', proc: 'clientes' },
+    'nomina_estimada': { label: 'Nómina estimada', value: '$48k', change: 'Pendiente', changeType: 'wa', proc: 'nomina' }
+};
+
+// KPIs por rol (solo se definen los IDs, no se repite la estructura)
+const ROLE_KPIS = {
+    'admin': ['ventas_mes', 'cxc_vencida', 'cxp_pendiente', 'saldo_bancos', 'sri_pendiente', 'stock_critico', 'nomina_estimada'],
+    'comercial': ['ventas_mes', 'pedidos_pendientes', 'clientes_nuevos', 'stock_critico'],
+    'financiero': ['cxc_vencida', 'cxp_pendiente', 'saldo_bancos', 'sri_pendiente']
+};
+
+let currentUserData = null;
+
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get('user');
+    const companyId = params.get('company');
+    const companyName = params.get('companyName');
+    const ruc = params.get('ruc');
+    const profile = USER_PROFILES[username?.toLowerCase()];
+    
+    if (profile) {
+        return {
+            username: username,
+            name: profile.name,
+            short: profile.short,
+            role: profile.role,
+            modules: profile.modules,
+            companyId: companyId || 'EP',
+            companyName: companyName || 'L.HENRIQUES & CIA S.A.',
+            ruc: ruc || '0990331928001'
+        };
+    }
+    return {
+        username: username || 'usuario',
+        name: username || 'Usuario',
+        short: (username || 'US').substring(0, 2).toUpperCase(),
+        role: 'comercial',
+        modules: ['comercial'],
+        companyId: companyId || 'EP',
+        companyName: companyName || 'L.HENRIQUES & CIA S.A.',
+        ruc: ruc || '0990331928001'
+    };
+}
+
+function getFilteredDomains() {
+    if (!currentUserData) return DOMAINS;
+    return DOMAINS.filter(domain => currentUserData.modules.includes(domain.key));
+}
+
+function hasAccessToOption(procKey, optionLabel) {
+    if (!currentUserData) return true;
+    if (currentUserData.role === 'admin') return true;
+    const userAccess = USER_OPTION_ACCESS[currentUserData.username];
+    if (!userAccess) return false;
+    const proc = PROCS[procKey];
+    if (!proc) return false;
+    const allowedOptions = userAccess[proc.domKey];
+    if (!allowedOptions) return false;
+    if (allowedOptions.includes('all')) return true;
+    return allowedOptions.includes(optionLabel);
+}
+
+function buildKPIs() {
+    const kpisContainer = document.getElementById('hero-kpis');
+    if (!kpisContainer) return;
+    kpisContainer.innerHTML = '';
+    
+    // Obtener los IDs de KPIs según el rol
+    const kpiIds = ROLE_KPIS[currentUserData?.role] || ROLE_KPIS.admin;
+    
+    kpiIds.forEach(kpiId => {
+        const kpi = MASTER_KPIS[kpiId];
+        if (!kpi) return;
+        
+        const kpiEl = document.createElement('div');
+        kpiEl.className = 'kpi';
+        kpiEl.onclick = () => { 
+            if (kpi.proc && PROCS[kpi.proc]) openProc(kpi.proc); 
+        };
+        kpiEl.innerHTML = `
+            <div class="kpi-v">${kpi.value}</div>
+            <div class="kpi-l">${kpi.label}</div>
+            <div class="kpi-d ${kpi.changeType}">${kpi.change}</div>
+        `;
+        kpisContainer.appendChild(kpiEl);
     });
-  });
 }
 
-/* ════ OPEN PROC → show sections grid (NO sidebar) ════ */
-function openProc(pk){
-  const p=PROCS[pk]; if(!p) return;
-  curProc=pk;
-  document.querySelectorAll('.ac').forEach(c=>c.classList.remove('on'));
-  const card=document.getElementById('c-'+pk); if(card) card.classList.add('on');
-  // shell
-  document.getElementById('sh-home').classList.remove('on');
-  const bc=document.getElementById('sh-bc'); bc.style.display='flex';
-  document.getElementById('bc-a').textContent=p.domain;
-  document.getElementById('bc-b').textContent=p.label;
-  document.getElementById('bc-s2').style.display='none';
-  document.getElementById('bc-c').style.display='none';
-  // sections view
-  document.getElementById('sec-proc-ico').textContent=p.icon;
-  document.getElementById('sec-proc-ico').style.background=p.color+'1a';
-  document.getElementById('sec-proc-ico').style.color=p.color;
-  document.getElementById('sec-proc-nm').textContent=p.label;
-  document.getElementById('sec-proc-dom').textContent=p.domain;
-  document.getElementById('sec-intro').textContent=p.domain+' › '+p.label+' · Selecciona una sección';
-  buildSectionCards(pk);
-  // switch views
-  document.getElementById('v-home').style.display='none';
-  document.getElementById('v-sections').style.display='flex';
-  document.getElementById('v-detail').style.display='none';
+function updateUserUI() {
+    if (!currentUserData) return;
+    
+    // Actualizar saludo (si existe el elemento)
+    const heroGreet = document.getElementById('hero-greet');
+    if (heroGreet) heroGreet.textContent = `Bienvenido, ${currentUserData.name}`;
+    
+    // Actualizar fecha (si existe el elemento)
+    const heroDate = document.getElementById('hero-date');
+    if (heroDate) {
+        heroDate.textContent = new Date().toLocaleDateString('es-EC', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ` · ${currentUserData.companyName || 'Empresa'}`;
+    }
+    
+    // Header derecho - empresa
+    const empNm = document.getElementById('emp-nm');
+    if (empNm) empNm.textContent = currentUserData.companyName || 'Sin empresa';
+    
+    // Header derecho - rol
+    const shEmpRl = document.getElementById('sh-emp-rl');
+    if (shEmpRl) {
+        const roleText = currentUserData.role === 'admin' ? 'Administrador' : currentUserData.role === 'comercial' ? 'Comercial' : 'Financiero';
+        shEmpRl.textContent = `${currentUserData.name} · ${roleText}`;
+    }
+    
+    // Tarjeta central - nombre empresa
+    const epNm = document.getElementById('ep-nm');
+    if (epNm) epNm.textContent = currentUserData.companyName || 'Sin empresa';
+    
+    // Tarjeta central - RUC
+    const epRuc = document.getElementById('ep-ruc');
+    if (epRuc) epRuc.textContent = `RUC: ${currentUserData.ruc || 'N/A'}`;
+    
+    // Iniciales del avatar
+    const initials = currentUserData.short.substring(0, 2).toUpperCase();
+    
+    const empAv = document.getElementById('emp-av');
+    if (empAv) empAv.textContent = initials;
+    
+    const epAv = document.getElementById('ep-av');
+    if (epAv) epAv.textContent = initials;
+    
+    // Obtener color desde MASTER_COMPANIES
+    const companyData = MASTER_COMPANIES[currentUserData.companyId];
+    const avatarColor = companyData?.color || '#e85d04';
+    
+    if (empAv) empAv.style.background = avatarColor;
+    if (epAv) epAv.style.background = avatarColor;
+    
+    // Actualizar dropdown de empresas
+    updateCompanyDropdown();
 }
 
-/* ════ BUILD SECTION CARDS ════ */
-function buildSectionCards(pk){
-  const p=PROCS[pk]; if(!p) return;
-  const grid=document.getElementById('sec-grid'); grid.innerHTML='';
-  p.menu.forEach(sec=>{
-    const ico=SECTION_ICONS[sec.l]||'📌';
-    const card=document.createElement('div');
-    card.className='sc';
-    card.style.setProperty('--sc-clr',p.color);
-    card.innerHTML=`
-      <div class="sc-ico-wrap" style="background:${p.color}15;color:${p.color}">${ico}</div>
-      <div class="sc-nm">${sec.l}</div>`;
-    card.onclick=()=>openSection(pk,sec);
-    grid.appendChild(card);
-  });
-}
-
-/* ════ OPEN SECTION → show detail view with sidebar ════ */
-function openSection(pk, sec){
-  const p=PROCS[pk]; if(!p) return;
-  curSection=sec;
-  // breadcrumb
-  document.getElementById('bc-s2').style.display='inline';
-  document.getElementById('bc-c').style.display='inline';
-  document.getElementById('bc-c').textContent=sec.l;
-  // sidebar header
-  document.getElementById('det-sb-ico').textContent=SECTION_ICONS[sec.l]||'📌';
-  document.getElementById('det-sb-ico').style.background=p.color+'20';
-  document.getElementById('det-sb-ico').style.color=p.color;
-  document.getElementById('det-sb-nm').textContent=sec.l;
-  // build sidebar items
-  buildDetailSidebar(sec, p.color);
-  // main default state
-  document.getElementById('det-t').textContent=sec.l;
-  document.getElementById('det-s').textContent=p.domain+' › '+p.label+' › '+sec.l;
-  document.getElementById('det-ico').textContent=SECTION_ICONS[sec.l]||'📌';
-  document.getElementById('det-pt').textContent=sec.l;
-  document.getElementById('det-ps').textContent='Selecciona una opción del menú lateral para acceder al formulario correspondiente.';
-  // switch views
-  document.getElementById('v-home').style.display='none';
-  document.getElementById('v-sections').style.display='none';
-  document.getElementById('v-detail').style.display='flex';
-}
-
-/* ════ BUILD DETAIL SIDEBAR ════ */
-function buildDetailSidebar(sec, clr){
-  const sb=document.getElementById('det-sb-scroll'); sb.innerHTML='';
-  function render(items,el,depth){
-    items.forEach(item=>{
-      if(item.t==='M'&&item.c&&item.c.length){
-        const g=document.createElement('div');
-        const hdr=document.createElement('div');
-        hdr.className=depth===0?'sbi':'sbi2';
-        if(depth>0) hdr.style.paddingLeft=(15+depth*14)+'px';
-        hdr.innerHTML=`<span style="flex:1;overflow:hidden;text-overflow:ellipsis;font-size:${depth===0?'12':'11.5'}px">${item.l}</span><span class="sbi-arr">›</span>`;
-        const sub=document.createElement('div'); sub.className='sbi-sub';
-        let exp=false;
-        hdr.onclick=e=>{e.stopPropagation();exp=!exp;sub.classList.toggle('open',exp);hdr.classList.toggle('exp',exp);};
-        g.appendChild(hdr); render(item.c,sub,depth+1); g.appendChild(sub); el.appendChild(g);
-      } else {
-        const d=document.createElement('div');
-        d.className=depth===0?'sbi':depth===1?'sbi2':'sbi3';
-        if(depth>0) d.style.paddingLeft=(15+depth*14)+'px';
-        d.innerHTML=`<span style="font-size:7px;color:${clr};flex-shrink:0;margin-right:3px">●</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis" title="${item.l}">${item.l}</span>`;
-        d.dataset.k=item.l;
-        d.onclick=()=>selOption(item.l,clr);
-        el.appendChild(d);
-      }
+function updateCompanyDropdown() {
+    const dropList = document.getElementById('emp-drop-list');
+    if (!dropList) return;
+    dropList.innerHTML = '';
+    
+    const authorizedIds = USER_COMPANIES[currentUserData?.username] || ['EP', 'FN', 'MS', 'CI'];
+    
+    authorizedIds.forEach(id => {
+        const co = MASTER_COMPANIES[id];
+        if (!co) return;
+        const item = document.createElement('div');
+        item.className = 'ed-item';
+        if (currentUserData?.companyId === id) item.style.background = 'rgba(232,93,4,.15)';
+        item.innerHTML = `
+            <div class="ed-av" style="background:${co.color}">${co.id}</div>
+            <div>
+                <div class="ed-nm">${co.name}</div>
+                <div class="ed-ruc">RUC: ${co.ruc}</div>
+            </div>
+            ${currentUserData?.companyId === id ? '<div class="ed-chk">✓</div>' : ''}
+        `;
+        item.onclick = () => selEmp(co.id);  // ← ahora solo pasa el ID
+        dropList.appendChild(item);
     });
-  }
-  // If section itself has children, render them; else render section as single leaf group
-  if(sec.c&&sec.c.length) render(sec.c,sb,0);
 }
 
-/* ════ SELECT OPTION ════ */
-function selOption(label, clr){
-  document.querySelectorAll('#det-sb-scroll [data-k]').forEach(el=>el.classList.toggle('on',el.dataset.k===label));
-  document.getElementById('det-t').textContent=label;
-  document.getElementById('det-s').textContent=document.getElementById('bc-a').textContent+' › '+document.getElementById('bc-b').textContent+' › '+document.getElementById('bc-c').textContent+' › '+label;
-  document.getElementById('det-ico').textContent='📋';
-  document.getElementById('det-pt').textContent=label;
-  document.getElementById('det-ps').textContent='Abriendo formulario: '+label+'. Este formulario está conectado a la base de datos migrada desde Oracle Forms.';
-}
-
-/* ════ NAVIGATION ════ */
-function goSections(){
-  if(!curProc) return;
-  document.getElementById('bc-s2').style.display='none';
-  document.getElementById('bc-c').style.display='none';
-  document.getElementById('v-detail').style.display='none';
-  document.getElementById('v-sections').style.display='flex';
-}
-function goHome(){
-  curProc=null; curSection=null;
-  document.querySelectorAll('.ac').forEach(c=>c.classList.remove('on'));
-  document.getElementById('sh-home').classList.add('on');
-  document.getElementById('sh-bc').style.display='none';
-  document.getElementById('v-home').style.display='block';
-  document.getElementById('v-sections').style.display='none';
-  document.getElementById('v-detail').style.display='none';
-}
-
-/* ════ LOGOUT ════ */
-function showLogout(){ document.getElementById('logout-overlay').classList.add('open'); }
-function hideLogout(e){ if(!e||e.target===document.getElementById('logout-overlay')) document.getElementById('logout-overlay').classList.remove('open'); }
-function doLogout(){ window.location.href='synerERP_login_finalv2.html'; }
-
-/* ════ EMPRESA ════ */
-function toggleEmp(){ document.getElementById('emp-drop').classList.toggle('open'); }
-function selEmp(name,code,clr,el){
-  document.querySelectorAll('.ed-item').forEach(i=>{i.classList.remove('active-emp');const c=i.querySelector('.ed-chk');if(c)c.remove();});
-  const chk=document.createElement('div');chk.className='ed-chk';chk.textContent='✓';el.appendChild(chk);
-  document.getElementById('emp-nm').textContent=name;
-  document.getElementById('emp-av').textContent=code;
-  document.getElementById('emp-av').style.background=clr;
-  document.getElementById('ep-nm').textContent=name;
-  document.getElementById('ep-av').textContent=code;
-  document.getElementById('ep-av').style.background=clr;
-  document.getElementById('emp-drop').classList.remove('open');
-}
-document.addEventListener('click',e=>{
-  if(!e.target.closest('.sh-emp-btn')&&!e.target.closest('.emp-drop')&&!e.target.closest('.emp-pill'))
+function selEmp(companyId) {
+    // Obtener datos de la empresa desde MASTER_COMPANIES
+    const co = MASTER_COMPANIES[companyId];
+    if (!co) return;
+    
+    // Actualizar header derecho
+    document.getElementById('emp-nm').textContent = co.name;
+    document.getElementById('emp-av').textContent = co.id;
+    document.getElementById('emp-av').style.background = co.color;
+    
+    // Actualizar tarjeta central
+    document.getElementById('ep-nm').textContent = co.name;
+    document.getElementById('ep-av').textContent = co.id;
+    document.getElementById('ep-av').style.background = co.color;
+    document.getElementById('ep-ruc').textContent = `RUC: ${co.ruc}`;
+    
+    // Actualizar currentUserData
+    currentUserData.companyId = co.id;
+    currentUserData.companyName = co.name;
+    currentUserData.ruc = co.ruc;
+    
+    // Actualizar dropdown (marcar como seleccionada)
+    const items = document.querySelectorAll('.ed-item');
+    items.forEach(item => {
+        const itemId = item.querySelector('.ed-av')?.textContent;
+        const chk = item.querySelector('.ed-chk');
+        if (itemId === co.id) {
+            item.style.background = 'rgba(232,93,4,.15)';
+            if (!chk) item.innerHTML += '<div class="ed-chk">✓</div>';
+        } else {
+            item.style.background = '';
+            if (chk) chk.remove();
+        }
+    });
+    
+    // Cerrar dropdown
     document.getElementById('emp-drop').classList.remove('open');
-});
+    document.querySelector('.sh-emp-btn')?.classList.remove('open');
+}
 
+function buildHome() {
+    const homeContainer = document.getElementById('v-home');
+    
+    buildKPIs();
+    const wrap = document.getElementById('domains');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    
+    const filteredDomains = getFilteredDomains();
+    if (filteredDomains.length === 0) { 
+        wrap.innerHTML = '<div style="text-align:center; padding:40px; color:rgba(255,255,255,.5);">No tienes módulos asignados.</div>'; 
+    } else {
+        filteredDomains.forEach(dom => {
+            const sec = document.createElement('div'); sec.className = 'dom-sec';
+            sec.innerHTML = `<div class="dom-hdr"><span class="dom-ic">${dom.icon}</span><span class="dom-lbl">${dom.label}</span><div class="dom-line"></div><span class="dom-desc">${dom.desc}</span></div><div class="agg" id="g-${dom.key}"></div>`;
+            wrap.appendChild(sec);
+            dom.procs.forEach(p => {
+                const c = document.createElement('div'); c.className = 'ac'; c.id = 'c-' + p.key;
+                c.innerHTML = `<div class="ac-ico" style="background:${p.color}1a;color:${p.color}">${p.icon}</div><div class="ac-lbl">${p.label}</div>`;
+                c.onclick = () => openProc(p.key);
+                sec.querySelector('.agg').appendChild(c);
+            });
+        });
+    }
+    
+    // Mostrar el contenido después de construido
+    if (homeContainer) {
+        homeContainer.classList.add('ready');
+        // Remover el loading si existe
+        const loadingEl = homeContainer.querySelector('.loading-init');
+        if (loadingEl) loadingEl.remove();
+    }
+}
+
+function showScreen(id) { document.querySelectorAll('#v-home, #v-sections, #v-detail').forEach(s => s.style.display = 'none'); document.getElementById(id).style.display = id === 'v-sections' ? 'flex' : 'block'; }
+function goHome() { curProc = null; curSection = null; document.getElementById('sh-home').classList.add('on'); document.getElementById('sh-bc').style.display = 'none'; showScreen('v-home'); }
+function goSections() { document.getElementById('bc-s2').style.display = 'none'; document.getElementById('bc-c').style.display = 'none'; showScreen('v-sections'); }
+function toggleEmp() { const btn = document.querySelector('.sh-emp-btn'); const drop = document.getElementById('emp-drop'); btn.classList.toggle('open'); drop.classList.toggle('open'); }
+function showLogout() { document.getElementById('logout-overlay').classList.add('open'); }
+function hideLogout(e) { if (!e || e.target === document.getElementById('logout-overlay')) document.getElementById('logout-overlay').classList.remove('open'); }
+function doLogout() { window.location.href = 'https://cesacald26.github.io/MigrationApp/demoLoginv1.html'; }
+//function doLogout() { window.location.href = 'https://cesacald26.github.io/MigrationApp/demoLoginv1.html'; }
+document.addEventListener('click', e => { if (!e.target.closest('.sh-emp-btn') && !e.target.closest('.emp-drop')) { document.getElementById('emp-drop').classList.remove('open'); document.querySelector('.sh-emp-btn')?.classList.remove('open'); } });
+
+function openProc(pk) {
+    const p = PROCS[pk]; 
+    if (!p) return;
+    curProc = pk;
+    
+    // Actualizar breadcrumb
+    document.getElementById('sh-home').classList.remove('on');
+    document.getElementById('sh-bc').style.display = 'flex';
+    document.getElementById('bc-a').textContent = p.domain;
+    document.getElementById('bc-b').textContent = p.label;
+    document.getElementById('bc-s2').style.display = 'none';
+    document.getElementById('bc-c').style.display = 'none';
+    
+    // Actualizar header de secciones
+    document.getElementById('sec-proc-ico').textContent = p.icon;
+    document.getElementById('sec-proc-ico').style.background = p.color + '1a';
+    document.getElementById('sec-proc-ico').style.color = p.color;
+    document.getElementById('sec-proc-nm').textContent = p.label;
+    document.getElementById('sec-proc-dom').textContent = p.domain;
+    
+    // 🔧 Mejorar el texto introductorio con más separación visual
+    const introText = document.getElementById('sec-intro');
+    if (introText) {
+        introText.innerHTML = `<span style="font-weight: 600;">${p.domain}</span> › <span style="font-weight: 600;">${p.label}</span> · Selecciona una sección`;
+        introText.style.marginBottom = '24px';
+        introText.style.paddingBottom = '12px';
+        introText.style.borderBottom = '1px solid var(--g2)';
+    }
+    
+    buildSectionCards(pk);
+    
+    // Cambiar vista
+    document.getElementById('v-home').style.display = 'none';
+    document.getElementById('v-sections').style.display = 'flex';
+    document.getElementById('v-detail').style.display = 'none';
+}
+
+function buildSectionCards(pk) {
+    const p = PROCS[pk]; 
+    if (!p) return;
+    const grid = document.getElementById('sec-grid'); 
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    let sectionsToShow = p.menu;
+    if (currentUserData?.role !== 'admin') {
+        const userAccess = USER_OPTION_ACCESS[currentUserData?.username];
+        if (userAccess && userAccess[p.domKey] && !userAccess[p.domKey].includes('all')) {
+            const allowedOptions = userAccess[p.domKey];
+            sectionsToShow = p.menu.filter(sec => {
+                const checkAccess = (items) => {
+                    if (!items) return false;
+                    for (const item of items) {
+                        if (allowedOptions.includes(item.l)) return true;
+                        if (item.c && item.c.length && checkAccess(item.c)) return true;
+                    }
+                    return false;
+                };
+                return checkAccess(sec.c || []);
+            });
+        }
+    }
+    
+    if (sectionsToShow.length === 0) {
+        grid.innerHTML = '<div style="text-align:center; padding:40px; color:var(--tx3);">No tienes acceso a ninguna sección de este módulo.</div>';
+        const introText = document.getElementById('sec-intro');
+        if (introText) {
+            introText.innerHTML = `${p.domain} › ${p.label} · No tienes secciones asignadas`;
+        }
+        return;
+    }
+    
+    sectionsToShow.forEach(sec => {
+        const ico = SECTION_ICONS[sec.l] || '📌';
+        const card = document.createElement('div'); 
+        card.className = 'sc'; 
+        card.style.setProperty('--sc-clr', p.color);
+        card.innerHTML = `
+            <div class="sc-ico-wrap" style="background: ${p.color}12; color: ${p.color};">${ico}</div>
+            <div class="sc-nm">${sec.l}</div>
+        `;
+        card.onclick = () => openSection(pk, sec);
+        grid.appendChild(card);
+    });
+}
+
+function openSection(pk, sec) {
+    const p = PROCS[pk]; 
+    if (!p) return;
+    curSection = sec;
+    
+    // Actualizar breadcrumb
+    document.getElementById('bc-s2').style.display = 'inline';
+    document.getElementById('bc-c').style.display = 'inline';
+    document.getElementById('bc-c').textContent = sec.l;
+    
+    // Sidebar header
+    const sidebarIco = SECTION_ICONS[sec.l] || '📌';
+    document.getElementById('det-sb-ico').textContent = sidebarIco;
+    document.getElementById('det-sb-ico').style.background = p.color + '20';
+    document.getElementById('det-sb-ico').style.color = p.color;
+    document.getElementById('det-sb-nm').textContent = sec.l;
+    
+    // Main header
+    document.getElementById('det-t').textContent = sec.l;
+    document.getElementById('det-s').textContent = `${p.domain} › ${p.label} › ${sec.l}`;
+    document.getElementById('det-ico').textContent = sidebarIco;
+    document.getElementById('det-pt').textContent = sec.l;
+    document.getElementById('det-ps').textContent = 'Selecciona una opción del menú lateral para acceder al formulario correspondiente.';
+    
+    buildDetailSidebar(sec, p.color);
+    
+    // Cambiar vista
+    document.getElementById('v-home').style.display = 'none';
+    document.getElementById('v-sections').style.display = 'none';
+    document.getElementById('v-detail').style.display = 'flex';
+}
+
+function buildDetailSidebar(sec, clr) {
+    const sb = document.getElementById('det-sb-scroll'); 
+    if (!sb) return;
+    sb.innerHTML = '';
+    
+    function renderItems(items, container, depth) {
+        if (!items || !items.length) return;
+        
+        items.forEach(item => {
+            const hasAccess = hasAccessToOption(curProc, item.l);
+            
+            if (item.t === 'M' && item.c && item.c.length) {
+                // Filtrar hijos con acceso
+                const filteredChildren = item.c.filter(child => hasAccessToOption(curProc, child.l));
+                if (filteredChildren.length === 0 && !hasAccess) return;
+                
+                const group = document.createElement('div');
+                const header = document.createElement('div');
+                header.className = depth === 0 ? 'sbi' : 'sbi2';
+                if (depth > 0) header.style.paddingLeft = (15 + depth * 14) + 'px';
+                header.innerHTML = `<span style="flex:1; ${!hasAccess ? 'opacity:0.5;' : ''}">${item.l}</span><span class="sbi-arr">›</span>`;
+                
+                if (!hasAccess) {
+                    header.style.cursor = 'not-allowed';
+                    header.style.opacity = '0.5';
+                }
+                
+                const subMenu = document.createElement('div');
+                subMenu.className = 'sbi-sub';
+                let expanded = false;
+                
+                header.onclick = (e) => {
+                    e.stopPropagation();
+                    if (!hasAccess) return;
+                    expanded = !expanded;
+                    subMenu.classList.toggle('open', expanded);
+                    header.classList.toggle('exp', expanded);
+                };
+                
+                group.appendChild(header);
+                renderItems(filteredChildren, subMenu, depth + 1);
+                group.appendChild(subMenu);
+                container.appendChild(group);
+            } else {
+                if (!hasAccess) return;
+                
+                const option = document.createElement('div');
+                option.className = depth === 0 ? 'sbi' : (depth === 1 ? 'sbi2' : 'sbi3');
+                if (depth > 0) option.style.paddingLeft = (15 + depth * 14) + 'px';
+                option.innerHTML = `<span style="font-size:7px;color:${clr};flex-shrink:0;margin-right:3px">●</span><span style="flex:1" title="${item.l}">${item.l}</span>`;
+                
+                // 🔥 ONCLICK CORREGIDO - Usar closure para capturar el valor correcto
+                option.onclick = (function(optionLabel) {
+                    return function() {
+                        // Actualizar títulos
+                        const detTitle = document.getElementById('det-t');
+                        const detPlaceholderTitle = document.getElementById('det-pt');
+                        if (detTitle) detTitle.textContent = optionLabel;
+                        if (detPlaceholderTitle) detPlaceholderTitle.textContent = optionLabel;
+                        
+                        // Obtener el contenedor principal
+                        const detBody = document.querySelector('.det-body');
+                        if (!detBody) return;
+                        
+                        // 🔥 SIMULACIÓN: Verificar qué opción se seleccionó
+                        if (optionLabel === 'Entrada de Pedidos') {
+                            detBody.innerHTML = getFormularioPedidoHTML(optionLabel);
+                        } else {
+                            // Restaurar placeholder normal
+                            detBody.innerHTML = `
+                                <div class="det-placeholder">
+                                    <div class="det-ph-ico">📋</div>
+                                    <div class="det-ph-t">${optionLabel}</div>
+                                    <div class="det-ph-s">Formulario: ${optionLabel}. Este formulario está conectado a la base de datos migrada desde Oracle Forms.</div>
+                                    <div class="det-ph-tag">📋 Formulario conectado a Oracle Forms migrado</div>
+                                </div>
+                            `;
+                        }
+                    };
+                })(item.l);
+                
+                container.appendChild(option);
+            }
+        });
+    }
+    
+    // Filtrar y renderizar solo las opciones con acceso
+    if (sec.c && sec.c.length) {
+        const filteredItems = sec.c.filter(item => hasAccessToOption(curProc, item.l));
+        renderItems(filteredItems, sb, 0);
+    }
+}
+  
+currentUserData = getUrlParams();
+updateUserUI();
 buildHome();
+
+// Asegurar que el home se muestre correctamente después de un pequeño retraso
+setTimeout(() => {
+    const homeContainer = document.getElementById('v-home');
+    if (homeContainer && !homeContainer.classList.contains('ready')) {
+        homeContainer.classList.add('ready');
+        const loadingEl = homeContainer.querySelector('.loading-init');
+        if (loadingEl) loadingEl.remove();
+    }
+}, 500);
+
+// ========== SIMULACIÓN DE FORMULARIOS ==========
+function showFormularioPedido() {
+    const detBody = document.querySelector('.det-body');
+    if (!detBody) return;
+    
+    // Guardar el estado actual para poder volver
+    detBody.setAttribute('data-original-content', 'pedido');
+    
+    detBody.innerHTML = `
+        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.09);">
+            <div style="border-bottom: 2px solid #e85d04; padding-bottom: 12px; margin-bottom: 20px;">
+                <div style="font-size: 18px; font-weight: 900; color: #1a1a1a;">Entrada de Pedidos</div>
+                <div style="font-size: 11px; color: #999;">Ver. 13-05-2021 - Ffa40_20</div>
+            </div>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="font-weight: 900; font-size: 14px; color: #e85d04;">L.HENRIQUES - GUAYAQUIL</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Centro Distribución</label><div style="font-weight: 700; font-size: 13px;">01 GUAYAQUIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Centro Facturación</label><div style="font-weight: 700; font-size: 13px;">MOV DISPOSITIVO MOVIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Transacción Nº</label><div style="font-weight: 700; font-size: 13px;">--</div></div>
+                <div><label style="font-size: 10px; color: #999;">Pedido Nº</label><div style="font-weight: 700; font-size: 13px; color: #e85d04;">P-2026-0001</div></div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Tipo de pago</label><div style="font-weight: 700; font-size: 13px;">Crédito</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha</label><div style="font-weight: 700; font-size: 13px;">${new Date().toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha Vence</label><div style="font-weight: 700; font-size: 13px;">${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Plazo especial</label><div style="font-weight: 700; font-size: 13px;">30 días</div></div>
+            </div>
+            
+            <div style="background: #fff3eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div><label style="font-size: 10px; color: #999;">Cliente</label><div style="font-weight: 700; font-size: 13px;">DISTRIBUIDORA ALIMENTICIA DEL ECUADOR</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Subcliente</label><div style="font-weight: 700; font-size: 13px;">SUCURSAL NORTE</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo cliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$12,450.00</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo subcliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$8,230.00</div></div>
+                </div>
+            </div>
+            
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background: #1a1a1a; color: white;">
+                        <th style="padding: 8px; text-align: left;">Línea</th>
+                        <th style="padding: 8px; text-align: left;">Artículo</th>
+                        <th style="padding: 8px; text-align: right;">Cantidad</th>
+                        <th style="padding: 8px; text-align: right;">Precio</th>
+                        <th style="padding: 8px; text-align: right;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">1</td><td style="padding: 8px;">ACEITE VEGETAL 1L</td><td style="padding: 8px; text-align: right;">100</td><td style="padding: 8px; text-align: right;">$2.50</td><td style="padding: 8px; text-align: right;">$250.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">2</td><td style="padding: 8px;">ARROZ 5LB</td><td style="padding: 8px; text-align: right;">200</td><td style="padding: 8px; text-align: right;">$3.75</td><td style="padding: 8px; text-align: right;">$750.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">3</td><td style="padding: 8px;">LECHE 1L</td><td style="padding: 8px; text-align: right;">150</td><td style="padding: 8px; text-align: right;">$1.20</td><td style="padding: 8px; text-align: right;">$180.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">4</td><td style="padding: 8px;">AZÚCAR 2LB</td><td style="padding: 8px; text-align: right;">80</td><td style="padding: 8px; text-align: right;">$1.85</td><td style="padding: 8px; text-align: right;">$148.00</td></tr>
+                </tbody>
+            </table>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">Subtotal:</span><span>$1,328.00</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">IVA (12%):</span><span>$159.36</span></div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 8px;"><span style="font-weight: 900; font-size: 16px;">TOTAL:</span><span style="font-weight: 900; font-size: 16px; color: #e85d04;">$1,487.36</span></div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button onclick="alert('✅ Pedido procesado correctamente (Demo)')" style="padding: 8px 16px; background: #e85d04; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">Procesar Pedido</button>
+                <button onclick="location.reload()" style="padding: 8px 16px; background: #666; color: white; border: none; border-radius: 6px; cursor: pointer;">Cancelar</button>
+            </div>
+            
+            <div style="margin-top: 16px; font-size: 10px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 12px;">📋 Formulario simulado - Datos de ejemplo</div>
+        </div>
+    `;
+}
+
+function restoreDefaultContent(optionLabel) {
+    const detBody = document.querySelector('.det-body');
+    if (!detBody) return;
+    
+    detBody.innerHTML = `
+        <div class="det-placeholder">
+            <div class="det-ph-ico">📋</div>
+            <div class="det-ph-t">${optionLabel}</div>
+            <div class="det-ph-s">Formulario: ${optionLabel}. Este formulario está conectado a la base de datos migrada desde Oracle Forms.</div>
+            <div class="det-ph-tag">📋 Formulario conectado a Oracle Forms migrado</div>
+        </div>
+    `;
+}
+
+function getFormularioPedidoHTML(optionLabel) {
+    return `
+        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.09);">
+            <div style="border-bottom: 2px solid #e85d04; padding-bottom: 12px; margin-bottom: 20px;">
+                <div style="font-size: 18px; font-weight: 900; color: #1a1a1a;">${optionLabel}</div>
+                <div style="font-size: 11px; color: #999;">Ver. 13-05-2021 - Ffa40_20</div>
+            </div>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="font-weight: 900; font-size: 14px; color: #e85d04;">L.HENRIQUES - GUAYAQUIL</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Centro Distribución</label><div style="font-weight: 700; font-size: 13px;">01 GUAYAQUIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Centro Facturación</label><div style="font-weight: 700; font-size: 13px;">MOV DISPOSITIVO MOVIL</div></div>
+                <div><label style="font-size: 10px; color: #999;">Transacción Nº</label><div style="font-weight: 700; font-size: 13px;">--</div></div>
+                <div><label style="font-size: 10px; color: #999;">Pedido Nº</label><div style="font-weight: 700; font-size: 13px; color: #e85d04;">P-2026-0001</div></div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                <div><label style="font-size: 10px; color: #999;">Tipo de pago</label><div style="font-weight: 700; font-size: 13px;">Crédito</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha</label><div style="font-weight: 700; font-size: 13px;">${new Date().toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Fecha Vence</label><div style="font-weight: 700; font-size: 13px;">${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('es-EC')}</div></div>
+                <div><label style="font-size: 10px; color: #999;">Plazo especial</label><div style="font-weight: 700; font-size: 13px;">30 días</div></div>
+            </div>
+            
+            <div style="background: #fff3eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div><label style="font-size: 10px; color: #999;">Cliente</label><div style="font-weight: 700; font-size: 13px;">DISTRIBUIDORA ALIMENTICIA DEL ECUADOR</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Subcliente</label><div style="font-weight: 700; font-size: 13px;">SUCURSAL NORTE</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo cliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$12,450.00</div></div>
+                    <div><label style="font-size: 10px; color: #999;">Saldo subcliente</label><div style="font-weight: 700; font-size: 13px; color: #2e7d32;">$8,230.00</div></div>
+                </div>
+            </div>
+            
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background: #1a1a1a; color: white;">
+                        <th style="padding: 8px; text-align: left;">Línea</th>
+                        <th style="padding: 8px; text-align: left;">Artículo</th>
+                        <th style="padding: 8px; text-align: right;">Cantidad</th>
+                        <th style="padding: 8px; text-align: right;">Precio</th>
+                        <th style="padding: 8px; text-align: right;">Subtotal</th>
+                    <th
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">1</td><td style="padding: 8px;">ACEITE VEGETAL 1L</td><td style="padding: 8px; text-align: right;">100</td><td style="padding: 8px; text-align: right;">$2.50</td><td style="padding: 8px; text-align: right;">$250.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">2</td><td style="padding: 8px;">ARROZ 5LB</td><td style="padding: 8px; text-align: right;">200</td><td style="padding: 8px; text-align: right;">$3.75</td><td style="padding: 8px; text-align: right;">$750.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">3</td><td style="padding: 8px;">LECHE 1L</td><td style="padding: 8px; text-align: right;">150</td><td style="padding: 8px; text-align: right;">$1.20</td><td style="padding: 8px; text-align: right;">$180.00</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">4</td><td style="padding: 8px;">AZÚCAR 2LB</td><td style="padding: 8px; text-align: right;">80</td><td style="padding: 8px; text-align: right;">$1.85</td><td style="padding: 8px; text-align: right;">$148.00</td></tr>
+                </tbody>
+            </table>
+            
+            <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">Subtotal:</span><span>$1,328.00</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="font-weight: 700;">IVA (12%):</span><span>$159.36</span></div>
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid #ddd; padding-top: 8px;"><span style="font-weight: 900; font-size: 16px;">TOTAL:</span><span style="font-weight: 900; font-size: 16px; color: #e85d04;">$1,487.36</span></div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button onclick="alert('✅ Pedido procesado correctamente (Demo)')" style="padding: 8px 16px; background: #e85d04; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">Procesar Pedido</button>
+                <button onclick="location.reload()" style="padding: 8px 16px; background: #666; color: white; border: none; border-radius: 6px; cursor: pointer;">Cancelar</button>
+            </div>
+            
+            <div style="margin-top: 16px; font-size: 10px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 12px;">📋 Formulario simulado - Datos de ejemplo</div>
+        </div>
+    `;
+}
+
+function forceShowHome() {
+    const homeContainer = document.getElementById('v-home');
+    if (homeContainer) {
+        homeContainer.classList.add('ready');
+        const loadingEl = homeContainer.querySelector('.loading-init');
+        if (loadingEl) loadingEl.remove();
+    }
+}
+
+// Ejecutar después de buildHome con un timeout garantizado
+setTimeout(() => {
+    forceShowHome();
+}, 1000);
+
 </script>
 </body>
 </html>
