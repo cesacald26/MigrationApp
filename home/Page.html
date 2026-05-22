@@ -1089,8 +1089,7 @@ function goSections() { document.getElementById('bc-s2').style.display = 'none';
 function toggleEmp() { const btn = document.querySelector('.sh-emp-btn'); const drop = document.getElementById('emp-drop'); btn.classList.toggle('open'); drop.classList.toggle('open'); }
 function showLogout() { document.getElementById('logout-overlay').classList.add('open'); }
 function hideLogout(e) { if (!e || e.target === document.getElementById('logout-overlay')) document.getElementById('logout-overlay').classList.remove('open'); }
-function doLogout() { window.location.href = 'https://cesacald26.github.io/MigrationApp/demoLoginv1.html'; }
-//function doLogout() { window.location.href = 'https://cesacald26.github.io/MigrationApp/demoLoginv1.html'; }
+function doLogout() { window.location.href = 'https://cesacald26.github.io/MigrationApp/Version1/Loginv1.html'; }
 document.addEventListener('click', e => { if (!e.target.closest('.sh-emp-btn') && !e.target.closest('.emp-drop')) { document.getElementById('emp-drop').classList.remove('open'); document.querySelector('.sh-emp-btn')?.classList.remove('open'); } });
 
 function openProc(pk) {
