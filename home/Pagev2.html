@@ -364,6 +364,86 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
 .hide-until-ready.ready {
     opacity: 1;
 }
+/* ========== RESPONSIVE PARA MÓVILES ========== */
+@media (max-width: 768px) {
+    /* Sidebar oculto por defecto en móvil */
+    .det-sb {
+        position: fixed;
+        left: -280px;
+        top: 48px;
+        width: 280px;
+        height: calc(100vh - 48px);
+        z-index: 1000;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    
+    .det-sb.open {
+        left: 0;
+    }
+    
+    /* Botón para abrir/cerrar sidebar en móvil */
+    .menu-toggle {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: var(--or);
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1001;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        border: none;
+        color: white;
+        font-size: 24px;
+    }
+    
+    .menu-toggle.hidden {
+        display: none;
+    }
+    
+    /* Ajustes generales */
+    .hero {
+        padding: 16px;
+    }
+    
+    .hero-row {
+        flex-direction: column;
+    }
+    
+    .hero-kpis {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 8px;
+    }
+    
+    .domains {
+        padding: 16px;
+    }
+    
+    .sec-content {
+        padding: 16px;
+    }
+    
+    .sec-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+    }
+    
+    .ac {
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+}
 
 </style>
 </head>
@@ -442,34 +522,35 @@ html,body{height:100%;font-family:var(--font);font-size:13px;color:var(--tx);bac
     </div>
   </div>
 
-  <div id="v-detail" class="det-shell">
-    <div class="det-sb">
-      <div class="det-sb-hdr">
-        <button class="det-sb-back" onclick="goSections()">←</button>
-        <div class="det-sb-ico" id="det-sb-ico"></div>
-        <div class="det-sb-nm" id="det-sb-nm"></div>
-      </div>
-      <div class="det-sb-fade">
-        <div class="det-sb-scroll" id="det-sb-scroll"></div>
-      </div>
+<div id="v-detail" class="det-shell">
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="det-sb" id="det-sb">
+        <div class="det-sb-hdr">
+            <button class="det-sb-back" onclick="goSections()">←</button>
+            <div class="det-sb-ico" id="det-sb-ico"></div>
+            <div class="det-sb-nm" id="det-sb-nm"></div>
+        </div>
+        <div class="det-sb-fade">
+            <div class="det-sb-scroll" id="det-sb-scroll"></div>
+        </div>
     </div>
     <div class="det-main">
-      <div class="det-topbar">
-        <div>
-          <div class="det-topbar-t" id="det-t"></div>
-          <div class="det-topbar-s" id="det-s"></div>
+        <div class="det-topbar">
+            <div>
+                <div class="det-topbar-t" id="det-t"></div>
+                <div class="det-topbar-s" id="det-s"></div>
+            </div>
         </div>
-      </div>
-      <div class="det-body">
-        <div class="det-placeholder">
-          <div class="det-ph-ico" id="det-ico"></div>
-          <div class="det-ph-t" id="det-pt"></div>
-          <div class="det-ph-s" id="det-ps"></div>
-          <div class="det-ph-tag">📋 Formulario conectado a Oracle Forms migrado</div>
+        <div class="det-body">
+            <div class="det-placeholder">
+                <div class="det-ph-ico" id="det-ico"></div>
+                <div class="det-ph-t" id="det-pt"></div>
+                <div class="det-ph-s" id="det-ps"></div>
+                <div class="det-ph-tag">👷 Formulario en construcción 👷</div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
 </div>
 </div>
@@ -1185,30 +1266,56 @@ function openSection(pk, sec) {
     curSection = sec;
     
     // Actualizar breadcrumb
-    document.getElementById('bc-s2').style.display = 'inline';
-    document.getElementById('bc-c').style.display = 'inline';
-    document.getElementById('bc-c').textContent = sec.l;
+    const bcS2 = document.getElementById('bc-s2');
+    const bcC = document.getElementById('bc-c');
+    if (bcS2) bcS2.style.display = 'inline';
+    if (bcC) {
+        bcC.style.display = 'inline';
+        bcC.textContent = sec.l;
+    }
     
-    // Sidebar header
+    // Sidebar header - verificar que los elementos existan
     const sidebarIco = SECTION_ICONS[sec.l] || '📌';
-    document.getElementById('det-sb-ico').textContent = sidebarIco;
-    document.getElementById('det-sb-ico').style.background = p.color + '20';
-    document.getElementById('det-sb-ico').style.color = p.color;
-    document.getElementById('det-sb-nm').textContent = sec.l;
+    const detSbIco = document.getElementById('det-sb-ico');
+    const detSbNm = document.getElementById('det-sb-nm');
+    
+    if (detSbIco) {
+        detSbIco.textContent = sidebarIco;
+        detSbIco.style.background = p.color + '20';
+        detSbIco.style.color = p.color;
+    }
+    if (detSbNm) detSbNm.textContent = sec.l;
     
     // Main header
-    document.getElementById('det-t').textContent = sec.l;
-    document.getElementById('det-s').textContent = `${p.domain} › ${p.label} › ${sec.l}`;
-    document.getElementById('det-ico').textContent = sidebarIco;
-    document.getElementById('det-pt').textContent = sec.l;
-    document.getElementById('det-ps').textContent = 'Selecciona una opción del menú lateral para acceder al formulario correspondiente.';
+    const detT = document.getElementById('det-t');
+    const detS = document.getElementById('det-s');
+    const detIco = document.getElementById('det-ico');
+    const detPt = document.getElementById('det-pt');
+    const detPs = document.getElementById('det-ps');
     
+    if (detT) detT.textContent = sec.l;
+    if (detS) detS.textContent = `${p.domain} › ${p.label} › ${sec.l}`;
+    if (detIco) detIco.textContent = sidebarIco;
+    if (detPt) detPt.textContent = sec.l;
+    if (detPs) detPs.textContent = 'Selecciona una opción del menú lateral para acceder al formulario correspondiente.';
+    
+    // Resetear sidebar cerrado en móvil
+    const sidebar = document.getElementById('det-sb');
+    const menuBtn = document.getElementById('menu-toggle');
+    if (sidebar) sidebar.classList.remove('open');
+    if (menuBtn) menuBtn.textContent = '☰';
+    
+    // Construir sidebar
     buildDetailSidebar(sec, p.color);
     
     // Cambiar vista
-    document.getElementById('v-home').style.display = 'none';
-    document.getElementById('v-sections').style.display = 'none';
-    document.getElementById('v-detail').style.display = 'flex';
+    const vHome = document.getElementById('v-home');
+    const vSections = document.getElementById('v-sections');
+    const vDetail = document.getElementById('v-detail');
+    
+    if (vHome) vHome.style.display = 'none';
+    if (vSections) vSections.style.display = 'none';
+    if (vDetail) vDetail.style.display = 'flex';
 }
 
 function buildDetailSidebar(sec, clr) {
@@ -1223,7 +1330,6 @@ function buildDetailSidebar(sec, clr) {
             const hasAccess = hasAccessToOption(curProc, item.l);
             
             if (item.t === 'M' && item.c && item.c.length) {
-                // Filtrar hijos con acceso
                 const filteredChildren = item.c.filter(child => hasAccessToOption(curProc, child.l));
                 if (filteredChildren.length === 0 && !hasAccess) return;
                 
@@ -1262,7 +1368,7 @@ function buildDetailSidebar(sec, clr) {
                 if (depth > 0) option.style.paddingLeft = (15 + depth * 14) + 'px';
                 option.innerHTML = `<span style="font-size:7px;color:${clr};flex-shrink:0;margin-right:3px">●</span><span style="flex:1" title="${item.l}">${item.l}</span>`;
                 
-                // 🔥 ONCLICK CORREGIDO - Usar closure para capturar el valor correcto
+                // 🔥 ONCLICK CORREGIDO - Usar closure y restaurar correctamente
                 option.onclick = (function(optionLabel) {
                     return function() {
                         // Actualizar títulos
@@ -1271,15 +1377,13 @@ function buildDetailSidebar(sec, clr) {
                         if (detTitle) detTitle.textContent = optionLabel;
                         if (detPlaceholderTitle) detPlaceholderTitle.textContent = optionLabel;
                         
-                        // Obtener el contenedor principal
                         const detBody = document.querySelector('.det-body');
                         if (!detBody) return;
                         
-                        // 🔥 SIMULACIÓN: Verificar qué opción se seleccionó
+                        // Verificar qué opción se seleccionó
                         if (optionLabel === 'Entrada de Pedidos') {
                             detBody.innerHTML = getFormularioPedidoHTML(optionLabel);
                         } else {
-                            // Restaurar placeholder normal
                             detBody.innerHTML = `
                                 <div class="det-placeholder">
                                     <div class="det-ph-ico">📋</div>
@@ -1297,7 +1401,6 @@ function buildDetailSidebar(sec, clr) {
         });
     }
     
-    // Filtrar y renderizar solo las opciones con acceso
     if (sec.c && sec.c.length) {
         const filteredItems = sec.c.filter(item => hasAccessToOption(curProc, item.l));
         renderItems(filteredItems, sb, 0);
@@ -1485,6 +1588,39 @@ function forceShowHome() {
         if (loadingEl) loadingEl.remove();
     }
 }
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('det-sb');
+    const menuBtn = document.getElementById('menu-toggle');
+    if (sidebar) {
+        sidebar.classList.toggle('open');
+        if (menuBtn) menuBtn.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+    }
+}
+
+// Cerrar sidebar al hacer clic fuera (en móvil)
+document.addEventListener('click', function(e) {
+    const sidebar = document.getElementById('det-sb');
+    const menuBtn = document.getElementById('menu-toggle');
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile && sidebar && sidebar.classList.contains('open')) {
+        if (!sidebar.contains(e.target) && !menuBtn?.contains(e.target)) {
+            sidebar.classList.remove('open');
+            if (menuBtn) menuBtn.textContent = '☰';
+        }
+    }
+});
+
+// Al cambiar tamaño de ventana, resetear estado del sidebar
+window.addEventListener('resize', function() {
+    const sidebar = document.getElementById('det-sb');
+    const menuBtn = document.getElementById('menu-toggle');
+    if (window.innerWidth > 768 && sidebar) {
+        sidebar.classList.remove('open');
+        if (menuBtn) menuBtn.textContent = '☰';
+    }
+});
 
 // Ejecutar después de buildHome con un timeout garantizado
 setTimeout(() => {
