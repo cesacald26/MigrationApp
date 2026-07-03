@@ -4,10 +4,10 @@
     {
       "id": 1,
       "name": "Diagnóstico",
-      "period": "Q2 2026",
-      "status": "active",
+      "period": "Q3 2026",
+      "status": "next",
       "tasks": [
-        {"name": "Análisis de complejidad", "completed": true},
+        {"name": "Análisis de complejidad", "completed": false},
         {"name": "Inventario de forms", "completed": false},
         {"name": "Definición de prioridades por área", "completed": false},
         {"name": "Depuración de funcionalidades", "completed": false}
@@ -16,8 +16,8 @@
     {
       "id": 2,
       "name": "Diseño & Arquitectura",
-      "period": "Q2 2026",
-      "status": "active",
+      "period": "Q3 2026",
+      "status": "next",
       "tasks": [
         {"name": "Diseño UX/UI web", "completed": false},
         {"name": "Arquitectura APEX", "completed": false},
@@ -27,7 +27,7 @@
     {
       "id": 3,
       "name": "Desarrollo Módulo 1",
-      "period": "Q3 2026",
+      "period": "Q4 2026",
       "status": "next",
       "tasks": [
         {"name": "Desarrollo Login / Main Page", "completed": false},
