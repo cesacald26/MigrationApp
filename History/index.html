@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NAF Next — Plan de migración de Oracle Forms a Oracle APEX.">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>NAF Next — El Futuro del ERP ya está aquí</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --orange:#EC7723;--orange-light:#F08A3A;
+  --dark:#0F1822;--navy:#323E48;
+  --gray:#51565B;--light-gray:#96A2AD;
+  --red:#8D292B;--white:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden}
+
+/* ═══ LOADER ═══ */
+#loader{position:fixed;inset:0;z-index:99999;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity .7s,visibility .7s}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.ld-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(236,119,35,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(236,119,35,.04) 1px,transparent 1px);background-size:52px 52px}
+.ld-logo{position:relative;z-index:1}
+
+.ld-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ld-logo img {
+    height: 80px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 0 12px rgba(236, 119, 35, 0.4));
+    animation: logoPulse 2s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(236, 119, 35, 0.3));
+    }
+    50% {
+        transform: scale(1.02);
+        filter: drop-shadow(0 0 16px rgba(236, 119, 35, 0.6));
+    }
+}
+
+.ld-msg{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:5px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;animation:pulse 1.5s ease-in-out infinite;position:relative;z-index:1}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.ld-bar-wrap{width:300px;height:2px;background:rgba(236,119,35,.15);border-radius:2px;overflow:hidden;position:relative;z-index:1}
+.ld-bar{height:100%;width:0%;background:var(--orange);border-radius:2px;box-shadow:0 0 12px rgba(236,119,35,.6)}
+.ld-pct{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--orange);letter-spacing:2px;position:relative;z-index:1}
+
+/* ═══ CURSOR ═══ */
+.cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--orange);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+
+/* ═══ HERO ═══ */
+.hero{min-height:100vh;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:var(--dark)}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(236,119,35,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(236,119,35,.07) 1px,transparent 1px);background-size:52px 52px;animation:gridPulse 6s ease-in-out infinite}
+@keyframes gridPulse{0%,100%{opacity:.4}50%{opacity:1}}
+.sweep{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent 0%,var(--orange) 40%,var(--orange) 60%,transparent 100%);animation:sweepLine 4s ease-in-out infinite;opacity:.5}
+.sweep2{animation-delay:2s}
+@keyframes sweepLine{0%{left:-2%;opacity:0}5%{opacity:.5}95%{opacity:.5}100%{left:102%;opacity:0}}
+.glow{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.glow1{width:500px;height:500px;background:rgba(236,119,35,.12);top:-150px;right:-100px;animation:glowPulse 7s ease-in-out infinite}
+.glow2{width:300px;height:300px;background:rgba(141,41,43,.10);bottom:-80px;left:5%;animation:glowPulse 7s ease-in-out infinite 3.5s}
+@keyframes glowPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+
+/* NAV */
+nav{position:relative;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;border-bottom:1px solid rgba(236,119,35,.12);animation:fadeDown .8s ease-out both;flex-wrap:wrap;gap:12px}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+.nav-logo {
+    flex-shrink: 0;
+}
+
+.nav-logo img {
+    height: 50px !important;
+    width: auto !important;
+    min-width: auto !important;
+    max-width: none !important;
+    display: block !important;
+    object-fit: contain !important;    
+}
+.nav-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;font-weight:600;color:var(--orange);text-transform:uppercase}
+.nav-ctas{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nav-cta{background:var(--orange);color:var(--dark);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;border-radius:2px;transition:background .2s,transform .15s;text-decoration:none;display:inline-block}
+.nav-cta:hover{background:var(--orange-light);transform:translateY(-1px)}
+.nav-cta-ghost{background:transparent;color:var(--orange);border:1px solid rgba(236,119,35,.4);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:10px 22px;border-radius:2px;cursor:pointer;transition:background .2s,border-color .2s,transform .15s;text-decoration:none;display:inline-block}
+.nav-cta-ghost:hover{background:rgba(236,119,35,.1);border-color:var(--orange);transform:translateY(-1px)}
+
+/* HERO CONTENT */
+.hero-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 60px 80px;position:relative;z-index:10}
+.pre-tag{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:5px;font-weight:600;color:var(--orange);text-transform:uppercase;margin-bottom:20px;animation:fadeUp .8s ease-out .2s both}
+.hero-headline{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;line-height:.92;margin-bottom:10px;animation:fadeUp .8s ease-out .35s both}
+.hero-headline .l1{font-size:clamp(64px,10vw,120px);color:var(--white);display:block}
+.hero-headline .l2{font-size:clamp(64px,10vw,120px);color:var(--white);display:block}
+.hero-headline .l3{font-size:clamp(44px,7vw,84px);color:var(--orange);font-weight:300;display:block}
+.hero-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.6);max-width:520px;line-height:1.7;margin-bottom:48px;animation:fadeUp .8s ease-out .5s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.hero-pills{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp .8s ease-out .6s both}
+.pill{background:rgba(236,119,35,.1);border:1px solid rgba(236,119,35,.3);color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:2px}
+.hero-actions{display:flex;align-items:center;gap:20px;animation:fadeUp .8s ease-out .7s both;flex-wrap:wrap}
+.btn-primary{background:var(--orange);color:var(--dark);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:16px 36px;border:none;cursor:pointer;border-radius:2px;transition:background .2s,transform .15s;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--orange-light);transform:translateY(-2px)}
+.btn-ghost-link{color:rgba(255,255,255,.5);font-size:14px;font-weight:300;display:flex;align-items:center;gap:8px;text-decoration:none;transition:color .2s}
+.btn-ghost-link:hover{color:var(--white)}
+.btn-ghost-link svg{transition:transform .2s}
+.btn-ghost-link:hover svg{transform:translateX(4px)}
+
+/* COUNTDOWN */
+.countdown-bar{position:relative;z-index:10;background:rgba(236,119,35,.08);border-top:1px solid rgba(236,119,35,.15);padding:20px 60px;display:flex;align-items:center;gap:40px;animation:fadeUp .8s ease-out .9s both;flex-wrap:wrap}
+.countdown-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;font-weight:600;color:rgba(255,255,255,.35);text-transform:uppercase;white-space:nowrap}
+.cd-units{display:flex;gap:24px}
+.cd-unit{text-align:center}
+.cd-num{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:800;color:var(--orange);line-height:1;display:block}
+.cd-lbl{font-size:9px;letter-spacing:2px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase}
+.cd-sep{font-family:'Barlow Condensed',sans-serif;font-size:28px;color:rgba(236,119,35,.3);align-self:flex-start;padding-top:2px}
+
+/* ═══ SECTIONS BASE ═══ */
+.section{padding:40px 60px;position:relative}
+.s-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:5px;font-weight:600;color:var(--orange);text-transform:uppercase;margin-bottom:16px}
+.s-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,5vw,58px);font-weight:800;text-transform:uppercase;line-height:.95;color:var(--white);margin-bottom:16px}
+.s-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,.5);max-width:480px;line-height:1.7}
+.orange{color:var(--orange)}
+
+/* ═══ INFO NOTE — con espacio superior propio ═══ */
+.info-note-wrap{padding:10px 60px 0}
+.info-note{background:rgba(141,41,43,.08);border:1px solid rgba(141,41,43,.25);border-left:4px solid var(--red);padding:20px 28px;font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;border-radius:0 3px 3px 0;display:flex;align-items:flex-start;gap:14px}
+.info-note-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.info-note strong{color:rgba(255,255,255,.9)}
+
+/* ═══ COMPARE ═══ */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:60px;border:1px solid rgba(236,119,35,.15)}
+.compare-head{padding:16px 28px;font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;font-weight:700;text-transform:uppercase}
+.compare-head.before{background:var(--navy);color:rgba(255,255,255,.5)}
+.compare-head.after{background:var(--orange);color:var(--dark)}
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.compare-cell{padding:18px 28px;font-size:13px;font-weight:300;border-bottom:1px solid rgba(255,255,255,.04)}
+.compare-cell.before{color:rgba(255,255,255,.45);background:rgba(50,62,72,.3)}
+.compare-cell.after{color:var(--white);font-weight:500;background:rgba(236,119,35,.05)}
+.compare-cell.after::before{content:'✓  ';color:var(--orange);font-weight:700}
+
+/* ═══ METRICS ═══ */
+.metrics-section{background:var(--navy);padding:80px 60px;position:relative;overflow:hidden}
+.metrics-section::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(236,119,35,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(236,119,35,.05) 1px,transparent 1px);background-size:40px 40px}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(236,119,35,.15);position:relative;z-index:1;margin-top:50px}
+.metric-card{background:var(--navy);padding:36px 28px;border-left:3px solid transparent;transition:border-color .3s,background .3s}
+.metric-card:hover{border-color:var(--orange);background:rgba(236,119,35,.05)}
+.metric-val{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:var(--orange);line-height:1;margin-bottom:8px}
+.metric-lbl{font-size:12px;font-weight:300;color:rgba(255,255,255,.5)}
+
+/* ═══ ROADMAP ═══ */
+.roadmap-section{padding:100px 60px}
+.roadmap-track{position:relative;margin-top:60px;padding-top:20px}
+.roadmap-line{position:absolute;top:44px;left:0;right:0;height:2px;background:rgba(236,119,35,.2)}
+.roadmap-line-fill{height:100%;background:var(--orange);width:0;transition:width 2s ease-out;box-shadow:0 0 10px rgba(236,119,35,.5)}
+.roadmap-phases{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;z-index:1}
+.phase-item{display:flex;flex-direction:column;align-items:flex-start}
+.phase-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--orange);background:var(--dark);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.phase-dot.active{background:var(--orange)}
+.phase-dot-inner{width:10px;height:10px;border-radius:50%;background:var(--orange)}
+.phase-dot.active .phase-dot-inner{background:var(--dark)}
+.phase-num{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:rgba(236,119,35,.15);line-height:1;margin-bottom:4px}
+.phase-num.active{color:var(--orange)}
+.phase-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px}
+.phase-period{font-size:12px;color:var(--orange);margin-bottom:10px;font-weight:500}
+.phase-prog-wrap{width:100%;height:3px;background:rgba(236,119,35,.15);border-radius:2px;margin-bottom:4px;overflow:hidden}
+.phase-prog-bar{height:100%;background:var(--orange);border-radius:2px;width:0;transition:width 1.8s ease-out;box-shadow:0 0 6px rgba(236,119,35,.5)}
+.phase-prog-label{font-size:10px;color:rgba(255,255,255,.35);margin-bottom:8px;letter-spacing:1px}
+.phase-tasks{font-size:12px;color:rgba(255,255,255,.4);line-height:1.7}
+.phase-badge{margin-top:14px;padding:4px 12px;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;font-weight:700;text-transform:uppercase;border-radius:2px}
+.badge-wip{background:rgba(236,119,35,.15);color:var(--orange);border:1px solid rgba(236,119,35,.3)}
+.badge-next{background:rgba(150,162,173,.1);color:var(--light-gray);border:1px solid rgba(150,162,173,.2)}
+
+/* ═══════════════════════════════════════════
+   NOMBRE & LOGO ERP
+═══════════════════════════════════════════ */
+#nombre-erp{
+  padding:100px 60px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(236,119,35,.04) 0%,transparent 60%);
+  border-top:1px solid rgba(236,119,35,.12);
+  border-bottom:1px solid rgba(236,119,35,.12);
+}
+#nombre-erp::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(236,119,35,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(236,119,35,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+
+.erp-intro-text{font-size:15px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.85;max-width:720px;margin-bottom:14px}
+.erp-intro-text strong{color:var(--orange);font-weight:600}
+.deadline-pill{display:inline-flex;align-items:center;gap:10px;background:rgba(236,119,35,.1);border:1px solid rgba(236,119,35,.3);padding:10px 18px;border-radius:2px;margin-bottom:48px}
+.deadline-pill span{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;color:var(--orange);font-weight:600;text-transform:uppercase}
+
+/* 2-col grid */
+.erp-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;position:relative;z-index:1}
+
+/* Form panel */
+.form-panel{background:rgba(50,62,72,.35);border:1px solid rgba(236,119,35,.18);padding:36px;border-radius:2px;position:relative}
+.form-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),rgba(236,119,35,.2))}
+.f-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:8px;display:block}
+.f-field{width:100%;background:rgba(15,24,34,.85);border:1px solid rgba(236,119,35,.2);color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;padding:12px 16px;border-radius:2px;margin-bottom:18px;transition:border-color .2s;outline:none}
+.f-field:focus{border-color:var(--orange)}
+.f-field::placeholder{color:rgba(255,255,255,.22)}
+textarea.f-field{resize:vertical;min-height:88px}
+.f-row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* Submit btn */
+.btn-submit{width:100%;background:var(--orange);color:var(--dark);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:16px;border:none;cursor:pointer;border-radius:2px;transition:background .2s,transform .15s}
+.btn-submit:hover{background:var(--orange-light);transform:translateY(-2px)}
+.form-hint{font-size:11px;color:rgba(255,255,255,.25);text-align:center;margin-top:10px;line-height:1.5}
+
+/* ═══ VOTE PANEL ═══ */
+.vote-panel{position:relative;z-index:1}
+.vp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.vp-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase}
+.vp-total-badge{background:rgba(236,119,35,.12);border:1px solid rgba(236,119,35,.25);padding:6px 14px;border-radius:2px;display:flex;align-items:center;gap:8px}
+.vp-total-num{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--orange)}
+.vp-total-lbl{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase}
+.vp-hint{font-size:11px;color:rgba(255,255,255,.22);margin-bottom:16px;line-height:1.5}
+
+.proposals-list{display:flex;flex-direction:column;gap:8px}
+
+/* Proposal card */
+.prop-card{background:rgba(50,62,72,.25);border:1px solid rgba(236,119,35,.1);padding:16px 18px;border-radius:2px;display:flex;align-items:center;gap:14px;transition:border-color .2s,background .2s,transform .15s}
+.prop-card:hover{border-color:rgba(236,119,35,.35);background:rgba(236,119,35,.04);transform:translateX(3px)}
+.prop-rank{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:rgba(255,255,255,.1);width:24px;flex-shrink:0;text-align:center}
+.prop-thumb{width:46px;height:46px;border-radius:2px;flex-shrink:0;background:rgba(236,119,35,.1);border:1px solid rgba(236,119,35,.2);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:var(--orange);letter-spacing:1px;overflow:hidden}
+.prop-thumb img{width:100%;height:100%;object-fit:cover}
+.prop-info{flex:1;min-width:0}
+.prop-name{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);letter-spacing:1px}
+.prop-desc{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prop-bar-wrap{width:100%;height:2px;background:rgba(255,255,255,.05);border-radius:2px;margin-top:8px;overflow:hidden}
+.prop-bar{height:100%;background:rgba(236,119,35,.4);border-radius:2px;transition:width .6s ease-out}
+.prop-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.prop-count{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--orange);line-height:1}
+.prop-count-lbl{font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px;text-align:right}
+.prop-vote-btn{background:transparent;border:1px solid rgba(236,119,35,.35);color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:2px;font-weight:700;text-transform:uppercase;padding:5px 12px;border-radius:2px;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap;text-decoration:none;display:inline-block}
+.prop-vote-btn:hover{background:rgba(236,119,35,.18);transform:translateY(-1px)}
+
+/* ═══════════════════════════════════════════
+   NECESIDADES — DOBLE ENFOQUE TI
+═══════════════════════════════════════════ */
+#necesidades{padding:100px 60px;background:var(--dark);border-top:1px solid rgba(236,119,35,.12)}
+
+.needs-hero{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-bottom:72px}
+.needs-big-line{font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,4vw,48px);font-weight:900;text-transform:uppercase;line-height:1;color:var(--white);margin-bottom:16px}
+.needs-big-line .o{color:var(--orange)}
+.needs-body-text{font-size:14px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.85}
+.needs-body-text strong{color:rgba(255,255,255,.85);font-weight:500}
+
+.sub-section-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:5px;font-weight:600;color:var(--orange);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.sub-section-tag::after{content:'';flex:1;height:1px;background:rgba(236,119,35,.2)}
+
+.investment-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(236,119,35,.1);border:1px solid rgba(236,119,35,.15);margin-bottom:72px}
+.inv-card{background:var(--dark);padding:32px 28px;border-left:3px solid transparent;transition:border-color .3s,background .3s}
+.inv-card:hover{border-color:var(--orange);background:rgba(236,119,35,.03)}
+.inv-icon{font-size:28px;margin-bottom:14px;display:block}
+.inv-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--white);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.inv-badge{display:inline-block;background:rgba(236,119,35,.12);border:1px solid rgba(236,119,35,.25);color:var(--orange);font-size:9px;letter-spacing:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-bottom:14px}
+.inv-badge.critical{background:rgba(141,41,43,.15);border-color:rgba(141,41,43,.4);color:#e06060}
+.inv-items{list-style:none;display:flex;flex-direction:column;gap:8px}
+.inv-items li{font-size:12px;color:rgba(255,255,255,.45);padding-left:16px;position:relative;line-height:1.5}
+.inv-items li::before{content:'→';position:absolute;left:0;color:var(--orange);font-size:10px}
+
+.needs-table{width:100%;border-collapse:collapse;border:1px solid rgba(236,119,35,.15);margin-bottom:48px}
+.needs-table thead th{background:rgba(236,119,35,.1);padding:14px 18px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;text-align:left;border-bottom:1px solid rgba(236,119,35,.2)}
+.needs-table tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .2s}
+.needs-table tbody tr:hover{background:rgba(236,119,35,.03)}
+.needs-table td{padding:13px 18px;font-size:12px;font-weight:300;color:rgba(255,255,255,.52);vertical-align:top;border-right:1px solid rgba(255,255,255,.04)}
+.needs-table td:first-child{color:var(--white);font-weight:500;white-space:nowrap}
+.needs-table td:last-child{border-right:none}
+.n-tag{display:inline-block;background:rgba(236,119,35,.12);border:1px solid rgba(236,119,35,.25);color:var(--orange);font-size:9px;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+.n-tag.urgent{background:rgba(141,41,43,.15);border-color:rgba(141,41,43,.4);color:#e06060}
+
+/* CTA band */
+.cta-band{background:linear-gradient(135deg,rgba(236,119,35,.12) 0%,rgba(236,119,35,.04) 100%);border:1px solid rgba(236,119,35,.25);padding:36px 40px;border-radius:2px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.cta-band-text{flex:1;min-width:200px}
+.cta-band-hl{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--white);text-transform:uppercase;margin-bottom:6px}
+.cta-band-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+.btn-cta{background:var(--orange);color:var(--dark);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:16px 32px;border:none;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s;white-space:nowrap}
+.btn-cta:hover{background:var(--orange-light);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid rgba(236,119,35,.15);padding:36px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.25);font-weight:300}
+.footer-logo img { height:32px; opacity:.7; }
+.demo-buttons{display:flex;gap:12px}
+.demo-btn{background:rgba(236,119,35,.08);border:1px solid rgba(236,119,35,.3);color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 18px;border-radius:2px;text-decoration:none;transition:all .2s}
+.demo-btn:hover{background:rgba(236,119,35,.2);border-color:var(--orange);transform:translateY(-1px)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .investment-grid{grid-template-columns:1fr}
+  .needs-hero{grid-template-columns:1fr;gap:32px}
+  .erp-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  nav,.hero-content,.section,.metrics-section,.roadmap-section,
+  footer,.countdown-bar,#nombre-erp,#necesidades,.info-note-wrap{padding-left:24px;padding-right:24px}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .roadmap-phases{grid-template-columns:1fr 1fr}
+  .compare-grid,.compare-row{grid-template-columns:1fr}
+  .f-row2{grid-template-columns:1fr}
+  .needs-table{font-size:11px}
+  .needs-table td{padding:10px 12px}
+  .cta-band{flex-direction:column}
+  footer{flex-direction:column;align-items:center;text-align:center}
+  .demo-buttons{width:100%;justify-content:center}
+}
+
+/* ═══ NECESIDADES - DISEÑO CON TÍTULO CENTRADO ═══ */
+.needs-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.needs-header .s-tag {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.needs-header .s-title {
+  margin-bottom: 0;
+}
+
+.needs-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+  align-items: start;
+}
+
+.needs-big-line {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--white);
+}
+
+.needs-big-line .o {
+  color: var(--orange);
+}
+
+.needs-right {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.needs-intro-text p {
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.needs-intro-text strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+.two-frentes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.frente-card {
+  background: rgba(50, 62, 72, 0.25);
+  border: 1px solid rgba(236, 119, 35, 0.15);
+  border-radius: 2px;
+  padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.frente-card:hover {
+  border-color: rgba(236, 119, 35, 0.4);
+  background: rgba(236, 119, 35, 0.03);
+  transform: translateX(3px);
+}
+
+.frente-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.frente-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.frente-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .needs-two-columns {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .needs-header {
+    margin-bottom: 32px;
+  }
+}
+
+/* Centrar el texto "Tenemos el plan. Necesitamos el respaldo." */
+.needs-big-line {
+  text-align: center;
+}
+
+.needs-left {
+  display: flex;
+  justify-content: center;
+}
+
+#roadmapPhases {
+    min-height: 400px;
+}
+
+#roadmapPhases:empty::before {
+    content: "🔄 Cargando roadmap...";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    text-align: center;
+    color: var(--light-gray);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══ LOADER ══ -->
+<div id="loader">
+  <div class="ld-grid"></div>
+  <div class="ld-logo">
+    <img src="https://cesacald26.github.io/MigrationApp/logoResideñado.png"
+         alt="NAF Next Logo" >
+  </div>
+  <div class="ld-msg" id="ldMsg">Iniciando sistema…</div>
+  <div class="ld-bar-wrap"><div class="ld-bar" id="ldBar"></div></div>
+  <div class="ld-pct" id="ldPct">0%</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="grid-bg"></div>
+    <div class="sweep"></div><div class="sweep sweep2"></div>
+    <div class="glow glow1"></div><div class="glow glow2"></div>
+  </div>
+
+  <nav>
+<div class="nav-logo">
+    <img src="https://cesacald26.github.io/MigrationApp/logoResideñado.png"
+         alt="NAF Next Logo" >
+</div>
+
+    <span class="nav-tag">ERP Corporativo · Plan de Migración 2026</span>
+
+    <div class="nav-ctas">
+      <a href="#nombre-erp" class="nav-cta-ghost">🧑‍💻 Nombra ERP</a>
+      <a href="#necesidades" class="nav-cta-ghost">📋 Solicitudes TI</a>
+      <a href="#roadmap" class="nav-cta">🚧 Ver Roadmap →</a>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <div class="pre-tag">Transformación Digital · 2026</div>
+    <h1 class="hero-headline">
+      <span class="l1">El Futuro</span>
+      <span class="l2">del ERP</span>
+      <span class="l3">ya está aquí.</span>
+    </h1>
+    <p class="hero-sub">Evolucionamos de Oracle Forms hacia una plataforma web moderna y flexible, diseñada para mejorar la experiencia de usuario y acelerar los procesos del negocio.</p>
+    <div class="hero-pills">
+      <span class="pill">Oracle Application Express (APEX) 20.2</span>
+      <span class="pill">HTML5 · CSS3 · JS</span>
+      <span class="pill">100% Web nativo</span>
+      <span class="pill">Integración con Servicios Modernos</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#que-cambia" class="btn-primary">Descubrir el cambio</a>
+      <a href="#nombre-erp" class="btn-ghost-link">
+        🧑‍💻 Proponer nombre del ERP
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#roadmap" class="btn-ghost-link">
+        🚧 Ver roadmap
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!--se comenta cuenta regresiva
+  <div class="countdown-bar">
+    <span class="countdown-label">Cuenta regresiva al lanzamiento</span>
+    <div class="cd-units">
+      <div class="cd-unit"><span class="cd-num" id="cd-d">00</span><span class="cd-lbl">Días</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl">Horas</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">Minutos</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">Segundos</span></div>
+    </div>
+  </div>-->
+</section>
+
+<!-- ══════════════════ QUÉ CAMBIA ══════════════════ -->
+<section class="section" id="que-cambia">
+  <div class="s-tag reveal">Lo que cambia para ti</div>
+  <h2 class="s-title reveal">Antes<br><span class="orange">vs Ahora</span></h2>
+  <p class="s-sub reveal">Una comparativa honesta de lo que significa trabajar con NAF Next frente al sistema actual.</p>
+  <div class="compare-grid reveal">
+    <div class="compare-head before">NAF Actual — Hoy</div>
+    <div class="compare-head after">NAF Next — Mañana</div>
+    <div class="compare-cell before">Alta dependencia de Citrix para conexiones fuera de la red interna GYE</div>
+    <div class="compare-cell after">Acceso desde cualquier navegador web o desde tu móvil 📱</div>
+    <div class="compare-cell before">Usuarios diferentes para Windows y NAF</div>
+    <div class="compare-cell after">Usuario único mediante integración con Directorio Activo</div>
+    <div class="compare-cell before">Interfaz rígida y poco intuitiva</div>
+    <div class="compare-cell after">Herramienta de fácil uso que se ajusta automáticamente a tu pantalla en el dispositivo que estés</div>
+    <div class="compare-cell before">Tiempos de carga lentos al cargar y/o procesar reportes o archivos en Excel</div>
+    <div class="compare-cell after">Los reportes se podrán generar y descargar en varios formatos (.pdf, .xls, .xlsx, .csv) de manera nativa sin demoras</div>
+    <div class="compare-cell before">Sin integración con herramientas modernas</div>
+    <div class="compare-cell after">Puede integrarse con Servicios Web, Servicios en la Nube, Automatización e Inteligencia a futuro (a futuro luego de Upgrade de la Base de Datos)</div>
+  </div>
+</section>
+
+<!-- Nota de seguridad — con espaciado propio, separada de métricas -->
+<div class="info-note-wrap reveal">
+  <div class="info-note">
+    <span class="info-note-icon">🔒</span>
+    <div>
+      <strong>Nota de seguridad:</strong> Para conexiones externas seguiremos utilizando <strong>VPN</strong> como parte de nuestras políticas de seguridad corporativa. Oracle APEX mejora la experiencia interna sin comprometer la capa de seguridad establecida.
+    </div>
+  </div>
+</div>
+
+<div style="height: 4rem;"></div>
+
+<!-- ══════════════════ MÉTRICAS ══════════════════ -->
+<section class="metrics-section">
+  <div class="s-tag reveal">Impacto esperado</div>
+  <h2 class="s-title reveal">Números que<br><span class="orange">importan</span></h2>
+  <div class="metrics-grid reveal">
+    <div class="metric-card"><div class="metric-val">↓30%</div><div class="metric-lbl">Reducción en tiempo de desarrollo de nuevas funcionalidades</div></div>
+    <div class="metric-card"><div class="metric-val">↑3x</div><div class="metric-lbl">Mejora en velocidad de respuesta — interfaz 3 veces más rápida</div></div>
+    <div class="metric-card"><div class="metric-val">↓100%</div><div class="metric-lbl">Eliminación de costos de licencias Citrix</div></div>
+    <div class="metric-card"><div class="metric-val">↓70%</div><div class="metric-lbl">Reducción en tiempo de generación de reportes</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════ ROADMAP ══════════════════ -->
+<section class="roadmap-section" id="roadmap">
+  <div class="s-tag reveal">Plan de migración</div>
+  <h2 class="s-title reveal">Roadmap<br><span class="orange">2026 — 2027</span></h2>
+  
+  <!-- Botón de recarga manual -->
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+    <button class="prop-vote-btn" onclick="forceReloadRoadmap()" style="background: rgba(236,119,35,0.2);">
+      🔄 Recargar Roadmap
+    </button>
+  </div>
+  
+  <div class="roadmap-track">
+    <div class="roadmap-line"><div class="roadmap-line-fill" id="lineProgress"></div></div>
+    <div class="roadmap-phases" id="roadmapPhases">
+      <!-- Las fases se cargarán dinámicamente desde JSON -->
+      <div style="text-align: center; padding: 40px;">Cargando roadmap...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     NOMBRE & LOGO DEL ERP
+══════════════════════════════════════════════ -->
+<section id="nombre-erp">
+  <div class="s-tag reveal">Participación corporativa</div>
+  <h2 class="s-title reveal">¡Tú decides el<br><span class="orange">nombre del ERP!</span></h2>
+
+  <p class="erp-intro-text reveal">
+    Queremos que <strong>toda la organización sea parte</strong> de este cambio histórico. El nuevo ERP llevará el nombre que <strong>nuestros equipos elijan</strong>. Completa el formulario y tu correo se abrirá listo para enviar la propuesta directamente al equipo de TI.
+  </p>
+  <div class="deadline-pill reveal">
+    <span>📅</span>
+    <span>Plazo de envío propuestas: 30 de Julio 2026</span>
+  </div>
+
+  <div class="erp-grid reveal">
+
+    <!-- FORMULARIO → abre mailto nativo -->
+    <div class="form-panel">
+      <label class="f-label">Tu nombre y área</label>
+      <div class="f-row2">
+        <input class="f-field" type="text" id="fNombre" placeholder="Nombre completo" autocomplete="name">
+        <input class="f-field" type="text" id="fArea" placeholder="Área / Departamento">
+      </div>
+
+      <label class="f-label">Nombre propuesto para el ERP</label>
+      <input class="f-field" type="text" id="fErpName" placeholder="Ej: NOVA, Nexus, etc" maxlength="40">
+
+      <label class="f-label">Descripción e inspiración</label>
+      <textarea class="f-field" id="fDesc" placeholder="¿Qué significa el nombre? ¿Cómo lo imaginas?…"></textarea>
+
+      <button class="btn-submit" onclick="openProposalMail()">
+        Enviar propuesta →
+      </button>
+      <p class="form-hint">Al hacer clic se abrirá tu correo con el asunto y contenido prellenados.</p>
+    </div>
+
+    <!-- PANEL DE VOTACIÓN (AUTOMÁTICO) -->
+    <div class="vote-panel">
+      <div class="vp-header">
+        <span class="vp-title">Propuestas actuales — conteo de votos</span>
+        <div class="vp-total-badge">
+          <span class="vp-total-num" id="totalVotes">0</span>
+          <span class="vp-total-lbl">votos totales</span>
+        </div>
+      </div>
+      <p class="vp-hint">Haz clic en <strong style="color:rgba(255,255,255,.5)">↑ Votar</strong> para enviar tu voto por correo al equipo de TI. El sistema actualiza el conteo automáticamente.</p>
+      <div class="proposals-list" id="proposalsList"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     QUÉ NECESITAMOS — DISEÑO DE DOS COLUMNAS CON TÍTULO CENTRADO
+══════════════════════════════════════════════ -->
+<section id="necesidades">
+  <!-- Título centrado -->
+  <div class="needs-header reveal">
+    <div class="s-tag">Desde el equipo de TI</div>
+    <h2 class="s-title">Lo que necesitamos<br><span class="orange">para lograrlo</span></h2>
+  </div>
+  
+  <!-- Contenedor de dos columnas -->
+  <div class="needs-two-columns reveal">
+    
+    <!-- COLUMNA IZQUIERDA -->
+    <div class="needs-left">
+      <div class="needs-big-line"><br><br>Tenemos el <span class="o">plan</span>.<br>Necesitamos<br>el <span class="o">respaldo</span>.</div>
+    </div>
+    
+    <!-- COLUMNA DERECHA -->
+    <div class="needs-right">
+      <div class="needs-intro-text">
+        <p>Esta migración no es solo un proyecto técnico: es una <strong>transformación organizacional</strong>. El equipo de TI tiene la capacidad y la hoja de ruta para ejecutarla. Para <strong>acelerar los tiempos y garantizar calidad</strong> necesitamos el apoyo en dos frentes:</p>
+      </div>
+      
+      <div class="two-frentes">
+        <div class="frente-card">
+          <div class="frente-icon">📈</div>
+          <div class="frente-title">Inversión en herramientas, <span class="orange">capacitación e IA</span></div>
+          <div class="frente-desc">Recursos que multiplican la productividad del equipo de desarrollo y reducen el tiempo de migración significativamente.</div>
+        </div>
+        <div class="frente-card">
+          <div class="frente-icon">🤝</div>
+          <div class="frente-title">Colaboración activa de <span class="orange">cada área</span></div>
+          <div class="frente-desc">Sin el conocimiento de los usuarios del negocio no podemos migrar correctamente sus procesos.</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- PARTE 1: Inversión TI -->
+  <div class="sub-section-tag reveal">Requisitos necesarios</div>
+  <div class="investment-grid reveal">
+
+    <div class="inv-card">
+      <span class="inv-icon">🎓</span>
+      <div class="inv-title">Equipo TI</div>
+      <div class="inv-badge critical">Alta prioridad</div>
+      <ul class="inv-items">
+        <li>Licencias de asistentes de código con IA — Claude</li>
+        <li>Certificación oficial Oracle APEX Developer para el equipo de desarrollo</li>
+        <li>Servidor dedicado de desarrollo y QA — independiente del productivo</li>
+        <li>Herramientas de análisis y conversión automática de código Oracle Forms legacy</li>
+      </ul>
+    </div>
+    <div class="inv-card">
+      <span class="inv-icon">⏱</span>
+      <div class="inv-title">Tiempo & Recurso Humano</div>
+      <div class="inv-badge critical">Recurso más crítico</div>
+      <ul class="inv-items">
+        <li>Liberación parcial del soporte operativo diario durante fases de desarrollo</li>
+        <li>Protección del calendario del equipo TI frente a proyectos paralelos no prioritarios</li>        
+        <li>Designación formal de 1 analista funcional por área clave como contraparte</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- PARTE 2: Por área (tabla) -->
+  <div class="sub-section-tag reveal">Lo que necesitamos de cada área — Colaboración operativa</div>
+  <table class="needs-table reveal">
+    <thead>
+      <tr><th>Área</th><th>Qué necesitamos de ellos</th><th>Entregable esperado</th><th>Prioridad</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>💼 Presidencia</td><td>Patrocinio ejecutivo, aprobación de presupuesto y comunicado formal a toda la organización sobre el proyecto</td><td>Carta de apoyo + asignación presupuestaria aprobada</td><td><span class="n-tag urgent">Crítico</span></td></tr>
+      <tr><td>📊 Finanzas / Contabilidad</td><td>Documentar flujos contables actuales, depurar procesos actuales y catálogos de cuentas y validar que los reportes migrados sean correctos</td><td>Mapeo de procesos contables + Validación UAT usuario financiero</td><td><span class="n-tag urgent">Urgente</span></td></tr>
+      <tr><td>📦 Logística / Bodega</td><td>Definir y Documentar mapa de proceso interno (Inventarios, Movimientos Bodega, etc), depurar catálogo de productos</td><td>Mapa de Proceso Interno, casos de prueba, Validación UAT usuarios bodega</td><td><span class="n-tag">Alta</span></td></tr>      <tr><td>🤝 RRHH / Talento Humano</td><td>Coordinar disponibilidad del personal para capacitaciones, apoyar la comunicación interna y definir perfiles de usuario por rol</td><td>Plan de capacitación por rol + comunicados de cambio</td><td><span class="n-tag">Alta</span></td></tr>
+      <tr><td>💰 Ventas / Comercial</td><td>Definir y documentar flujo E2E cotización-pedido-facturación listas de precios, descuentos y condiciones especiales. Identificar reportes comerciales </td><td>Mapa de proceso comercial E2E, Reportes Clave, Pruebas de Integración y Facturación</td><td><span class="n-tag">Media</span></td></tr>
+      <tr><td>🛒 Compras</td><td>Mapear proceso de compras y definir flujos de aprobación por niveles de autorización, Identificar reportes claves del proceso</td><td>Flujo de compras documentado + matriz de aprobaciones</td><td><span class="n-tag">Media</span></td></tr>
+      <tr><td>🏭 Producción / Operaciones</td><td>Documentar órdenes de producción y definir qué procesos</td><td>Flujos críticos mapeados</td><td><span class="n-tag">Media</span></td></tr>
+      <tr><td>🏢 Administración</td><td>Documentar procesos de gestión documental, aprobaciones internas, control de activos fijos y cualquier formulario administrativo que hoy opera. Identificar integraciones con herramientas ofimáticas actuales</td><td>Inventario de formularios administrativos + flujos de aprobación documentados + validación UAT administrativo</td><td><span class="n-tag">Alta</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="cta-band reveal">
+    <div class="cta-band-text">
+      <div class="cta-band-hl">¿Listo para sumarte al cambio?</div>
+      <div class="cta-band-sub">Cada área que se compromete hoy acelera el lanzamiento mañana. Escríbenos y coordinamos cómo podemos trabajar juntos.</div>
+    </div>
+    <a id="ctaContactBtn" href="#" class="btn-cta" onclick="openContactMail(event)">Contactar al equipo TI →</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER con botones demo══ -->
+<footer>
+  <div style="display:flex;align-items:center;gap:18px">
+    <!--<svg width="130" height="32" viewBox="0 0 130 32" xmlns="http://www.w3.org/2000/svg" style="opacity:.65">
+      <rect x="0" y="4" width="4" height="24" fill="#EC7723"/>
+      <text x="10" y="24" font-family="Barlow Condensed, sans-serif" font-size="24" font-weight="900" fill="white" letter-spacing="1">NAF</text>
+      <circle cx="63" cy="22" r="2.5" fill="#EC7723"/>
+      <text x="70" y="24" font-family="Barlow Condensed, sans-serif" font-size="24" font-weight="300" fill="#EC7723" letter-spacing="1">NEXT</text>
+    </svg>!-->
+    <div class="footer-logo"><img src="https://cesacald26.github.io/MigrationApp/logoResideñado.png" alt="Descripción">
+    <span class="footer-copy">© 2026 NAF Next · ERP Corporativo</span>
+  </div>
+  <div class="demo-buttons">
+    <a href="#" class="demo-btn" id="demo1Btn" target="_blank">📱 Demo Módulo V1.1</a>
+    <a href="#" class="demo-btn" id="demo2Btn" target="_blank">📊 Demo Módulo V1.2</a>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════
+   CONFIGURACIÓN
+════════════════════════════════════════ */
+const TI_EMAIL = 'sistemas@lhenriques.com'; // ← REEMPLAZAR
+
+// --- LINKS DE DEMO (REEMPLAZAR CON URLs REALES DE GITHUB PAGES) ---
+const DEMO_LINK_1 = 'https://cesacald26.github.io/MigrationApp/Version1/Loginv1.html'; // LINK REAL 1
+const DEMO_LINK_2 = 'https://cesacald26.github.io/MigrationApp/Version2/Loginv2.html';  // LINK REAL 2
+
+const PROPOSALS_JSON_BASE = 'https://cesacald26.github.io/MigrationApp/proposals.json';
+let cachedProposals = [];
+
+async function loadProposals() {
+    try {
+        // Timestamp único para evitar cualquier cache
+        const url = `${PROPOSALS_JSON_BASE}?_=${Date.now()}`;
+        const response = await fetch(url, {
+            cache: 'no-store',
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            cachedProposals = data.proposals || [];
+            renderProposals();
+            return cachedProposals;
+        } else {
+            console.warn('Error al cargar JSON');
+            return getDefaultProposals();
+        }
+    } catch (error) {
+        console.error('Error de red:', error);
+        return getDefaultProposals();
+    }
+}
+
+function getDefaultProposals() {
+    return [
+        {id:1, name:'NAFNXT', desc:'Evolucionamos a las nuevas tecnologías', votes:0}
+    ];
+}
+
+function renderProposals() {
+    const proposals = [...cachedProposals].sort((a,b) => b.votes - a.votes);
+    const list = document.getElementById('proposalsList');
+    const total = proposals.reduce((s,p) => s + p.votes, 0);
+    const max = Math.max(...proposals.map(p => p.votes), 1);
+    document.getElementById('totalVotes').textContent = total;
+
+    list.innerHTML = proposals.map((p,i) => `
+        <div class="prop-card">
+            <div class="prop-rank">${i+1}</div>
+            <div class="prop-thumb">${p.name.slice(0,2)}</div>
+            <div class="prop-info">
+                <div class="prop-name">${p.name}</div>
+                <div class="prop-desc">${p.desc}</div>
+                <div class="prop-bar-wrap">
+                    <div class="prop-bar" style="width:${(p.votes/max*100).toFixed(0)}%"></div>
+                </div>
+            </div>
+            <div class="prop-right">
+                <div>
+                    <div class="prop-count">${p.votes}</div>
+                    <div class="prop-count-lbl">votos</div>
+                </div>
+                <a class="prop-vote-btn" href="#" onclick="openVoteMail('${p.name.replace(/'/g, "\\'")}'); return false;">
+                    ↑ Votar
+                </a>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ────────────────────────────────────────
+   VOTAR — abre mailto
+──────────────────────────────────────── */
+function openVoteMail(propName) {
+  const subject = encodeURIComponent(`🗳️ NAF Next | Mi voto para: ${propName}`);
+  const body = encodeURIComponent(
+`🗳️ ERP CORPORATIVO -REGISTRO DE VOTO
+
+🏆 MI VOTO ES PARA:
+   • ${propName.toUpperCase()}
+
+👤 MIS DATOS (opcional):
+   • Nombre: 
+   • Área:   
+
+💬 COMENTARIO (opcional):
+
+
+────────────────────────────────────────────────────────────────
+✓ Tu voto será asignado por el equipo de TI.
+`);
+  window.location.href = `mailto:${TI_EMAIL}?subject=${subject}&body=${body}`;
+  setTimeout(() => {    
+    alert(`¡Gracias! Tu voto para "${propName}" será registrado una vez recibido. A continuación, se abrirá tu correo para que nos compartas tu voto`);
+  }, 500);
+}
+
+/* ────────────────────────────────────────
+   PROPUESTA DE NOMBRE ERP
+──────────────────────────────────────── */
+function openProposalMail() {
+  const nombre  = document.getElementById('fNombre').value.trim();
+  const area    = document.getElementById('fArea').value.trim();
+  const erpName = document.getElementById('fErpName').value.trim();
+  const desc    = document.getElementById('fDesc').value.trim();
+
+  if(!nombre){ alert('Por favor ingresa tu nombre.'); return; }
+  if(!erpName){ alert('Por favor ingresa el nombre propuesto para el ERP.'); return; }
+
+  const subject = encodeURIComponent(`🚀 NAF Next | Propuesta de nombre ERP: ${erpName.toUpperCase()}`);
+  const body = encodeURIComponent(
+`🚀 ERP CORPORATIVO - PROPUESTA DE NOMBRE
+
+📌 NOMBRE PROPUESTO:
+   • ${erpName.toUpperCase()}
+
+👤 PRESENTADO POR:
+   • Nombre: ${nombre}
+   • Área:   ${area || 'No especificada'}
+
+📝 DESCRIPCIÓN E INSPIRACIÓN:
+   ${desc || 'Sin descripción adicional'}
+
+────────────────────────────────────────────────────────────────
+📎 Adjunta aquí tu logo o boceto si lo tienes.
+
+`);
+  window.location.href = `mailto:${TI_EMAIL}?subject=${subject}&body=${body}`;
+  alert('¡Gracias por participar! A continuación, se abrirá tu correo para que nos compartas tu propuesta');
+  // ✅ LIMPIAR CAMPOS después de enviar
+  document.getElementById('fNombre').value = '';
+  document.getElementById('fArea').value = '';
+  document.getElementById('fErpName').value = '';
+  document.getElementById('fDesc').value = ''; 
+}
+
+/* ────────────────────────────────────────
+   CONTACTO TI
+──────────────────────────────────────── */
+function openContactMail(e) {
+  if(e) e.preventDefault();
+  const subject = encodeURIComponent('🤝 NAF Next | Apoyo al proyecto de migración ERP');
+  const body = encodeURIComponent(
+`🤝 PROYECTO MIGRACIÓN ERP CORPORATIVO - SOLICITUD DE COLABORACIÓN      
+📢 ME COMUNICO PARA SUMARME AL PROYECTO:
+
+👤 MIS DATOS:
+   • Nombre:    
+   • Área/Cargo: 
+   • Ext/Cel:   
+
+💬 MENSAJE / COLABORACIÓN:
+
+────────────────────────────────────────────────────────────────
+✅ El equipo de TI se pondrá en contacto contigo.
+────────────────────────────────────────────────────────────────
+`);
+  window.location.href = `mailto:${TI_EMAIL}?subject=${subject}&body=${body}`;
+}
+
+/* ════════════════════════════════════════
+   LOADER, CURSOR, COUNTDOWN, REVEAL, ETC.
+════════════════════════════════════════ */
+(function(){
+  const bar=document.getElementById('ldBar'),
+        pct=document.getElementById('ldPct'),
+        msg=document.getElementById('ldMsg'),
+        ldr=document.getElementById('loader');
+  const steps=['Iniciando sistema…','Cargando Presentación ERP…','Conectando...','Preparando la experiencia…','¡Bienvenido a NAF Next!'];
+  let p=0;
+  const iv=setInterval(()=>{
+    p=Math.min(p+Math.random()*7+2,100);
+    bar.style.width=p+'%';
+    pct.textContent=Math.floor(p)+'%';
+    msg.textContent=steps[Math.min(Math.floor(p/22),steps.length-1)];
+    if(p>=100){clearInterval(iv);setTimeout(()=>ldr.classList.add('hidden'),400);}
+  },55);
+})();
+
+document.addEventListener('mousemove',e=>{
+  const c=document.getElementById('cursor');
+  c.style.left=e.clientX+'px'; c.style.top=e.clientY+'px';
+});
+
+function tick(){
+  const diff=new Date('2026-09-01T08:00:00')-new Date();
+  if(diff<=0)return;
+  const cdD = document.getElementById('cd-d');
+  const cdH = document.getElementById('cd-h');
+  const cdM = document.getElementById('cd-m');
+  const cdS = document.getElementById('cd-s');
+  if(cdD) cdD.textContent=String(Math.floor(diff/86400000)).padStart(2,'0');
+  if(cdH) cdH.textContent=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  if(cdM) cdM.textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  if(cdS) cdS.textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+}
+tick(); setInterval(tick,1000);
+
+const rObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>rObs.observe(el));
+
+const ROADMAP_JSON_URL = 'https://cesacald26.github.io/MigrationApp/roadmap.json';
+let roadmapData = null;
+
+// Cargar roadmap desde JSON
+async function loadRoadmap() {
+    try {
+        const url = `${ROADMAP_JSON_URL}?_=${Date.now()}`;
+        const response = await fetch(url, {
+            cache: 'no-store',
+            headers: { 'Cache-Control': 'no-cache' }
+        });
+        
+        if (response.ok) {
+            roadmapData = await response.json();
+            renderRoadmap();
+            updateRoadmapProgress();
+            return roadmapData;
+        } else {
+            console.warn('Error al cargar roadmap, usando datos por defecto');
+            return getDefaultRoadmap();
+        }
+    } catch (error) {
+        console.error('Error de red:', error);
+        return getDefaultRoadmap();
+    }
+}
+
+// Datos por defecto (fallback)
+function getDefaultRoadmap() {
+    return {
+        lastUpdated: new Date().toISOString(),
+        phases: [
+            {id:1, name:"Diagnóstico", period:"Q2 2026", status:"active", 
+             tasks:[
+                 {name:"Análisis de complejidad", completed:false},
+                 {name:"Inventario de forms", completed:false},
+                 {name:"Definición de prioridades por área", completed:false},
+                 {name:"Depuración de funcionalidades", completed:false}
+             ]},
+            {id:2, name:"Diseño & Arquitectura", period:"Q2 2026", status:"active",
+             tasks:[
+                 {name:"Diseño UX/UI web", completed:false},
+                 {name:"Arquitectura APEX", completed:false},
+                 {name:"Estándares de desarrollo", completed:false}
+             ]},
+            {id:3, name:"Desarrollo Módulo 1", period:"Q3 2026", status:"next",
+             tasks:[
+                 {name:"Desarrollo Login / Main Page", completed:false},
+                 {name:"Migración de funcionalidades actuales", completed:false},
+                 {name:"Pruebas unitarias", completed:false},
+                 {name:"Documentación e instructivos", completed:false}
+             ]},
+            {id:4, name:"Roll-out & Go Live", period:"Q1 2027", status:"future",
+             tasks:[
+                 {name:"Piloto usuarios clave", completed:false},
+                 {name:"Lanzamiento general · Entregables Fase 1", completed:false},
+                 {name:"Capacitación masiva", completed:false}
+             ]}
+        ]
+    };
+}
+
+// Calcular porcentaje de una fase basado en tareas completadas
+function calculatePhaseProgress(phase) {
+    if (!phase.tasks || phase.tasks.length === 0) return 0;
+    const completedTasks = phase.tasks.filter(task => task.completed).length;
+    return Math.floor((completedTasks / phase.tasks.length) * 100);
+}
+
+// Calcular progreso total del roadmap
+function calculateTotalProgress(phases) {
+    let totalTasks = 0;
+    let completedTasks = 0;
+    
+    phases.forEach(phase => {
+        if (phase.tasks) {
+            totalTasks += phase.tasks.length;
+            completedTasks += phase.tasks.filter(task => task.completed).length;
+        }
+    });
+    
+    if (totalTasks === 0) return 0;
+    return Math.floor((completedTasks / totalTasks) * 100);
+}
+
+// Renderizar el roadmap
+function renderRoadmap() {
+    if (!roadmapData) return;
+    
+    const phasesContainer = document.getElementById('roadmapPhases');
+    if (!phasesContainer) return;
+    
+    phasesContainer.innerHTML = '';
+    
+    roadmapData.phases.forEach((phase, index) => {
+        const progress = calculatePhaseProgress(phase);
+        const isActive = phase.status === 'active';
+        const isNext = phase.status === 'next';
+        
+        let badgeClass = 'badge-next';
+        let badgeText = 'Próximo';
+        let phaseDotClass = '';
+        let phaseNumClass = '';
+        
+        if (isActive) {
+            badgeClass = 'badge-wip';
+            badgeText = 'En Curso';
+            phaseDotClass = 'active';
+            phaseNumClass = 'active';
+        } else if (isNext) {
+            badgeClass = 'badge-next';
+            badgeText = 'Próximo';
+        } else {
+            badgeClass = 'badge-next';
+            badgeText = 'Futuro';
+        }
+        
+        const tasksHtml = phase.tasks.map(task => task.name).join('<br>');
+        
+        const phaseHtml = `
+            <div class="phase-item reveal" data-progress="${progress}">
+                <div class="phase-dot ${phaseDotClass}"><div class="phase-dot-inner"></div></div>
+                <div class="phase-num ${phaseNumClass}">0${phase.id}</div>
+                <div class="phase-name">${phase.name}</div>
+                <div class="phase-period">${phase.period}</div>
+                <div class="phase-prog-label">Avance de fase</div>
+                <div class="phase-prog-wrap"><div class="phase-prog-bar" data-target="${progress}"></div></div>
+                <div class="phase-tasks">${tasksHtml}</div>
+                <span class="phase-badge ${badgeClass}">${badgeText}</span>
+            </div>
+        `;
+        
+        phasesContainer.innerHTML += phaseHtml;
+    });
+    
+    // Re-aplicar observer para las nuevas barras
+    const pObs = new IntersectionObserver((es) => {
+        es.forEach(e => {
+            if (e.isIntersecting) {
+                const b = e.target.querySelector('.phase-prog-bar');
+                const progress = e.target.dataset.progress || 0;
+                if (b) setTimeout(() => b.style.width = progress + '%', 300);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    document.querySelectorAll('.phase-item[data-progress]').forEach(el => pObs.observe(el));
+    
+    // Re-aplicar reveal
+    document.querySelectorAll('#roadmapPhases .reveal').forEach(el => rObs.observe(el));
+}
+
+// Actualizar barra principal
+function updateRoadmapProgress() {
+    if (!roadmapData) return;
+    
+    const totalProgress = calculateTotalProgress(roadmapData.phases);
+    const lineProgress = document.getElementById('lineProgress');
+    
+    if (lineProgress) {
+        lineProgress.style.width = totalProgress + '%';
+        console.log(`📊 Progreso total del roadmap: ${totalProgress}%`);
+    }
+}
+
+// Forzar recarga manual
+async function forceReloadRoadmap() {
+    const btn = event?.target;
+    if (btn) {
+        btn.innerHTML = '⏳ Cargando...';
+        btn.disabled = true;
+    }
+    
+    await loadRoadmap();
+    
+    if (btn) {
+        btn.innerHTML = '🔄 Recargar Roadmap';
+        btn.disabled = false;
+    }
+    alert('✅ Roadmap actualizado desde el servidor');
+}
+
+new IntersectionObserver(es => {
+    es.forEach(e => {
+        if (e.isIntersecting) {
+            updateRoadmapProgress();
+        }
+    });
+}, { threshold: 0.3 }).observe(document.getElementById('roadmap'));
+
+// Actualizar roadmap automáticamente cada 30 segundos
+setInterval(() => {
+    loadProposals();
+    loadRoadmap();
+    console.log('🔄 Datos actualizados automáticamente');
+}, 30000);
+
+//inicializa
+loadRoadmap();
+loadProposals();
+
+// Asignar links de demo
+document.getElementById('demo1Btn').href = DEMO_LINK_1;
+document.getElementById('demo2Btn').href = DEMO_LINK_2;
+
+// Pequeña comprobación para asegurar que los enlaces no están vacíos
+if(DEMO_LINK_1 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_1 con la URL real de GitHub Pages');
+if(DEMO_LINK_2 === '#') console.warn('⚠️ Reemplaza DEMO_LINK_2 con la URL real de GitHub Pages');
+
+</script>
+</body>
+</html>
